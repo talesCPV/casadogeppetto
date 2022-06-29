@@ -6,6 +6,7 @@
     <title>Casa do Geppetto</title>
     <link rel="stylesheet" href="style/reset.css">
     <link rel="stylesheet" href="style/menu.css">
+    <link rel="stylesheet" href="style/modal.css">
 
 <style>
 
@@ -16,12 +17,9 @@
         --white: #f9f9f9;
         --black: #36383F;
         --gray: #85888C;
+        --sel_black: rgb(43, 224, 19);
+        --sel_white: rgb(224, 19, 19);
     } /* variables*/
-
-
-
-
-
 
     article{
         display: flex;
@@ -35,9 +33,6 @@
         width: 250px;
         height: 250px;
     }
-
-
-
 
 
 </style>
@@ -55,13 +50,13 @@
         <!-- Menu -->
         <nav class="nav">
             <ul class="menu">
-                <li><a href="#">Login</a></li>
-                <li><a href="#">Aniversários</a></li>
-                <li><a href="#">Momentos</a> </li>
-                <li><a href="#">Eventos</a></li>
-                <li><a href="#">Feedbacks</a></li>
-                <li><a href="#">Brinquedos</a></li>
-                <li><a href="#">Parcerias</a></li>
+                <li id="menu-login">Login</li>
+                <li>Aniversários</li>
+                <li>Momentos    </li>
+                <li>Eventos     </li>
+                <li>Feedbacks   </li>
+                <li>Brinquedos  </li>
+                <li>Parcerias   </li>
             </ul>
          </nav>
     </header>
@@ -83,9 +78,74 @@
             <div class="photo"></div>
             <div class="photo"></div>
 
-
         </article>
+        <section class="screen"></section>
+
     </main>
 
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-title">
+                <p id="modal-title">some title...</p>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-text">
+                <p>Some text in the Modal..</p>
+            </div>
+            <input type="hidden" class="modal-data">
+        </div>
+    
+    </div> 
+
 </body>
+<script>
+
+    var screen = document.querySelector(".screen");
+    var modal = document.getElementById("myModal");
+    var modal_title = document.getElementById("modal-title");
+    var modal_text = document.querySelector(".modal-text");
+    var modal_data = document.querySelector(".modal-data");
+    var btnClose = document.querySelector(".close");
+
+
+    document.querySelector('.close').addEventListener('click',()=>{
+        modal.style.display = "none";
+    })
+
+    function openHTML(template,where="window",label="", data=""){
+        if(template.trim() != ""){
+            fetch( "templates/"+template)
+            .then( stream => stream.text())
+            .then( text => {
+                const temp = document.createElement('div');
+                temp.innerHTML = text;
+                const body = temp.getElementsByTagName('template')[0];
+                const script = temp.getElementsByTagName('script')[0];
+
+                if(body != undefined){
+                    if(where == "self"){
+                        screen.innerHTML = body.innerHTML;
+                    }else if(where == "pop-up"){
+                        modal_text.innerHTML = body.innerHTML;
+                        modal_title.innerHTML = label;
+                        modal.style.display = "block";
+                    }else{
+                        document.getElementById(where).innerHTML = body.innerHTML;
+                    }
+                    modal_data.value = data;
+                    eval(script.innerHTML);
+                }
+            }); 
+        }
+    }
+
+    document.querySelector('#menu-login').addEventListener('click',()=>{
+
+        openHTML('login.html','pop-up','LOGIN')
+
+    })
+
+
+</script>
 </html>
