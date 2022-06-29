@@ -1,0 +1,57 @@
+<template>
+ 
+    <style>
+
+        .modal-content {
+            width: 350px ; 
+            height: auto;
+            padding: 20px;
+            opacity: 90%;
+        }
+
+        .frm-login{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+        }
+
+        .frm-login *{
+            padding: 8px;
+            margin: 10px;
+            width: 80%;
+        }
+
+        #lblNovoUsuario{
+            font-size: 12px;
+        }
+
+    </style>
+
+    <div class="frm-login">
+       
+        <input type="text"     id="edtNome" placeholder="Nome Completo">
+        <input type="text"     id="edtUser" placeholder="Usuário">
+        <input type="password" id="edtPass" placeholder="Senha"  >
+        <input type="password" id="edtRepPass" placeholder="Repita a Senha"  >
+        <button id="btnLogin"> Cadastrar </button>
+        
+
+    </div>
+
+</template>
+
+<script>        
+
+    document.querySelector('#btnLogin').addEventListener('click',()=>{
+
+        console.log( document.querySelector('#edtPass').value.getHash(30) )
+
+    })
+
+
+
+
+
+
+</script>    
