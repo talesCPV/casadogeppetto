@@ -34,18 +34,17 @@
         <input type="text"     id="edtUser" placeholder="Usuário">
         <input type="password" id="edtPass" placeholder="Senha"  >
         <input type="password" id="edtRepPass" placeholder="Repita a Senha"  >
-        <button id="btnLogin"> Cadastrar </button>
+        <button id="btnNovo"> Cadastrar </button>
         
-
     </div>
 
 </template>
 
 <script>        
 
-    document.querySelector('#btnLogin').addEventListener('click',()=>{
+    document.querySelector('#btnNovo').addEventListener('click',()=>{
 
-        console.log( document.querySelector('#edtPass').value.getHash(30) )
+        alert('Novo!!!')
 
     })
 

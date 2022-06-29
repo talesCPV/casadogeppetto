@@ -108,12 +108,11 @@
     var modal_data = document.querySelector(".modal-data");
     var btnClose = document.querySelector(".close");
 
-
     document.querySelector('.close').addEventListener('click',()=>{
         modal.style.display = "none";
     })
 
-    function openHTML(template,where="window",label="", data=""){
+    function openHTML(template,where="screen",label="", data=""){
         if(template.trim() != ""){
             fetch( "templates/"+template)
             .then( stream => stream.text())
