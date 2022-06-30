@@ -38,6 +38,8 @@
             <option value="0" selected>Foto</option>
             <option value="1">Texto</option>
         </select>
+        Cor de Fundo
+        <input id="cmbColor" type="color" value="#f0a70a" >
 
         <div id="showFoto">
             <input type="file">
@@ -74,6 +76,8 @@
             document.querySelector('#showFoto').style = 'display: none;'
             document.querySelector('#showTexto').style = 'display: block;'            
         }
+
+        console.log(document.querySelector('#cmbColor').value)
 
     })
 
