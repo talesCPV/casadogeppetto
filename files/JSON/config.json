@@ -1,0 +1,36 @@
+{
+    "frame": [
+        {
+            "category" : "photo",
+            "content" : "plus",
+            "background" : "240,167,10",
+            "filename" : "",
+            "justify" : "",
+            "font" : 0,
+            "text" : "",
+            "access" : 10
+        },
+        {
+            "category" : "photo",
+            "content" : "pic",
+            "background" : "10, 167, 20",
+            "filename" : "wood.jpeg",
+            "justify" : "",
+            "font" : 0,
+            "text" : "",
+            "access" : 0
+        },
+        {
+            "category" : "photo",
+            "content" : "txt",
+            "background" : "240, 100, 80",
+            "filename" : "",
+            "justify" : "center",
+            "font" : 15,
+            "text" : "Exemplo de texto... bem grande com várias linhas",
+            "access" : 0
+        }
+
+
+    ]
+}

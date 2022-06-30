@@ -1,0 +1,89 @@
+<template>
+ 
+    <style>
+
+        .modal-content {
+            width: 350px ; 
+            height: auto;
+            padding: 20px;
+            opacity: 90%;
+        }
+
+        .frm-frame{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+        }
+
+        .frm-frame *{
+            padding: 8px;
+            margin: 10px;
+            width: 80%;
+        }
+
+        #lblNovoUsuario{
+            font-size: 12px;
+        }
+
+        #showFoto{display: block;}
+        #showTexto{display: none;}
+
+    </style>
+
+    <div class="frm-frame">
+       
+        Tipo de quadro
+        <select id="cmbTipo">
+            <option value="0" selected>Foto</option>
+            <option value="1">Texto</option>
+        </select>
+        Cor de Fundo
+        <input id="cmbColor" type="color" value="#f0a70a" >
+
+        <div id="showFoto">
+            <input type="file">
+            <button id="btnUpload"> Upload </button>
+        </div>
+        <div id="showTexto">
+            Tamanho da Fonte
+            <input  id="cmbFont" type="number" value="15" min="8" max="35" >
+            <select id="cmbJustify">
+                <option value="center" selected>Centralizado</option>
+                <option value="justify">Justificado</option>
+                <option value="left">Esquerda</option>
+                <option value="right">Direita</option>
+                <option value="start">Começo</option>
+                <option value="end">Final</option>
+            </select>
+            <textarea id="edtTexto" cols="40" rows="10"></textarea>
+            <button id="btnAdd"> Adicionar </button>
+        </div>
+
+        
+    </div>
+
+</template>
+
+<script>        
+
+    document.querySelector('#cmbTipo').addEventListener('change',()=>{
+
+        if(document.querySelector('#cmbTipo').value == 0){
+            document.querySelector('#showFoto').style = 'display: block;'
+            document.querySelector('#showTexto').style = 'display: none;'            
+        }else{
+            document.querySelector('#showFoto').style = 'display: none;'
+            document.querySelector('#showTexto').style = 'display: block;'            
+        }
+
+        console.log(document.querySelector('#cmbColor').value)
+
+    })
+
+
+
+
+
+
+</script>    

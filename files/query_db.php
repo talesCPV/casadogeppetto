@@ -3,15 +3,16 @@
     $query_db = array(
          "0" => 'SELECT * FROM tb_usuario WHERE y00="x00" AND y01="x01";',
          "1" => "INSERT INTO tb_usuario VALUES ('a','b','c');",
+         "2" => 'SELECT * FROM tb_frames WHERE y00="x00" AND y01="x01";',
               
     );
 
 
-    if (IsSet($_POST["cod"]) && IsSet($_POST["params"]) && IsSet($_POST["token"]) ){
+    if (IsSet($_POST["cod"]) && IsSet($_POST["params"])  ){
 
         $cod = $_POST["cod"];        
         $params = json_decode($_POST["params"],true); 
-        $token = $_POST["token"];
+//        $token = $_POST["token"];
 
         include "connect.php";        
 /*        
@@ -21,6 +22,8 @@
             mysqli_query($conexao, $query);
         }
 */
+
+        var_dump($params);
         $query = $query_db[$_POST["cod"]];
         $i = 0;
         foreach($params as $key => $val ){
@@ -32,7 +35,7 @@
             $i++;
         }
 
-//        echo $query;
+        echo $query;
 
 		$result = mysqli_query($conexao, $query);
 		$qtd_lin = $result->num_rows;

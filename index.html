@@ -27,13 +27,27 @@
         justify-content: center;
     }
 
-    .photo{
-        background-color: rgb(240, 167, 10);
+    .frame{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
         margin: 10px;
         width: 250px;
         height: 250px;
     }
 
+    .circle{
+        background-color: beige;
+        width: 50px;
+        height: 50px;
+        border-radius: 25px;
+        text-align: center;
+        padding: 10px;
+        font-size: 20px;
+        font-weight: bolder;
+        cursor: pointer;
+    }
 
 </style>
 
@@ -51,32 +65,19 @@
         <nav class="nav">
             <ul class="menu">
                 <li id="menu-login">Login</li>
-                <li>Aniversários</li>
-                <li>Momentos    </li>
                 <li>Eventos     </li>
-                <li>Feedbacks   </li>
+                <li>Parceiros   </li>
                 <li>Brinquedos  </li>
-                <li>Parcerias   </li>
             </ul>
          </nav>
     </header>
     <!-- Main content -->
     <main>
-        <article>
+        <article id="form-for-frames">
 
-            <div class="photo"></div>
-            <div class="photo"></div>
-            <div class="photo"></div>
-            <div class="photo"></div>
-            <div class="photo"></div>
-            <div class="photo"></div>
-            <div class="photo"></div>
-            <div class="photo"></div>
-            <div class="photo"></div>
-            <div class="photo"></div>
-            <div class="photo"></div>
-            <div class="photo"></div>
-            <div class="photo"></div>
+            <div class="frame"></div>
+            <div class="frame"></div>
+
 
         </article>
         <section class="screen"></section>
@@ -112,6 +113,120 @@
         modal.style.display = "none";
     })
 
+    loadContent("photo")
+
+    function loadContent(cat){
+
+        const params = new URLSearchParams();        
+            params.append("category", cat);
+            params.append("access", localStorage.getItem('access'));
+
+        console.log(params)
+
+        const myPromisse = queryDB(params,2)
+
+        myPromisse.then((resolve)=>{
+            console.log(resolve)
+
+/*            
+            if(resolve.trim() != ""){
+                const json = JSON.parse(resolve);
+                console.log(json);
+                frames = document.querySelector('#form-for-frames')
+                frames.innerHTML = ''
+                for(let i=0; i<json.length; i++){
+                    newFrame = createFrame(json[i])
+                    frames.appendChild(newFrame.html)
+                    eval(newFrame.script)
+
+                }   
+            }   
+*/            
+
+        });
+
+/*
+        const data = new URLSearchParams();        
+        data.append("path", '/JSON/config.json');
+        data.append("category", cat);
+        data.append("access", localStorage.getItem('access'));
+
+        const myRequest = new Request("files/getJSON.php",{
+            method : "POST",
+            body : data
+        });
+
+        const myPromisse = new Promise((resolve,reject) =>{
+
+            fetch(myRequest)
+            .then(function (response){
+
+                if (response.status === 200) { 
+                    resolve(response.text());
+                    
+                } else { 
+                    reject(new Error("Houve algum erro na comunicação com o servidor"));
+                    
+                } 
+
+            });            
+
+        });        
+
+        myPromisse.then((resolve)=>{
+            console.log(resolve)
+            if(resolve.trim() != ""){
+                const json = JSON.parse(resolve);
+//                console.log(json);
+                frames = document.querySelector('#form-for-frames')
+                frames.innerHTML = ''
+                for(let i=0; i<json.length; i++){
+                    newFrame = createFrame(json[i])
+                    frames.appendChild(newFrame.html)
+                    eval(newFrame.script)
+                    
+                }
+                
+            }        
+
+        });
+*/
+
+    }
+
+    function createFrame(frm){
+        frm = JSON.parse(frm)
+        console.log(frm)
+
+        out = new Object
+        out.script = ''
+
+        rgb = frm.background.split(',')
+        console.log(rgb)
+
+        out.html = document.createElement('div')
+        out.html.classList = 'frame'
+
+        if(frm.content == 'plus'){
+            out.html.innerHTML = '<div id="btnPlus" class="circle">+</div>'
+            
+            out.script = `
+            document.querySelector('#btnPlus').addEventListener('click',()=>{
+                openHTML('new_frame.html','pop-up','Novo Quadro')
+            })`            
+
+        }else if(frm.content == 'txt'){
+            out.html.innerHTML = frm.text
+            out.html.style =  `text-align : ${frm.justify}; font-size: ${frm.font}px ;`
+        }else if(frm.content == 'pic'){
+            out.html.innerHTML = `<img src="files/pictures/${frm.filename}" alt="">`
+        }
+
+        out.html.style.background = `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`;
+        return out
+
+    }
+
     function openHTML(template,where="screen",label="", data=""){
         if(template.trim() != ""){
             fetch( "templates/"+template)
@@ -141,8 +256,8 @@
 
     function queryDB(params,cod){
         const data = new URLSearchParams();        
-        data.append("cod", cod);
-        data.append("params", JSON.stringify(params));
+            data.append("cod", cod);
+            data.append("params", JSON.stringify(params));
 
         const myRequest = new Request("files/query_db.php",{
             method : "POST",
@@ -150,20 +265,14 @@
         });
 
         return new Promise((resolve,reject) =>{
-
-        fetch(myRequest)
-        .then(function (response){
-
-            if (response.status === 200) { 
-                resolve(response.text());
-                
-            } else { 
-                reject(new Error("Houve algum erro na comunicação com o servidor"));
-                
-            } 
-
-        });            
-
+            fetch(myRequest)
+            .then(function (response){
+                if (response.status === 200) { 
+                    resolve(response.text());                    
+                } else { 
+                    reject(new Error("Houve algum erro na comunicação com o servidor"));                    
+                } 
+            });
         });      
     }
 
@@ -172,7 +281,6 @@
         openHTML('login.html','pop-up','LOGIN')
 
     })
-
 
 </script>
 </html>
