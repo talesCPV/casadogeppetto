@@ -1,0 +1,144 @@
+<template>
+ 
+    <style>
+
+        .modal-content {
+            width: 350px ; 
+            height: auto;
+            padding: 20px;
+            opacity: 90%;
+        }
+
+        .frm-login{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+        }
+
+        .frm-login *{
+            padding: 8px;
+            margin: 10px;
+            width: 80%;
+        }
+
+        #lblNovoUsuario{
+            font-size: 12px;
+        }
+
+    </style>
+
+    <div class="frm-login">
+       
+        <a href="#" class="logo"><img src="assets/logo.png" alt=""></a>
+
+        <input type="text"     id="edtUser" placeholder="Usuário">
+        <input type="password" id="edtPass" placeholder="Senha"  >
+        <button id="btnLogin"> LOGIN </button>
+        
+        <hr size="1" width="90%">
+
+        <a href="#" id="lblNovoUsuario">Novo usuário?</a>
+
+
+    </div>
+
+</template>
+
+<script>        
+
+String.prototype.getHash = function(S){
+        let weigth = 0
+        let hash = ''
+        let str = this.valueOf()
+
+        function getRange(N){ // keeps caracters under ASCII 33 & 126
+            while (N > 126 || N < 33){
+                N -= 126
+                N < 33 ? N += 33 : N
+                N == 127 ? N++ : 0
+            }
+            return N
+        }
+
+        for (i = 0; i < str.length; i++) {
+            weigth += str.charCodeAt(i) * 5
+        }
+
+        while(str.length < S){
+            str += String.fromCharCode(str.length + 33)
+        }
+
+        for (i = 0; i < str.length; i++) {
+            chr = getRange(weigth * str.charCodeAt(i))
+            hash += String.fromCharCode(chr)  
+        }
+
+        return hash;
+    }
+
+    document.querySelector('#btnLogin').addEventListener('click',()=>{
+        let user = document.querySelector('#edtUser').value
+        let hash = document.querySelector('#edtPass').value.getHash(30)
+
+        const params = new Object;
+            params.username = user;
+            params.pass = hash;
+
+        const data = new URLSearchParams();        
+        data.append("cod", 0);
+        data.append("token", '');
+        data.append("params", JSON.stringify(params));
+
+        const myRequest = new Request("files/query_db.php",{
+            method : "POST",
+            body : data
+        });
+
+        const myPromisse = new Promise((resolve,reject) =>{
+
+            fetch(myRequest)
+            .then(function (response){
+
+                if (response.status === 200) { 
+                    resolve(response.text());
+                } else { 
+                    reject(new Error("Houve algum erro na comunicação com o servidor"));
+                } 
+
+            });            
+
+        });
+
+        myPromisse.then((resolve)=>{
+            if(resolve.trim() != ""){
+                const json = JSON.parse(resolve);
+                console.log(json);
+
+
+                localStorage.setItem("id",json[0].id);
+                localStorage.setItem("username",json[0].username);
+                localStorage.setItem("nome",json[0].nome);
+                localStorage.setItem("access",json[0].access);
+//                window.open("dashboard.html","_self")
+                
+            }else{
+                alert("Usuário ou senha inválido!");
+                localStorage.clear();
+            }        
+
+        });
+
+
+//        console.log( document.querySelector('#edtPass').value.getHash(30) )
+
+    })
+
+    document.querySelector('#lblNovoUsuario').addEventListener('click',()=>{
+
+        openHTML('new_user.html','pop-up','Novo Usuario')
+
+    })
+
+
+</script>    
