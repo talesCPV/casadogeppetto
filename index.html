@@ -65,12 +65,9 @@
         <nav class="nav">
             <ul class="menu">
                 <li id="menu-login">Login</li>
-                <li>Aniversários</li>
-                <li>Momentos    </li>
-                <li>Eventos     </li>
-                <li>Feedbacks   </li>
-                <li>Brinquedos  </li>
-                <li>Parcerias   </li>
+                <li class="menu-item">Eventos     </li>
+                <li class="menu-item">Parceiros   </li>
+                <li class="menu-item">Brinquedos  </li>
             </ul>
          </nav>
     </header>
@@ -116,67 +113,50 @@
         modal.style.display = "none";
     })
 
-    loadContent("photo")
+    menu_item = document.querySelectorAll('.menu-item');
+    for(let i=0; i< menu_item.length; i++){
+        menu_item[i].addEventListener('click',()=>{
+            loadContent(menu_item[i].innerHTML.toLowerCase().trim())
+        })
+    }
+
+    loadContent("brinquedos")
 
     function loadContent(cat){
-        const data = new URLSearchParams();        
-        data.append("path", 'JSON/config.json');
-        data.append("category", cat);
-        data.append("access", localStorage.getItem('access'));
 
-        const myRequest = new Request("files/getJSON.php",{
-            method : "POST",
-            body : data
-        });
+        const params = new Object;        
+            params.category = cat;
+            params.access = localStorage.getItem('access');
 
-        const myPromisse = new Promise((resolve,reject) =>{
-
-            fetch(myRequest)
-            .then(function (response){
-
-                if (response.status === 200) { 
-                    resolve(response.text());
-                    
-                } else { 
-                    reject(new Error("Houve algum erro na comunicação com o servidor"));
-                    
-                } 
-
-            });            
-
-        });        
+        const myPromisse = queryDB(params,2)
 
         myPromisse.then((resolve)=>{
-//            console.log(resolve)
+           
             if(resolve.trim() != ""){
                 const json = JSON.parse(resolve);
-//                console.log(json);
                 frames = document.querySelector('#form-for-frames')
                 frames.innerHTML = ''
                 for(let i=0; i<json.length; i++){
                     newFrame = createFrame(json[i])
                     frames.appendChild(newFrame.html)
                     eval(newFrame.script)
-                    
-                }
-                
-            }        
+                }   
+            }              
 
         });
-
 
     }
 
     function createFrame(frm){
-        frm = JSON.parse(frm)
+
+
         console.log(frm)
 
         out = new Object
         out.script = ''
 
         rgb = frm.background.split(',')
-        console.log(rgb)
-
+ 
         out.html = document.createElement('div')
         out.html.classList = 'frame'
 
@@ -195,13 +175,10 @@
             out.html.innerHTML = `<img src="files/pictures/${frm.filename}" alt="">`
         }
 
-
         out.html.style.background = `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`;
-
         return out
 
     }
-
 
     function openHTML(template,where="screen",label="", data=""){
         if(template.trim() != ""){
@@ -232,8 +209,8 @@
 
     function queryDB(params,cod){
         const data = new URLSearchParams();        
-        data.append("cod", cod);
-        data.append("params", JSON.stringify(params));
+            data.append("cod", cod);
+            data.append("params", JSON.stringify(params));
 
         const myRequest = new Request("files/query_db.php",{
             method : "POST",
@@ -241,20 +218,14 @@
         });
 
         return new Promise((resolve,reject) =>{
-
-        fetch(myRequest)
-        .then(function (response){
-
-            if (response.status === 200) { 
-                resolve(response.text());
-                
-            } else { 
-                reject(new Error("Houve algum erro na comunicação com o servidor"));
-                
-            } 
-
-        });            
-
+            fetch(myRequest)
+            .then(function (response){
+                if (response.status === 200) { 
+                    resolve(response.text());                    
+                } else { 
+                    reject(new Error("Houve algum erro na comunicação com o servidor"));                    
+                } 
+            });
         });      
     }
 

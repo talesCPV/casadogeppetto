@@ -4,11 +4,13 @@
 
 
 	if (IsSet($_POST["path"])){
-	  $path = $_POST["path"];
+	  $path = getcwd().$_POST["path"];
 	  $access = $_POST["access"];
 	  $category = $_POST["category"];
-
+echo getcwd()."<br>";
+echo $path."<br>" ;
       if (file_exists($path)) {
+echo"1";
           $fp = fopen($path, "r");
           $resp = "";
           while (!feof ($fp)) {
