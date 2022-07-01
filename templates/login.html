@@ -120,11 +120,13 @@ String.prototype.getHash = function(S){
                 localStorage.setItem("username",json[0].username);
                 localStorage.setItem("nome",json[0].nome);
                 localStorage.setItem("access",json[0].access);
-                
+                loadContent(localStorage.getItem("frame"))
             }else{
                 alert("Usuário ou senha inválido!");
                 localStorage.clear();
-            }        
+                
+            }     
+            menu_login();   
             loadContent("photo");
             btnClose.click();
         });

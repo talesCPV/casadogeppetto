@@ -41,10 +41,17 @@
         Cor de Fundo
         <input id="cmbColor" type="color" value="#f0a70a" >
 
-        <div id="showFoto">
-            <input type="file">
-            <button id="btnUpload"> Upload </button>
-        </div>
+            <div id="showFoto">
+                <form action="files/upload.php" method='post' enctype='multipart/form-data'>
+                    <input  name="up_file" id="fileImage"    type="file">
+                    <input  type="hidden"  id="hdnAccess"    name="hdnAccess"    value="">
+                    <input  type="hidden"  id="hdnColor"     name="hdnColor"     value="">
+                    <input  type="hidden"  id="hdnCategory"  name="hdnCategory"  value="">
+                    <button type='submit'  id="btnUpload"> Upload </button>
+                </form>
+                
+            </div>
+
         <div id="showTexto">
             Tamanho da Fonte
             <input  id="cmbFont" type="number" value="15" min="8" max="35" >
@@ -59,7 +66,6 @@
             <textarea id="edtTexto" cols="40" rows="10"></textarea>
             <button id="btnAdd"> Adicionar </button>
         </div>
-
         
     </div>
 
@@ -79,7 +85,38 @@
 
     })
 
+    
+    document.querySelector('#btnUpload').addEventListener('click',()=>{
 
+        document.querySelector('#hdnAccess').value = localStorage.getItem('access');
+        document.querySelector('#hdnColor').value  = document.querySelector('#cmbColor').value;
+        document.querySelector('#hdnCategory').value  = localStorage.getItem("frame");
+
+
+/*        file = document.querySelector('#fileImage')
+        
+
+        const data = new URLSearchParams();        
+            data.append("file", file);
+            data.append("filename", 'teste1_.jpeg');
+
+        const myRequest = new Request("files/upload.php",{
+            method : "POST",
+            body : data
+        });
+
+        const myPromisse = new Promise((resolve,reject) =>{
+            fetch(myRequest)
+            .then(function (response){
+                if (response.status === 200) { 
+                    resolve(response.text());                    
+                } else { 
+                    reject(new Error("Houve algum erro na comunicação com o servidor"));                    
+                } 
+            });
+        });  
+*/
+    })
 
 
 

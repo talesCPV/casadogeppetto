@@ -109,6 +109,8 @@
     var modal_data = document.querySelector(".modal-data");
     var btnClose = document.querySelector(".close");
 
+    menu_login()
+
     document.querySelector('.close').addEventListener('click',()=>{
         modal.style.display = "none";
     })
@@ -116,13 +118,15 @@
     menu_item = document.querySelectorAll('.menu-item');
     for(let i=0; i< menu_item.length; i++){
         menu_item[i].addEventListener('click',()=>{
-            loadContent(menu_item[i].innerHTML.toLowerCase().trim())
+            let frame = menu_item[i].innerHTML.toLowerCase().trim()            
+            loadContent(frame)
         })
     }
 
     loadContent("brinquedos")
 
     function loadContent(cat){
+        localStorage.setItem("frame",cat);
 
         const params = new Object;        
             params.category = cat;
@@ -135,7 +139,7 @@
             if(resolve.trim() != ""){
                 const json = JSON.parse(resolve);
                 frames = document.querySelector('#form-for-frames')
-                frames.innerHTML = ''
+                frames.innerHTML = `<h1>${cat}</h1>`
                 for(let i=0; i<json.length; i++){
                     newFrame = createFrame(json[i])
                     frames.appendChild(newFrame.html)
@@ -148,13 +152,11 @@
     }
 
     function createFrame(frm){
-
-
         console.log(frm)
 
         out = new Object
         out.script = ''
-
+console.log(frm.background)
         rgb = frm.background.split(',')
  
         out.html = document.createElement('div')
@@ -175,7 +177,8 @@
             out.html.innerHTML = `<img src="files/pictures/${frm.filename}" alt="">`
         }
 
-        out.html.style.background = `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`;
+        out.html.style.background = frm.background;
+//        out.html.style.background = `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`;
         return out
 
     }
@@ -229,11 +232,26 @@
         });      
     }
 
+
     document.querySelector('#menu-login').addEventListener('click',()=>{
 
-        openHTML('login.html','pop-up','LOGIN')
+        if(localStorage.getItem('access') == null){
+            openHTML('login.html','pop-up','LOGIN')
+        }else{
+            localStorage.clear();
+            loadContent("brinquedos")
+        }
+        menu_login()
 
     })
+
+    function menu_login(){
+        if(localStorage.getItem('access') != null){
+            document.querySelector('#menu-login').innerHTML = 'Logout'
+        }else{
+            document.querySelector('#menu-login').innerHTML = 'Login'
+        }
+    }
 
 </script>
 </html>

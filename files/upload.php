@@ -1,18 +1,47 @@
 <?php
 
-  if (IsSet($_POST["file"]) && IsSet($_POST["filename"])){  
+  function frames($filename){
 
-    $file = $_POST["file"];
-    $filename = '../fotos/'.$_POST["filename"];
-    $data = base64_decode($file);
+   
+    $color = $_POST["hdnColor"];
+    $category = $_POST["hdnCategory"];
 
-    file_put_contents($filename, $data);
+    $query = "INSERT INTO tb_frames (category, content, background, filename) VALUES ('{$category}','pic','{$color}','{$filename}');";
+
+//    print($query);
+
+    include "connect.php"; 
+		
+    mysqli_query($conexao, $query);
+
+    $conexao->close();
+
+  }
+
+  if (IsSet($_FILES["up_file"])){ 
+   
+    $file = $_FILES["up_file"]["tmp_name"];
+    $filename = $_FILES["up_file"]["name"];
+    $url = getcwd().'/pictures/'.$filename;
+    $access = $_POST["hdnAccess"];
+
+
+//    echo $access."<br>";
+
+    if (file_exists($file) && $access==10){
+      echo "existe<br>";
+      if(move_uploaded_file($file, $url)){
+        print "SUCESSO!!!<br>";
+        frames($filename);
+      }else{
+        print"FUDEU<br>";
+      }
+    }else{
+      echo "não existe<br>";
+    }
     return true;
-
   }else{
-
     return false;
-    
   }
 
 ?>
