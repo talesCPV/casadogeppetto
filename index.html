@@ -118,12 +118,20 @@
     menu_item = document.querySelectorAll('.menu-item');
     for(let i=0; i< menu_item.length; i++){
         menu_item[i].addEventListener('click',()=>{
-            let frame = menu_item[i].innerHTML.toLowerCase().trim()            
+            let frame = menu_item[i].innerHTML.toLowerCase().trim()
+            closeMenu()
             loadContent(frame)
         })
     }
 
     loadContent("brinquedos")
+
+
+    function closeMenu(){
+        document.querySelector('#side-menu').checked =  false;
+        
+
+    }
 
     function loadContent(cat){
         localStorage.setItem("frame",cat);
