@@ -112,7 +112,7 @@ String.prototype.getHash = function(S){
         });
 
         myPromisse.then((resolve)=>{
-            console.log(resolve)
+
             if(resolve.trim() != ""){
                 const json = JSON.parse(resolve);
                 
@@ -123,12 +123,12 @@ String.prototype.getHash = function(S){
                 loadContent(localStorage.getItem("frame"))
             }else{
                 alert("Usuário ou senha inválido!");
-                localStorage.clear();
-                
+                localStorage.clear();                
             }     
             menu_login();   
             loadContent("photo");
             btnClose.click();
+            closeMenu();
         });
 
 

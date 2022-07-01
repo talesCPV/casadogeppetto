@@ -21,13 +21,22 @@
         --sel_white: rgb(224, 19, 19);
     } /* variables*/
 
+    main{
+        position: relative;
+        z-index: -2;
+    }
+
     article{
+        position: relative;
+        z-index: -2;
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
     }
 
     .frame{
+        position: relative;
+        z-index: -1;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -37,7 +46,12 @@
         height: 250px;
     }
 
-    .circle{
+    .frame img{
+        max-width: 200px;
+        max-height: 200px;
+    }
+
+    .circle{       
         background-color: beige;
         width: 50px;
         height: 50px;
@@ -47,6 +61,18 @@
         font-size: 20px;
         font-weight: bolder;
         cursor: pointer;
+    }
+
+    .circle:hover{
+
+        background-color: rgb(227, 214, 240);
+    }
+
+    .edit{
+        position: absolute;
+        bottom: 10px;
+        right: 10px;
+
     }
 
 </style>
@@ -118,12 +144,19 @@
     menu_item = document.querySelectorAll('.menu-item');
     for(let i=0; i< menu_item.length; i++){
         menu_item[i].addEventListener('click',()=>{
-            let frame = menu_item[i].innerHTML.toLowerCase().trim()            
+            let frame = menu_item[i].innerHTML.toLowerCase().trim()
+            closeMenu()
             loadContent(frame)
         })
     }
 
     loadContent("brinquedos")
+
+    function closeMenu(){
+        document.querySelector('#side-menu').checked =  false;
+        
+
+    }
 
     function loadContent(cat){
         localStorage.setItem("frame",cat);
@@ -152,11 +185,28 @@
     }
 
     function createFrame(frm){
-        console.log(frm)
+//        console.log(frm)
+        
+        function btn_edit(){
+//console.log(frm)
+
+            const btn = document.createElement('div')
+            btn.classList = 'edit circle'
+            btn.innerHTML = 'E'
+            btn.addEventListener('click',()=>{
+                console.log(frm)
+                openHTML('edit_frame.html','pop-up','Edição')
+            })
+            btn.data = frm
+
+
+            return btn
+
+        }
 
         out = new Object
         out.script = ''
-console.log(frm.background)
+
         rgb = frm.background.split(',')
  
         out.html = document.createElement('div')
@@ -165,7 +215,7 @@ console.log(frm.background)
         if(frm.content == 'plus'){
             out.html.innerHTML = '<div id="btnPlus" class="circle">+</div>'
             
-            out.script = `
+            out.script += `
             document.querySelector('#btnPlus').addEventListener('click',()=>{
                 openHTML('new_frame.html','pop-up','Novo Quadro')
             })`            
@@ -178,7 +228,11 @@ console.log(frm.background)
         }
 
         out.html.style.background = frm.background;
-//        out.html.style.background = `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`;
+
+        if(localStorage.getItem('access') == 10 && frm.content != 'plus'){
+            out.html.appendChild(btn_edit())
+        }
+
         return out
 
     }
