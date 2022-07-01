@@ -41,10 +41,17 @@
         Cor de Fundo
         <input id="cmbColor" type="color" value="#f0a70a" >
 
-        <div id="showFoto">
-            <input type="file">
-            <button id="btnUpload"> Upload </button>
-        </div>
+            <div id="showFoto">
+                <form id="frmUpload" action="files/upload.php" method='post' enctype='multipart/form-data'>
+                    <input  name="up_file" id="up_file"      type="file">
+                    <input  type="hidden"  id="hdnAccess"    name="hdnAccess"    value="">
+                    <input  type="hidden"  id="hdnColor"     name="hdnColor"     value="">
+                    <input  type="hidden"  id="hdnCategory"  name="hdnCategory"  value="">
+                </form>
+                <button  id="btnUpload"> Upload </button>
+                
+            </div>
+
         <div id="showTexto">
             Tamanho da Fonte
             <input  id="cmbFont" type="number" value="15" min="8" max="35" >
@@ -59,7 +66,6 @@
             <textarea id="edtTexto" cols="40" rows="10"></textarea>
             <button id="btnAdd"> Adicionar </button>
         </div>
-
         
     </div>
 
@@ -77,12 +83,79 @@
             document.querySelector('#showTexto').style = 'display: block;'            
         }
 
-        console.log(document.querySelector('#cmbColor').value)
-
     })
 
+    document.querySelector('#btnAdd').addEventListener('click',()=>{
 
+        const params = new Object;        
+            params.category = localStorage.getItem("frame");
+            params.content = 'txt';
+            params.background = document.querySelector('#cmbColor').value;
+            params.justify = document.querySelector('#cmbJustify').value;
+            params.font = document.querySelector('#cmbFont').value;
+            params.text = document.querySelector('#edtTexto').value;
 
+        const myPromisse = queryDB(params,3)
+
+        btnClose.click();
+    })
+
+    
+    document.querySelector('#btnUpload').addEventListener('click',()=>{
+
+        document.querySelector('#hdnAccess').value = localStorage.getItem('access');
+        document.querySelector('#hdnColor').value  = document.querySelector('#cmbColor').value;
+        document.querySelector('#hdnCategory').value  = localStorage.getItem("frame");
+
+        const data = new FormData();        
+            data.append("up_file",  document.querySelector('#up_file').files[0]);
+            data.append("hdnAccess", localStorage.getItem('access'));
+            data.append("hdnColor", localStorage.getItem('access'));
+            data.append("hdnCategory", localStorage.getItem('access'));
+
+        const myRequest = new Request("files/upload.php",{
+            method : "POST",
+            body : data
+        });
+
+        const myPromisse = new Promise((resolve,reject) =>{
+            fetch(myRequest)
+            .then(function (response){
+                if (response.status === 200) { 
+                    resolve(response.text());
+                    btnClose.click();
+                } else { 
+                    reject(new Error("Houve algum erro na comunicação com o servidor"));                    
+                } 
+            });
+        }); 
+
+        myPromisse.then((resolve)=>{
+            if(resolve == 1){
+
+                filename = document.querySelector('#up_file').value.split('\\')
+                filename = filename[filename.length-1] 
+
+                const params = new Object;        
+                    params.category = localStorage.getItem("frame");
+                    params.content = 'pic';
+                    params.background = document.querySelector('#cmbColor').value;
+                    params.filename = filename;
+                    params.justify = document.querySelector('#cmbJustify').value;
+                    params.font = document.querySelector('#cmbFont').value;
+
+                const myPromisse = queryDB(params,3)
+
+            }else{
+                console.log('NO')
+            }
+
+            btnClose.click();
+
+//            console.log(resolve)
+
+        })
+    })
 
 
 

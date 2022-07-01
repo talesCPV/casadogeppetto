@@ -78,12 +78,13 @@ String.prototype.getHash = function(S){
     }
 
     document.querySelector('#btnLogin').addEventListener('click',()=>{
+
         let user = document.querySelector('#edtUser').value
         let hash = document.querySelector('#edtPass').value.getHash(30)
 
         const params = new Object;
             params.username = user;
-            params.pass = hash;
+            params.hash = hash;
 
         const data = new URLSearchParams();        
         data.append("cod", 0);
@@ -111,22 +112,23 @@ String.prototype.getHash = function(S){
         });
 
         myPromisse.then((resolve)=>{
+            console.log(resolve)
             if(resolve.trim() != ""){
                 const json = JSON.parse(resolve);
-                console.log(json);
-
-
+                
                 localStorage.setItem("id",json[0].id);
                 localStorage.setItem("username",json[0].username);
                 localStorage.setItem("nome",json[0].nome);
                 localStorage.setItem("access",json[0].access);
-//                window.open("dashboard.html","_self")
-                
+                loadContent(localStorage.getItem("frame"))
             }else{
                 alert("Usuário ou senha inválido!");
                 localStorage.clear();
-            }        
-
+                
+            }     
+            menu_login();   
+            loadContent("photo");
+            btnClose.click();
         });
 
 

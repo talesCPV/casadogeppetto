@@ -1,18 +1,21 @@
 <?php
 
-  if (IsSet($_POST["file"]) && IsSet($_POST["filename"])){  
+  $out = 0;
 
-    $file = $_POST["file"];
-    $filename = '../fotos/'.$_POST["filename"];
-    $data = base64_decode($file);
-
-    file_put_contents($filename, $data);
-    return true;
-
-  }else{
-
-    return false;
-    
+  if (IsSet($_FILES["up_file"])){ 
+   
+    $file = $_FILES["up_file"]["tmp_name"];
+    $filename = $_FILES["up_file"]["name"];
+    $url = getcwd().'/pictures/'.$filename;
+    $access = $_POST["hdnAccess"];
+  
+    if (file_exists($file) && $access==10){
+      if(move_uploaded_file($file, $url)){
+        $out = 1;
+      }
+    }
   }
+
+  print $out;
 
 ?>
