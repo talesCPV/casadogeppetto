@@ -195,7 +195,7 @@
             btn.innerHTML = 'E'
             btn.addEventListener('click',()=>{
                 console.log(frm)
-                openHTML('edit_frame.html','pop-up','Edição')
+                open = openHTML('edit_frame.html','pop-up','Edição',frm) 
             })
             btn.data = frm
 
@@ -237,29 +237,31 @@
 
     }
 
-    function openHTML(template,where="screen",label="", data=""){
+    async function openHTML(template,where="screen",label="", data=""){
         if(template.trim() != ""){
-            fetch( "templates/"+template)
-            .then( stream => stream.text())
-            .then( text => {
-                const temp = document.createElement('div');
-                temp.innerHTML = text;
-                const body = temp.getElementsByTagName('template')[0];
-                const script = temp.getElementsByTagName('script')[0];
+            return await new Promise((resolve,reject) =>{
+                fetch( "templates/"+template)
+                .then( stream => stream.text())
+                .then( text => {
+                    const temp = document.createElement('div');
+                    temp.innerHTML = text;
+                    const body = temp.getElementsByTagName('template')[0];
+                    const script = temp.getElementsByTagName('script')[0];
 
-                if(body != undefined){
-                    if(where == "self"){
-                        screen.innerHTML = body.innerHTML;
-                    }else if(where == "pop-up"){
-                        modal_text.innerHTML = body.innerHTML;
-                        modal_title.innerHTML = label;
-                        modal.style.display = "block";
-                    }else{
-                        document.getElementById(where).innerHTML = body.innerHTML;
+                    if(body != undefined){
+                        if(where == "self"){
+                            screen.innerHTML = body.innerHTML;
+                        }else if(where == "pop-up"){
+                            modal_text.innerHTML = body.innerHTML;
+                            modal_title.innerHTML = label;
+                            modal.style.display = "block";
+                        }else{
+                            document.getElementById(where).innerHTML = body.innerHTML;
+                        }
+                        modal_data.value = data;
+                        eval(script.innerHTML);
                     }
-                    modal_data.value = data;
-                    eval(script.innerHTML);
-                }
+                }); 
             }); 
         }
     }

@@ -13,7 +13,6 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-
         }
 
         .frm-frame *{
@@ -26,38 +25,26 @@
             font-size: 12px;
         }
 
-        #showFoto{display: block;}
-        #showTexto{display: none;}
-
     </style>
 
     <div class="frm-frame">
        
-        Tipo de quadro
-        <select id="cmbTipo">
-            <option value="0" selected>Foto</option>
-            <option value="1">Texto</option>
-        </select>
+        Imagem
+        <form id="frmUpload" action="files/upload.php" method='post' enctype='multipart/form-data'>
+            <input  name="up_file" id="up_file"      type="file">
+            <input  type="hidden"  id="hdnAccess"    name="hdnAccess"    value="">
+        </form>
+
         Cor de Fundo
         <input id="cmbColor" type="color" value="#f0a70a" >
+            
+        Fonte
+        <input  id="cmbFont" type="number" value="15" min="8" max="35" maxlength="255" >
 
-            <div id="showFoto">
-                <form id="frmUpload" action="files/upload.php" method='post' enctype='multipart/form-data'>
-                    <input  name="up_file" id="up_file"      type="file">
-                    <input  type="hidden"  id="hdnAccess"    name="hdnAccess"    value="">
-                    <input  type="hidden"  id="hdnColor"     name="hdnColor"     value="">
-                    <input  type="hidden"  id="hdnCategory"  name="hdnCategory"  value="">
-                </form>
-                <button  id="btnUpload"> Upload </button>
-                
-            </div>
-
-        <div id="showTexto">
-            Tamanho da Fonte
-            <input  id="cmbFont" type="number" value="15" min="8" max="35" >
-            <textarea id="edtTexto" cols="40" rows="10"></textarea>
-            <button id="btnAdd"> Adicionar </button>
-        </div>
+        Texto
+        <textarea id="edtTexto" cols="40" rows="5"></textarea>
+        <button id="btnAdd"> Salvar </button>
+        <button id="btnDel"> Deletar </button>
         
     </div>
 
@@ -65,49 +52,18 @@
 
 <script>        
 
-    document.querySelector('#cmbTipo').addEventListener('change',()=>{
+    document.querySelector('#cmbColor').value = data.background
+    document.querySelector('#cmbFont').value = data.font
+    document.querySelector('#edtTexto').value = data.text
 
-        if(document.querySelector('#cmbTipo').value == 0){
-            document.querySelector('#showFoto').style = 'display: block;'
-            document.querySelector('#showTexto').style = 'display: none;'            
-        }else{
-            document.querySelector('#showFoto').style = 'display: none;'
-            document.querySelector('#showTexto').style = 'display: block;'            
-        }
-
-    })
 
     document.querySelector('#btnAdd').addEventListener('click',()=>{
 
-        const params = new Object;        
-            params.category = localStorage.getItem("frame");
-            params.content = 'txt';
-            params.background = document.querySelector('#cmbColor').value;
-            params.font = document.querySelector('#cmbFont').value;
-            params.text = document.querySelector('#edtTexto').value;
-
-        const myPromisse = queryDB(params,3)
-        
-        myPromisse.then((response)=>{
-            loadContent(localStorage.getItem("frame"));
-        })
-
-
-        btnClose.click();
-    })
-
-    
-    document.querySelector('#btnUpload').addEventListener('click',()=>{
-
         document.querySelector('#hdnAccess').value = localStorage.getItem('access');
-        document.querySelector('#hdnColor').value  = document.querySelector('#cmbColor').value;
-        document.querySelector('#hdnCategory').value  = localStorage.getItem("frame");
 
         const data = new FormData();        
             data.append("up_file",  document.querySelector('#up_file').files[0]);
             data.append("hdnAccess", localStorage.getItem('access'));
-            data.append("hdnColor", localStorage.getItem('access'));
-            data.append("hdnCategory", localStorage.getItem('access'));
 
         const myRequest = new Request("files/upload.php",{
             method : "POST",
@@ -127,33 +83,32 @@
         }); 
 
         myPromisse.then((resolve)=>{
-        
+
+            const params = new Object;        
+            params.category = localStorage.getItem("frame");
+            params.background = document.querySelector('#cmbColor').value;
             if(resolve == 1){
-
+                params.content = 'pic';
                 filename = document.querySelector('#up_file').value.split('\\')
-                filename = filename[filename.length-1] 
+                params.filename = filename[filename.length-1] 
 
-                const params = new Object;        
-                    params.category = localStorage.getItem("frame");
-                    params.content = 'pic';
-                    params.background = document.querySelector('#cmbColor').value;
-                    params.filename = filename;
-                    params.font = document.querySelector('#cmbFont').value;
-
-                const myPromisse = queryDB(params,3)
-
-                myPromisse.then(()=>{
-                    loadContent(localStorage.getItem("frame"));
-                })
+            }else{
+                params.content = 'txt';
+                params.filename = ''
             }
+            params.font = document.querySelector('#cmbFont').value;
+            params.text = document.querySelector('#edtTexto').value;
+            params.id = data.id;
 
+            const myPromisse = queryDB(params,3)
+
+            myPromisse.then(()=>{
+                loadContent(localStorage.getItem("frame"));
+            })
+            
             btnClose.click();
-
-//            console.log(resolve)
 
         })
     })
-
-
 
 </script>    

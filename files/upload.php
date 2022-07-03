@@ -2,7 +2,7 @@
 
   $out = 0;
 
-  if (IsSet($_FILES["up_file"])){ 
+  if (IsSet($_FILES["up_file"]) && IsSet($_POST["hdnAccess"])){ 
    
     $file = $_FILES["up_file"]["tmp_name"];
     $filename = $_FILES["up_file"]["name"];
