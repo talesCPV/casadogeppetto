@@ -43,7 +43,7 @@
 
         Texto
         <textarea id="edtTexto" cols="40" rows="5"></textarea>
-        <button id="btnAdd"> Salvar </button>
+        <button id="btnSave"> Salvar </button>
         <button id="btnDel"> Deletar </button>
         
     </div>
@@ -57,17 +57,17 @@
     document.querySelector('#edtTexto').value = data.text
 
 
-    document.querySelector('#btnAdd').addEventListener('click',()=>{
+    document.querySelector('#btnSave').addEventListener('click',()=>{
 
         document.querySelector('#hdnAccess').value = localStorage.getItem('access');
 
-        const data = new FormData();        
-            data.append("up_file",  document.querySelector('#up_file').files[0]);
-            data.append("hdnAccess", localStorage.getItem('access'));
+        const up_data = new FormData();        
+            up_data.append("up_file",  document.querySelector('#up_file').files[0]);
+            up_data.append("hdnAccess", localStorage.getItem('access'));
 
         const myRequest = new Request("files/upload.php",{
             method : "POST",
-            body : data
+            body : up_data
         });
 
         const myPromisse = new Promise((resolve,reject) =>{
@@ -100,7 +100,7 @@
             params.text = document.querySelector('#edtTexto').value;
             params.id = data.id;
 
-            const myPromisse = queryDB(params,3)
+            const myPromisse = queryDB(params,4)
 
             myPromisse.then(()=>{
                 loadContent(localStorage.getItem("frame"));
@@ -110,5 +110,19 @@
 
         })
     })
+
+    document.querySelector('#btnDel').addEventListener('click',()=>{
+        const params = new Object;
+        params.id = data.id;
+        const myPromisse = queryDB(params,5)
+
+        myPromisse.then(()=>{
+            loadContent(localStorage.getItem("frame"));
+        })
+
+        btnClose.click();
+
+    })
+
 
 </script>    

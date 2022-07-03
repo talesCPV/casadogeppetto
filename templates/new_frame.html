@@ -55,13 +55,13 @@ alert(3)
 
         document.querySelector('#hdnAccess').value = localStorage.getItem('access');
 
-        const data = new FormData();        
-            data.append("up_file",  document.querySelector('#up_file').files[0]);
-            data.append("hdnAccess", localStorage.getItem('access'));
+        const up_data = new FormData();        
+            up_data.append("up_file",  document.querySelector('#up_file').files[0]);
+            up_data.append("hdnAccess", localStorage.getItem('access'));
 
         const myRequest = new Request("files/upload.php",{
             method : "POST",
-            body : data
+            body : up_data
         });
 
         const myPromisse = new Promise((resolve,reject) =>{
