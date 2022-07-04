@@ -43,14 +43,21 @@
 
         Texto
         <textarea id="edtTexto" cols="40" rows="5"></textarea>
-        <button id="btnAdd"> Adicionar </button>
+        <button id="btnSave"> Salvar </button>
+        <button id="btnDel"> Deletar </button>
         
     </div>
 
 </template>
 
 <script>        
-    document.querySelector('#btnAdd').addEventListener('click',()=>{
+
+    document.querySelector('#cmbColor').value = data.background
+    document.querySelector('#cmbFont').value = data.font
+    document.querySelector('#edtTexto').value = data.text
+
+
+    document.querySelector('#btnSave').addEventListener('click',()=>{
 
         document.querySelector('#hdnAccess').value = localStorage.getItem('access');
 
@@ -91,8 +98,9 @@
             }
             params.font = document.querySelector('#cmbFont').value;
             params.text = document.querySelector('#edtTexto').value;
+            params.id = data.id;
 
-            const myPromisse = queryDB(params,3)
+            const myPromisse = queryDB(params,4)
 
             myPromisse.then(()=>{
                 loadContent(localStorage.getItem("frame"));
@@ -102,5 +110,19 @@
 
         })
     })
+
+    document.querySelector('#btnDel').addEventListener('click',()=>{
+        const params = new Object;
+        params.id = data.id;
+        const myPromisse = queryDB(params,5)
+
+        myPromisse.then(()=>{
+            loadContent(localStorage.getItem("frame"));
+        })
+
+        btnClose.click();
+
+    })
+
 
 </script>    

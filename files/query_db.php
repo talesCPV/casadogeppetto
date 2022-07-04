@@ -5,6 +5,8 @@
          "1" => "INSERT INTO tb_usuario VALUES ('a','b','c');",
          "2" => 'SELECT * FROM tb_frames WHERE y00="x00" AND y01<="x01" ORDER BY id DESC;',
          "3" => 'INSERT INTO tb_frames (y00, y01, y02, y03, y04, y05) VALUES ("x00", "x01", "x02", "x03", "x04", "x05");',
+         "4" => 'UPDATE tb_frames SET y00="x00", y01="x01", y02="x02", y03="x03", y04="x04", y05="x05" WHERE y06="x06";',
+         "5" => 'DELETE FROM tb_frames  WHERE y00="x00";',
               
     );
 

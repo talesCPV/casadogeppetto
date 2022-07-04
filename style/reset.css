@@ -5,6 +5,8 @@
         box-sizing: border-box;
     }
     body{
+        position: relative;
+        z-index: -2;
         background-color: var(--white);
         font-family: "Poppins", sans-serif;
     }
@@ -23,6 +25,10 @@
     ul{
         list-style: none;
         width: 100%;
+    }
+
+    li{
+        list-style: none;
     }
 
     button{

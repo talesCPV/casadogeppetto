@@ -4,6 +4,7 @@
         background-color: var(--black);
         box-shadow: 1px 1px 5px 0px var(--gray);
 */
+
         background-color: var(--white);
         display: flex;
         flex-direction: row;
@@ -137,6 +138,14 @@
 
         .hamb{
             display: none;
+        }
+
+        .social-menu{
+            display: none;
+        }
+
+        .social *{
+            display: flex !important;
         }
 
     }
