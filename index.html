@@ -112,13 +112,13 @@
         <nav class="nav">
             <ul class="menu">
                 <li id="menu-login"  > Login      </li>
-                <li id="menu-agenda"> Agende     </li>
+                <li id="menu-agenda" > Agende     </li>
                 <li class="menu-item"> Eventos    </li>
                 <li class="menu-item"> Parceiros  </li>
                 <li class="menu-item"> Brinquedos </li>
                 <div class="social-menu">
-                    <li> <a href="https://api.whatsapp.com/send?phone=5512982008855"><img class="icon" src="assets/whatsapp.png"> </a> </li>
-                    <li> <a href="https://www.instagram.com/casadogeppetto/"><img class="icon" src="assets/instagram.png"> </a></li>
+                    <li> <a href="https://api.whatsapp.com/send?phone=5512982008855"><img class="icon" src="assets/whatsapp.png" > </a> </li>
+                    <li> <a href="https://www.instagram.com/casadogeppetto/">        <img class="icon" src="assets/instagram.png"> </a> </li>
                 </div>
             </ul>
          </nav>
@@ -130,14 +130,7 @@
     </header>
     <!-- Main content -->
     <main>
-        <article id="form-for-frames">
-
-            <div class="frame"></div>
-            <div class="frame"></div>
-
-
-        </article>
-
+        <article id="form-for-frames"></article>
     </main>
 
     <!-- The Modal -->
@@ -158,5 +151,21 @@
 </body>
 
 <script src="files/main.js"></script>
+
+<script>
+    function createMenu(){
+        let access = localStorage.getItem('access')
+        const menu = document.querySelector('.menu')
+        const social = `
+            <div class="social-menu">
+                <li> <a href="https://api.whatsapp.com/send?phone=5512982008855"><img class="icon" src="assets/whatsapp.png" > </a> </li>
+                <li> <a href="https://www.instagram.com/casadogeppetto/">        <img class="icon" src="assets/instagram.png"> </a> </li>
+            </div>`
+
+
+    }
+
+</script>
+
 
 </html>
