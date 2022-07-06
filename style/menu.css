@@ -140,4 +140,12 @@
             display: none;
         }
 
+        .social-menu{
+            display: none;
+        }
+
+        .social *{
+            display: flex !important;
+        }
+
     }

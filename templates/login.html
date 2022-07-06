@@ -128,11 +128,10 @@ String.prototype.getHash = function(S){
             menu_login();   
             loadContent("photo");
             btnClose.click();
-            closeMenu();
         });
 
-
-//        console.log( document.querySelector('#edtPass').value.getHash(30) )
+        closeMenu()
+        loadContent(localStorage.getItem("frame"))
 
     })
 
