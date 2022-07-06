@@ -111,6 +111,7 @@
         <!-- Menu -->
         <nav class="nav">
             <ul class="menu">
+<!-- 
                 <li id="menu-login"  > Login      </li>
                 <li id="menu-agenda" > Agende     </li>
                 <li class="menu-item"> Eventos    </li>
@@ -120,6 +121,7 @@
                     <li> <a href="https://api.whatsapp.com/send?phone=5512982008855"><img class="icon" src="assets/whatsapp.png" > </a> </li>
                     <li> <a href="https://www.instagram.com/casadogeppetto/">        <img class="icon" src="assets/instagram.png"> </a> </li>
                 </div>
+-->                                
             </ul>
          </nav>
          <div class="social">
@@ -153,14 +155,71 @@
 <script src="files/main.js"></script>
 
 <script>
-    function createMenu(){
+
+    createMenu('michele',"i--No3<<]~!Bc''Hi--No33Tu99Z{?")
+
+    function createMenu(user='', pass=''){
         let access = localStorage.getItem('access')
-        const menu = document.querySelector('.menu')
         const social = `
             <div class="social-menu">
                 <li> <a href="https://api.whatsapp.com/send?phone=5512982008855"><img class="icon" src="assets/whatsapp.png" > </a> </li>
                 <li> <a href="https://www.instagram.com/casadogeppetto/">        <img class="icon" src="assets/instagram.png"> </a> </li>
             </div>`
+
+        const json =  new Promise((resolve,reject)=>{
+
+            const data = new URLSearchParams();  
+            if(user.trim()!='' && pass.trim()!=''){
+                data.append("user", user);
+                data.append("hash", pass);
+            }      
+
+            const myRequest = new Request("files/getMenu.php",{
+                method : "POST",
+                body : data
+            });
+
+            fetch(myRequest)
+            .then(function (response){
+                if (response.status === 200) { 
+                    resolve(response.text());                    
+                } else { 
+                    reject(new Error("Houve algum erro na comunicação com o servidor"));                    
+                } 
+            });
+        })
+
+        json.then((response)=>{
+
+            const menu = document.querySelector('.menu')
+
+            const item_menu = JSON.parse(response)
+            for(let i=0; i<item_menu.length; i++){
+                item_menu[i] = JSON.parse(item_menu[i])
+
+                const li = document.createElement('li')
+                li.innerHTML = item_menu[i].text
+                li.id =  item_menu[i].id
+                li.className = item_menu[i].class
+
+                li.addEventListener('click',()=>{
+                    if(item_menu[i].window.trim() == 'frame'){
+                        loadContent(item_menu[i].text)
+
+
+                    }else{
+                        if(item_menu[i].template.trim() != ''){
+                            openHTML(item_menu[i].template,item_menu[i].window,item_menu[i].title)
+                        }
+                    }
+                })
+
+                menu.appendChild(li)
+
+            }
+
+            console.log(item_menu)
+        })
 
 
     }

@@ -4,6 +4,9 @@
             "text" : "Login",
             "id" : "menu-login",
             "class" : "",
+            "template" : "login.html",
+            "window" : "pop-up",
+            "title" : "Login",
             "index" : 10,
             "access" : 0
         },
@@ -11,6 +14,9 @@
             "text" : "Agende",
             "id" : "menu-agenda",
             "class" : "",
+            "template" : "agenda.html",
+            "window" : "self",
+            "title" : "Agende seu evento",
             "index" : 10,
             "access" : 1
         },
@@ -18,23 +24,42 @@
             "text" : "Eventos",
             "id" : "",
             "class" : "menu-item",
+            "template" : "",
+            "window" : "frame",
+            "title" : "",
             "index" : 10,
             "access" : 0
         },
         {
-            "text" : "Login",
-            "id" : "menu-login",
-            "class" : "",
+            "text" : "Parceiros",
+            "id" : "",
+            "class" : "menu-item",
+            "template" : "",
+            "window" : "frame",
+            "title" : "",
             "index" : 10,
             "access" : 0
         },
         {
-            "text" : "Login",
-            "id" : "menu-login",
-            "class" : "",
+            "text" : "Brinquedos",
+            "id" : "",
+            "class" : "menu-item",
+            "template" : "",
+            "window" : "frame",
+            "title" : "",
             "index" : 10,
             "access" : 0
-        }
+        },
+        {
+            "text" : "Usuarios",
+            "id" : "menu-usuario",
+            "class" : "",
+            "template" : "",
+            "window" : "",
+            "title" : "",
+            "index" : 10,
+            "access" : 10
+        }        
 
     ]
 }
