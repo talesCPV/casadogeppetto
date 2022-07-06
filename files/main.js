@@ -1,3 +1,37 @@
+/* HASH */
+
+String.prototype.getHash = function(S){
+    let weigth = 0
+    let hash = ''
+    let str = this.valueOf()
+
+    function getRange(N){ // keeps caracters under ASCII 33 & 126
+        while (N > 126 || N < 33){
+            N -= 126
+            N < 33 ? N += 33 : N
+            N == 127 ? N++ : 0
+        }
+        return N
+    }
+
+    for (i = 0; i < str.length; i++) {
+        weigth += str.charCodeAt(i) * 5
+    }
+
+    while(str.length < S){
+        str += String.fromCharCode(str.length + 33)
+    }
+
+    for (i = 0; i < str.length; i++) {
+        chr = getRange(weigth * str.charCodeAt(i))
+        hash += String.fromCharCode(chr)  
+    }
+
+    return hash;
+}
+
+/* VARIABLES */
+
 var screen = document.querySelector("#form-for-frames");
 var modal = document.getElementById("myModal");
 var modal_title = document.getElementById("modal-title");
@@ -5,7 +39,7 @@ var modal_text = document.querySelector(".modal-text");
 var modal_data = document.querySelector(".modal-data");
 var btnClose = document.querySelector(".close");
 
-menu_login()
+//menu_login()
 
 document.querySelector('.close').addEventListener('click',()=>{
     modal.style.display = "none";
@@ -156,6 +190,7 @@ function queryDB(params,cod){
     });      
 }
 
+/*
 document.querySelector('#menu-agenda').addEventListener('click',()=>{
 
     openHTML('agenda.html','self','AGENDA')
@@ -173,11 +208,4 @@ document.querySelector('#menu-login').addEventListener('click',()=>{
     menu_login()
 
 })
-
-function menu_login(){
-    if(localStorage.getItem('access') != null){
-        document.querySelector('#menu-login').innerHTML = 'Logout'
-    }else{
-        document.querySelector('#menu-login').innerHTML = 'Login'
-    }
-}
+*/

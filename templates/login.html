@@ -47,35 +47,24 @@
 
 <script>        
 
-String.prototype.getHash = function(S){
-        let weigth = 0
-        let hash = ''
-        let str = this.valueOf()
+    const label = document.querySelector('#menu-login')
+//    localStorage.clear();
+    menu_login()
 
-        function getRange(N){ // keeps caracters under ASCII 33 & 126
-            while (N > 126 || N < 33){
-                N -= 126
-                N < 33 ? N += 33 : N
-                N == 127 ? N++ : 0
-            }
-            return N
+
+    function menu_login(){
+        if(localStorage.getItem('access') == null){
+            label.innerHTML = 'Logout'
+        }else{
+            label.innerHTML = 'Login'
+            const frame = localStorage.getItem("frame")
+            localStorage.clear(); 
+            localStorage.setItem('frame',frame)
+            loadContent(frame)
+            btnClose.click();
         }
-
-        for (i = 0; i < str.length; i++) {
-            weigth += str.charCodeAt(i) * 5
-        }
-
-        while(str.length < S){
-            str += String.fromCharCode(str.length + 33)
-        }
-
-        for (i = 0; i < str.length; i++) {
-            chr = getRange(weigth * str.charCodeAt(i))
-            hash += String.fromCharCode(chr)  
-        }
-
-        return hash;
     }
+
 
     document.querySelector('#btnLogin').addEventListener('click',()=>{
 
@@ -125,13 +114,12 @@ String.prototype.getHash = function(S){
                 alert("Usuário ou senha inválido!");
                 localStorage.clear();                
             }     
-            menu_login();   
-            loadContent("photo");
+            label.innerHTML = 'Logout'  
             btnClose.click();
         });
 
         closeMenu()
-        loadContent(localStorage.getItem("frame"))
+        loadContent(localStorage.getItem("frame")) 
 
     })
 

@@ -206,11 +206,8 @@
                     if(item_menu[i].window.trim() == 'frame'){
                         loadContent(item_menu[i].text)
 
-
                     }else{
-                        if(item_menu[i].template.trim() != ''){
-                            openHTML(item_menu[i].template,item_menu[i].window,item_menu[i].title)
-                        }
+                        openHTML(item_menu[i].template,item_menu[i].window,item_menu[i].title)
                     }
                 })
 
