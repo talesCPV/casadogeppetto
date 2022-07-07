@@ -54,9 +54,9 @@
             "text" : "Usuarios",
             "id" : "menu-usuario",
             "class" : "",
-            "template" : "",
-            "window" : "",
-            "title" : "",
+            "template" : "edt_user.html",
+            "window" : "self",
+            "title" : "Cadastro de Usuario",
             "index" : 10,
             "access" : 10
         }        

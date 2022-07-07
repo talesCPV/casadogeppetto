@@ -156,9 +156,16 @@
 
 <script>
 
-    createMenu('michele',"i--No3<<]~!Bc''Hi--No33Tu99Z{?")
 
-    function createMenu(user='', pass=''){
+    createMenu()
+
+    function createMenu(){
+        let user = ''
+        let pass = ''
+        if(localStorage.getItem('username') != null){
+            user = localStorage.getItem('username')
+            pass = localStorage.getItem('hash')
+        }
         let access = localStorage.getItem('access')
         const social = `
             <div class="social-menu">
@@ -192,6 +199,7 @@
         json.then((response)=>{
 
             const menu = document.querySelector('.menu')
+            menu.innerHTML = social
 
             const item_menu = JSON.parse(response)
             for(let i=0; i<item_menu.length; i++){
@@ -199,6 +207,11 @@
 
                 const li = document.createElement('li')
                 li.innerHTML = item_menu[i].text
+                if(item_menu[i].text == 'Login' && localStorage.getItem('access') > 0  ){
+                    li.innerHTML = 'Logout'
+                }
+
+
                 li.id =  item_menu[i].id
                 li.className = item_menu[i].class
 

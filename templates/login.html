@@ -53,15 +53,14 @@
 
 
     function menu_login(){
-        if(localStorage.getItem('access') == null){
-            label.innerHTML = 'Logout'
-        }else{
+        if(localStorage.getItem('access') != null){
             label.innerHTML = 'Login'
             const frame = localStorage.getItem("frame")
             localStorage.clear(); 
             localStorage.setItem('frame',frame)
             loadContent(frame)
             btnClose.click();
+            createMenu()
         }
     }
 
@@ -107,6 +106,7 @@
                 
                 localStorage.setItem("id",json[0].id);
                 localStorage.setItem("username",json[0].username);
+                localStorage.setItem("hash",json[0].hash);
                 localStorage.setItem("nome",json[0].nome);
                 localStorage.setItem("access",json[0].access);
                 loadContent(localStorage.getItem("frame"))
@@ -114,8 +114,9 @@
                 alert("Usuário ou senha inválido!");
                 localStorage.clear();                
             }     
-            label.innerHTML = 'Logout'  
             btnClose.click();
+            createMenu()
+
         });
 
         closeMenu()
