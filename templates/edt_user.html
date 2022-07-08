@@ -44,6 +44,53 @@
 
 <script>        
 
+    function viewUsers(){
+
+        const params = new Object;
+            params.hash = localStorage.getItem("hash");
+
+        const myPromisse = queryDB(params,6)
+
+        myPromisse.then((resolve)=>{
+
+            if(resolve.trim() != ""){
+                function addTD(val){
+                    const td = document.createElement('td')
+                    td.innerHTML = val
+                    return td
+                }
+
+
+                const json = JSON.parse(resolve);
+
+                const tab = document.querySelector('#tblUser')
+                for(let i=0; i<json.length; i++){
+                    const tr = document.createElement('tr')
+                    tr.appendChild(addTD(json[i].id))
+                    tr.appendChild(addTD(json[i].nome))
+                    tr.appendChild(addTD(json[i].username))
+                    tr.appendChild(addTD(json[i].email))
+                    tr.appendChild(addTD(json[i].cel))
+                    tr.appendChild(addTD(json[i].access))
+                    tr.appendChild(addTD(json[i].hash))
+                    tab.appendChild(tr)
+
+                }
+
+
+                console.log(json)
+
+
+            }     
+
+        });
+
+
+    }
+
+
+    viewUsers()
+
     document.querySelector('#btnNovo').addEventListener('click',()=>{
 
         alert('Novo!!!')

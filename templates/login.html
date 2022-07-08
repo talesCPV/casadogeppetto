@@ -74,30 +74,7 @@
             params.username = user;
             params.hash = hash;
 
-        const data = new URLSearchParams();        
-        data.append("cod", 0);
-        data.append("token", '');
-        data.append("params", JSON.stringify(params));
-
-        const myRequest = new Request("files/query_db.php",{
-            method : "POST",
-            body : data
-        });
-
-        const myPromisse = new Promise((resolve,reject) =>{
-
-            fetch(myRequest)
-            .then(function (response){
-
-                if (response.status === 200) { 
-                    resolve(response.text());
-                } else { 
-                    reject(new Error("Houve algum erro na comunicação com o servidor"));
-                } 
-
-            });            
-
-        });
+        const myPromisse = queryDB(params,0)
 
         myPromisse.then((resolve)=>{
 
