@@ -47,35 +47,23 @@
 
 <script>        
 
-String.prototype.getHash = function(S){
-        let weigth = 0
-        let hash = ''
-        let str = this.valueOf()
+    const label = document.querySelector('#menu-login')
+//    localStorage.clear();
+    menu_login()
 
-        function getRange(N){ // keeps caracters under ASCII 33 & 126
-            while (N > 126 || N < 33){
-                N -= 126
-                N < 33 ? N += 33 : N
-                N == 127 ? N++ : 0
-            }
-            return N
+
+    function menu_login(){
+        if(localStorage.getItem('access') != null){
+            label.innerHTML = 'Login'
+            const frame = localStorage.getItem("frame")
+            localStorage.clear(); 
+            localStorage.setItem('frame',frame)
+            loadContent(frame)
+            btnClose.click();
+            createMenu()
         }
-
-        for (i = 0; i < str.length; i++) {
-            weigth += str.charCodeAt(i) * 5
-        }
-
-        while(str.length < S){
-            str += String.fromCharCode(str.length + 33)
-        }
-
-        for (i = 0; i < str.length; i++) {
-            chr = getRange(weigth * str.charCodeAt(i))
-            hash += String.fromCharCode(chr)  
-        }
-
-        return hash;
     }
+
 
     document.querySelector('#btnLogin').addEventListener('click',()=>{
 
@@ -86,30 +74,7 @@ String.prototype.getHash = function(S){
             params.username = user;
             params.hash = hash;
 
-        const data = new URLSearchParams();        
-        data.append("cod", 0);
-        data.append("token", '');
-        data.append("params", JSON.stringify(params));
-
-        const myRequest = new Request("files/query_db.php",{
-            method : "POST",
-            body : data
-        });
-
-        const myPromisse = new Promise((resolve,reject) =>{
-
-            fetch(myRequest)
-            .then(function (response){
-
-                if (response.status === 200) { 
-                    resolve(response.text());
-                } else { 
-                    reject(new Error("Houve algum erro na comunicação com o servidor"));
-                } 
-
-            });            
-
-        });
+        const myPromisse = queryDB(params,0)
 
         myPromisse.then((resolve)=>{
 
@@ -118,6 +83,7 @@ String.prototype.getHash = function(S){
                 
                 localStorage.setItem("id",json[0].id);
                 localStorage.setItem("username",json[0].username);
+                localStorage.setItem("hash",json[0].hash);
                 localStorage.setItem("nome",json[0].nome);
                 localStorage.setItem("access",json[0].access);
                 loadContent(localStorage.getItem("frame"))
@@ -125,13 +91,13 @@ String.prototype.getHash = function(S){
                 alert("Usuário ou senha inválido!");
                 localStorage.clear();                
             }     
-            menu_login();   
-            loadContent("photo");
             btnClose.click();
+            createMenu()
+
         });
 
         closeMenu()
-        loadContent(localStorage.getItem("frame"))
+        loadContent(localStorage.getItem("frame")) 
 
     })
 

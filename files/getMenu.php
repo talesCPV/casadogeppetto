@@ -40,6 +40,9 @@
                 $obj->id = $json->menu[$i]->id;
                 $obj->class = $json->menu[$i]->class;
                 $obj->index = $json->menu[$i]->index;
+                $obj->template = $json->menu[$i]->template;
+                $obj->window = $json->menu[$i]->window;
+                $obj->title = $json->menu[$i]->title;
 
                 array_push($out, json_encode($obj));
             }            
