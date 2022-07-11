@@ -50,7 +50,7 @@ CREATE TABLE tb_frames(
 
 CREATE TABLE tb_brinquedo(
     id int(11) NOT NULL AUTO_INCREMENT,
-    category varchar(12) DEFAULT NULL,
+    tamanho varchar(1) DEFAULT "M",
 	nome varchar(50) NOT NULL,
     img varchar(50) DEFAULT NULL,
     qtd int(11) DEFAULT 1,

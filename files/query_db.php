@@ -10,7 +10,7 @@
          "6" => 'SELECT * FROM tb_usuario as A  WHERE(SELECT B.access from tb_usuario as B WHERE hash = "x00") = 10;',
          "7" => 'UPDATE tb_usuario SET y00="x00", y01="x01", y02="x02", y03="x03", y04="x04", y05="x05" WHERE y06="x06";',
          "8" => 'DELETE FROM tb_usuario WHERE y00="x00";',
-         "9" => 'INSERT INTO tb_brinquedo (y00, y01, y02, y03) VALUES ("x00", "x01", "x02", "x03");',
+         "9" => 'INSERT INTO tb_brinquedo (y00, y01, y02, y03, y04) VALUES ("x00", "x01", "x02", "x03", "x04");',
               
     );
 

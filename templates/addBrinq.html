@@ -23,6 +23,12 @@
         <input type="text"     id="edtNome" placeholder="Nome" maxlength="50">
         Imagem
         <input  name="up_file" id="up_file" type="file" accept=".jpg,.jpeg,.png">
+        Tamanho
+        <select id="cmbTamanho">
+            <option value="P">Pequeno</option>
+            <option value="M" selected>Médio</option>
+            <option value="G">Grande</option>
+        </select>
         Qtd.
         <input type="text"     id="edtQtd" placeholder="Quantidade" value="1">
         Sobre...
@@ -39,6 +45,7 @@
 
     if(modal_data != ''){
         document.querySelector('#edtNome').value = modal_data.nome
+        document.querySelector('#cmbTamanho').value = modal_data.tamanho
         document.querySelector('#edtQtd').value = modal_data.qtd
         document.querySelector('#edtSobre').value = modal_data.sobre
         document.querySelector('#btnNovo').innerHTML = 'Salvar'
@@ -65,10 +72,11 @@
 // salvar DB aqui                    
 
                 const params = new Object;
-                    params.nome = ''
-                    params.img = ''
-                    params.qtd = ''
-                    params.sobre = ''
+                    params.nome = document.querySelector('#edtNome').value
+                    params.img = document.querySelector('#up_file').value.split('\\')[2]
+                    params.tamanho = document.querySelector('#cmbTamanho').value
+                    params.qtd = document.querySelector('#edtQtd').value
+                    params.sobre = document.querySelector('#edtSobre').value
 
                 const myPM_2 = queryDB(params,9)
                 myPM_2.then((resolve)=>{
