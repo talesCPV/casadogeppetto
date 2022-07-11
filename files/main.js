@@ -36,7 +36,7 @@ var screen = document.querySelector("#form-for-frames");
 var modal = document.getElementById("myModal");
 var modal_title = document.getElementById("modal-title");
 var modal_text = document.querySelector(".modal-text");
-var modal_data = document.querySelector(".modal-data");
+var modal_data;
 var btnClose = document.querySelector(".close");
 
 //menu_login()
@@ -139,7 +139,7 @@ function createFrame(frm){
 
 }
 
-async function openHTML(template,where="screen",label="", data=""){
+async function openHTML(template,where="self",label="", data=""){
     if(template.trim() != ""){
         return await new Promise((resolve,reject) =>{
             fetch( "templates/"+template)
@@ -160,7 +160,7 @@ async function openHTML(template,where="screen",label="", data=""){
                     }else{
                         document.getElementById(where).innerHTML = body.innerHTML;
                     }
-                    modal_data.value = data;
+                    modal_data = data;
                     eval(script.innerHTML);
                 }
             }); 
@@ -190,22 +190,59 @@ function queryDB(params,cod){
     });      
 }
 
-/*
-document.querySelector('#menu-agenda').addEventListener('click',()=>{
+function number(campo){
+    var ok_chr = new Array('1','2','3','4','5','6','7','8','9','0');
+    var text = campo.value;
+    var after_dot = 0;
+    var out_text = '';
+    for(var i = 0; i<text.length; i++){
 
-    openHTML('agenda.html','self','AGENDA')
+        if(after_dot > 0){ // conta quantas casas depois da virgula
+            after_dot = after_dot + 1;
+        }
 
-})
+        if (after_dot < 4 ){ // se não passou de 2 casas depois da virgula ( conta o ponto + 2 digitos)
 
-document.querySelector('#menu-login').addEventListener('click',()=>{
+            if(ok_chr.includes(text.charAt(i))){
+                out_text = out_text + text.charAt(i)
 
-    if(localStorage.getItem('access') == null){
-        openHTML('login.html','pop-up','LOGIN')
-    }else{
-        localStorage.clear();
-        loadContent("brinquedos")
+            }
+            if((text.charAt(i) == ',' || text.charAt(i) == '.') && after_dot == 0){
+                out_text = out_text + '.';
+                after_dot = after_dot + 1;
+            }
+        }
+
+
+    }     
+
+    campo.value = out_text ;
+}  
+
+function phone(param){ // formata a string no padrão TELEFONE
+    number(param);
+    var num = param.value;
+    var out = '';
+    var count = 0;
+
+    for(i=0;i<num.length;i++){
+        chr = num.substring(i,i+1);
+        count++;
+
+        if(count == 1){
+            out = '(' + out ;
+        }
+        if(count == 3){
+            out = out + ')';
+        }
+        if(count == 7){
+            out = out + '-';
+        }
+        if(count == 11){
+            out = out.substr(0,5) +" "+out.substr(5,3)+out.substr(9,1)+"-"+out.substr(10,3);
+        }		
+        out = out + chr;			
     }
-    menu_login()
 
-})
-*/
+    param.value = out;
+}

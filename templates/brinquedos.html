@@ -1,0 +1,35 @@
+<template>
+ 
+    <style>
+
+        .frm-addBrinq{
+            display: flex;
+            flex-direction: column;
+            margin: 20px;
+            align-items: center;
+        }
+
+
+    </style>
+
+    <div class="frm-addBrinq">
+
+        <table id="tblBrinq"></table>
+        <button id="btnNewToy">Novo Brinquedo</button>        
+        
+    </div>
+
+</template>
+
+<script>        
+
+    document.querySelector('#btnNewToy').addEventListener('click',()=>{
+        openHTML('addBrinq.html','pop-up','Novo Brinquedo')
+    })
+
+
+
+
+
+
+</script>    

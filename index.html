@@ -125,8 +125,8 @@
             </ul>
          </nav>
          <div class="social">
-            <li> <a href="https://api.whatsapp.com/send?phone=5512982008855"><img class="icon" src="assets/whatsapp.png"> </a> </li>
-            <li> <a href="https://www.instagram.com/casadogeppetto/"><img class="icon" src="assets/instagram.png"> </a></li>
+            <li> <a href="https://api.whatsapp.com/send?phone=5512982008855" target="_blank"><img class="icon" src="assets/whatsapp.png"> </a> </li>
+            <li> <a href="https://www.instagram.com/casadogeppetto/"         target="_blank"><img class="icon" src="assets/instagram.png"> </a></li>
         </div>
 
     </header>
@@ -145,7 +145,6 @@
             <div class="modal-text">
                 <p>Some text in the Modal..</p>
             </div>
-            <input type="hidden" class="modal-data">
         </div>
     
     </div> 
@@ -169,8 +168,8 @@
         let access = localStorage.getItem('access')
         const social = `
             <div class="social-menu">
-                <li> <a href="https://api.whatsapp.com/send?phone=5512982008855"><img class="icon" src="assets/whatsapp.png" > </a> </li>
-                <li> <a href="https://www.instagram.com/casadogeppetto/">        <img class="icon" src="assets/instagram.png"> </a> </li>
+                <li> <a href="https://api.whatsapp.com/send?phone=5512982008855" target="_blank"><img class="icon" src="assets/whatsapp.png" > </a> </li>
+                <li> <a href="https://www.instagram.com/casadogeppetto/"         target="_blank"><img class="icon" src="assets/instagram.png"> </a> </li>
             </div>`
 
         const json =  new Promise((resolve,reject)=>{
@@ -222,6 +221,7 @@
                     }else{
                         openHTML(item_menu[i].template,item_menu[i].window,item_menu[i].title)
                     }
+                    document.querySelector('#side-menu').checked = false
                 })
 
                 menu.appendChild(li)

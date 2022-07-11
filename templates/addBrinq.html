@@ -1,0 +1,112 @@
+<template>
+ 
+    <style>
+
+        .frm-brinq{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+        }
+
+        .frm-brinq *{
+            padding: 8px;
+            margin: 10px;
+            width: 80%;
+        }
+
+    </style>
+
+    <div class="frm-brinq">
+       
+        Nome
+        <input type="text"     id="edtNome" placeholder="Nome" maxlength="50">
+        Imagem
+        <input  name="up_file" id="up_file" type="file" accept=".jpg,.jpeg,.png">
+        Qtd.
+        <input type="text"     id="edtQtd" placeholder="Quantidade" value="1">
+        Sobre...
+        <textarea id="edtSobre" cols="30" rows="10" maxlength="250"></textarea>
+
+        <button id="btnNovo"> Cadastrar </button>
+        <button id="btnDel" style="display:none;">Deletar</button>        
+        
+    </div>
+
+</template>
+
+<script>        
+
+    if(modal_data != ''){
+        document.querySelector('#edtNome').value = modal_data.nome
+        document.querySelector('#edtQtd').value = modal_data.qtd
+        document.querySelector('#edtSobre').value = modal_data.sobre
+        document.querySelector('#btnNovo').innerHTML = 'Salvar'
+        document.querySelector('#btnDel').style = 'display:block;'
+    }
+
+
+    document.querySelector('#btnNovo').addEventListener('click',()=>{
+
+        const up_data = new FormData();        
+            up_data.append("up_file",  document.querySelector('#up_file').files[0]);
+            up_data.append("hdnAccess", localStorage.getItem('access'));
+
+        const myRequest = new Request("files/upload.php",{
+            method : "POST",
+            body : up_data
+        });
+
+        const myPromisse = new Promise((resolve,reject) =>{
+            fetch(myRequest)
+            .then(function (response){
+                if (response.status === 200) { 
+                    resolve(response.text());
+// salvar DB aqui                    
+
+                const params = new Object;
+                    params.nome = ''
+                    params.img = ''
+                    params.qtd = ''
+                    params.sobre = ''
+
+                const myPM_2 = queryDB(params,9)
+                myPM_2.then((resolve)=>{
+                    btnClose.click();
+                    openHTML('edt_user.html')
+                });
+
+                } else { 
+                    reject(new Error("Houve algum erro na comunicação com o servidor"));                    
+                } 
+            });
+        }); 
+
+    })
+
+
+    document.querySelector('#btnDel').addEventListener('click',()=>{
+        if (confirm('Deseja realmente deletar este usuário?')) {
+
+            const params = new Object;
+                params.id = modal_data.id;
+
+            const myPromisse = queryDB(params,8)
+            myPromisse.then((resolve)=>{
+                btnClose.click();
+                openHTML('edt_user.html')
+            });         
+
+        }        
+    })
+
+
+    document.querySelector('#edtQtd').addEventListener('keyup',(key)=>{
+        number(key.target)
+        key.target.value = key.target.value.trim() == '' ? 0 : parseInt(key.target.value)
+    })
+
+
+
+
+</script>    

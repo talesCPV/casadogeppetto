@@ -11,6 +11,16 @@
             "access" : 0
         },
         {
+            "text" : "+Brinq",
+            "id" : "menu-addBrinq",
+            "class" : "",
+            "template" : "brinquedos.html",
+            "window" : "self",
+            "title" : "Nossos Brinquedos",
+            "index" : 10,
+            "access" : 10
+        },
+        {
             "text" : "Agende",
             "id" : "menu-agenda",
             "class" : "",
