@@ -2,37 +2,116 @@
  
     <style>
 
-        .frm-agenda{
+        .frm-agenda{   
             display: flex;
-            flex-direction: column;
+            flex-direction: column;         
+            width: 80%;
+            background-color: rgba(207, 241, 230, 0.8);
+            border-radius: 10px;
+            padding: 10px;
             margin: 20px;
         }
 
+        button{
+            margin: 0;
+        }
+
+
+        .inline * {
+            margin: 10px;
+            width: 100%;
+        }
 
     </style>
 
-    <div class="frm-agenda">
+    <h1>Agende sua Festa Conosco</h1>
 
-        <label for="edtData">Data do Evento</label>
-        <input id="edtData" type="date">
+    <div class="frm-agenda" >
+        <h4>Crie um Evento</h4>
+        <div class="inline">
+            <label for="edtData" >Data</label>
+            <input id="edtData" type="date" > 
+        </div>
+        <div class="inline">
+            <label for="edtNome">Nome</label>
+            <input type="text" id="edtNome" placeholder="Nome do Evento" maxlength="50">
+        </div>
+        <button id="btnNovoEvento" >Criar</button>       
        
-
-        <label for="btnBrinq">Selecione o Brinquedo</label>
-        <button id="btnBrinq">Adicionar</button>
-
-        <select id="cmbBrinq"></select>
-
-        
     </div>
+
+    <div class="frm-agenda" >
+    
+        <table id="tblFestas"></table>
+    
+    </div>
+
 
 </template>
 
 <script>        
 
+    viewParty()
+
+    function viewParty(){
+
+        const params = new Object;
+            params.id_user = localStorage.getItem('id');
+            
+        const myPromisse = queryDB(params,14)
+
+        myPromisse.then((resolve)=>{
+
+            const tab = document.querySelector('#tblFestas')
+            tab.innerHTML = ''
+            if(resolve.trim() != ""){            
+                tab.innerHTML = '<tr><th>id</th><th>Data</th><th>Nome</th></tr>'
+                function addTD(val,cn=''){
+                    const td = document.createElement('td')
+                    td.innerHTML = val
+                    if(cn != ''){
+                        td.className = cn
+                    }
+                    return td
+                }
+
+                const json = JSON.parse(resolve);
+
+                for(let i=0; i<json.length; i++){
+                    const tr = document.createElement('tr')
+                    tr.appendChild(addTD(json[i].id))
+                    tr.appendChild(addTD(json[i].data))
+                    tr.appendChild(addTD(json[i].nome))
+                    tr.appendChild(addTD(json[i].id_user,'hide'))
+                    tr.dados = json[i]
+                    tab.appendChild(tr)
+
+                }
+
+                console.log(json)
+            }
+            
+        });
 
 
+    }
 
+    document.querySelector('#btnNovoEvento').addEventListener('click',()=>{
+console.log('go')
+        const params = new Object;
+            params.id_user = localStorage.getItem('id');
+            params.data = document.querySelector('#edtData').value;
+            params.nome = document.querySelector('#edtNome').value;
+console.log(params)        
+        const myPromisse = queryDB(params,13)
 
+        myPromisse.then((resolve)=>{
+            alert('add ok')
+//            btnClose.click();
+//            openHTML('edt_user.html')
+        });
+
+    })
 
 
 

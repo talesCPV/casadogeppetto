@@ -9,11 +9,24 @@
             align-items: center;
         }
 
+        .inline input{
+            margin: 20px 0;
+            height: auto;
+        }
+
+        button{
+            width: 100%;
+        }
+
 
     </style>
 
     <div class="frm-addBrinq">
 
+        <div class="inline">
+            <input type="text" id="edtBusca" placeholder="Digite sua busca aqui">
+            <button id="btnBusca">Busca</button>
+        </div>
         <table id="tblBrinq"></table>
         <button id="btnNewToy">Novo Brinquedo</button>        
         
@@ -22,14 +35,65 @@
 </template>
 
 <script>        
+    viewToys()
+
+    function viewToys(){
+
+        const params = new Object;
+            params.nome = document.querySelector('#edtBusca').value;
+            
+        const myPromisse = queryDB(params,10)
+
+        myPromisse.then((resolve)=>{
+
+            const tab = document.querySelector('#tblBrinq')
+            tab.innerHTML = ''
+            if(resolve.trim() != ""){            
+                tab.innerHTML = '<tr><th>id</th><th>Nome</th><th>Tam.</th><th>Qtd.</th><th>Sobre</th></tr>'
+                function addTD(val,cn=''){
+                    const td = document.createElement('td')
+                    td.innerHTML = val
+                    if(cn != ''){
+                        td.className = cn
+                    }
+                    return td
+                }
+
+                const json = JSON.parse(resolve);
+
+                for(let i=0; i<json.length; i++){
+                    const tr = document.createElement('tr')
+                    tr.appendChild(addTD(json[i].id))
+                    tr.appendChild(addTD(json[i].nome))
+                    tr.appendChild(addTD(json[i].tamanho))
+                    tr.appendChild(addTD(json[i].qtd))
+                    tr.appendChild(addTD(json[i].sobre))
+                    tr.appendChild(addTD(json[i].img,'hide'))
+                    tr.dados = json[i]
+                    tab.appendChild(tr)
+
+                }
+
+                console.log(json)
+            }
+               
+        });
+
+
+    }
+
+    document.querySelector('#tblBrinq').addEventListener('click',(e)=>{
+        data = e.target.parentNode.dados
+        data.origin = 'brinquedos'
+        openHTML('addBrinq.html','pop-up',data.nome,data)
+    })
 
     document.querySelector('#btnNewToy').addEventListener('click',()=>{
         openHTML('addBrinq.html','pop-up','Novo Brinquedo')
     })
 
-
-
-
-
+    document.querySelector('#btnBusca').addEventListener('click',()=>{        
+        viewToys()
+    })
 
 </script>    

@@ -4,12 +4,14 @@
         padding: 0;
         box-sizing: border-box;
     }
+
     body{
         position: relative;
         z-index: -2;
         background-color: var(--white);
         font-family: "Poppins", sans-serif;
     }
+
     a{
       color: inherit; /* blue colors for links too */
       text-decoration: inherit; /* no underline */    
@@ -22,6 +24,12 @@
         text-transform: uppercase;
     }
 
+    h4{
+        text-align: center;
+        width: 100%;
+
+    }
+
     ul{
         list-style: none;
         width: 100%;
@@ -31,7 +39,13 @@
         list-style: none;
     }
 
+    input{
+        padding: 8px;
+    }
+
     button{
+        padding: 5px;
+        margin: 20px;
         cursor: pointer;
     }
 
@@ -52,6 +66,24 @@
         cursor: pointer;
     }
 
+    tr:hover td{
+        background-color: #2e2929;
+        color: rgb(223, 216, 208);
+    }
+
     tr:nth-child(even) {
         background-color: #dddddd;
     }
+
+
+/* CLASSES ESPECIAIS */
+
+    .hide{
+        display: none;
+    }
+
+    .inline{
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+    } 
