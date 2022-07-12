@@ -4,12 +4,14 @@
         padding: 0;
         box-sizing: border-box;
     }
+
     body{
         position: relative;
         z-index: -2;
         background-color: var(--white);
         font-family: "Poppins", sans-serif;
     }
+
     a{
       color: inherit; /* blue colors for links too */
       text-decoration: inherit; /* no underline */    
@@ -31,6 +33,10 @@
         list-style: none;
     }
 
+    input{
+        padding: 8px;
+    }
+
     button{
         cursor: pointer;
     }
@@ -50,6 +56,11 @@
 
     tr td{
         cursor: pointer;
+    }
+
+    tr:hover td{
+        background-color: #2e2929;
+        color: rgb(223, 216, 208);
     }
 
     tr:nth-child(even) {
