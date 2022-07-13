@@ -24,6 +24,12 @@
         text-transform: uppercase;
     }
 
+    h4{
+        text-align: center;
+        width: 100%;
+
+    }
+
     ul{
         list-style: none;
         width: 100%;
@@ -38,6 +44,8 @@
     }
 
     button{
+        padding: 5px;
+        margin: 20px;
         cursor: pointer;
     }
 
@@ -66,3 +74,19 @@
     tr:nth-child(even) {
         background-color: #dddddd;
     }
+
+    fieldset{
+        border-radius: 10px;
+    }
+
+/* CLASSES ESPECIAIS */
+
+    .hide{
+        display: none;
+    }
+
+    .inline{
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+    } 

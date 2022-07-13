@@ -44,40 +44,8 @@
 
 <script>        
 
-    function aspect_ratio(img,cvw=300, cvh=300){
-        out = [0,0,cvw,cvh]
-        w = img.width
-        h = img.height
-        
-        if(w >= h){
-            out[3] = cvh/(w/h)
-            out[1] = (cvh - out[3]) / 2
-        }else{
-            out[2] = cvw/(h/w)
-            out[0] = (cvw - out[2]) / 2
-        }
-        return out
-    }
-
-    function loadImg(filename) {
-
-        var ctx = document.getElementById('cnvImg');
-        if (ctx.getContext) {
-
-            ctx = ctx.getContext('2d');
-            var img = new Image();
-            img.onload = function () {
-                ar = aspect_ratio(img)
-                ctx.drawImage(img, 0, 0,img.width,img.height,ar[0],ar[1],ar[2],ar[3]);
-            };
-
-            img.src = 'files/pictures/'+filename;
-        }
-    }
-
-
     if(modal_data != ''){
-console.log(modal_data)
+
         document.querySelector('#edtNome').value = modal_data.nome
         document.querySelector('#cmbTamanho').value = modal_data.tamanho
         document.querySelector('#edtQtd').value = modal_data.qtd
@@ -87,7 +55,7 @@ console.log(modal_data)
         if(modal_data.img.trim() != ''){
             loadImg(modal_data.img)
         }
-console.log(document.querySelector('#up_file').value)
+
     }
 
     document.querySelector('#btnNovo').addEventListener('click',()=>{
@@ -158,7 +126,7 @@ console.log(document.querySelector('#up_file').value)
                     };
 
                     preview.src = e.target.result
-console.log(preview)                
+              
                 }
 
             }

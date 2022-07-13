@@ -14,6 +14,8 @@
          "10" => 'SELECT * FROM tb_brinquedo WHERE y00 LIKE "%x00%"',
          "11" => 'UPDATE tb_brinquedo SET y00="x00", y01="x01", y02="x02", y03="x03", y04="x04" WHERE y05="x05";',
          "12" => 'DELETE FROM tb_brinquedo WHERE y00="x00";',
+         "13" => 'INSERT INTO tb_festa (y00, y01, y02) VALUES ("x00", "x01", "x02");',
+         "14" => 'SELECT F.* FROM tb_festa as F INNER JOIN tb_usuario as U WHERE F.y00="x00" AND F.id_user = U.id;',
               
     );
 

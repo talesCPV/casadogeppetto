@@ -58,8 +58,6 @@ loadContent("brinquedos")
 
 function closeMenu(){
     document.querySelector('#side-menu').checked =  false;
-    
-
 }
 
 function loadContent(cat){
@@ -245,4 +243,39 @@ function phone(param){ // formata a string no padrão TELEFONE
     }
 
     param.value = out;
+}
+
+function aspect_ratio(img,cvw=300, cvh=300){
+    out = [0,0,cvw,cvh]
+    w = img.width
+    h = img.height
+    
+    if(w >= h){
+        out[3] = cvh/(w/h)
+        out[1] = (cvh - out[3]) / 2
+    }else{
+        out[2] = cvw/(h/w)
+        out[0] = (cvw - out[2]) / 2
+    }
+    return out
+}
+
+function loadImg(filename, id='cnvImg') {
+
+    var ctx = document.getElementById(id);
+    if (ctx.getContext) {
+
+        ctx = ctx.getContext('2d');
+        var img = new Image();
+        img.onload = function () {
+            ar = aspect_ratio(img)
+            ctx.drawImage(img, 0, 0,img.width,img.height,ar[0],ar[1],ar[2],ar[3]);
+        };
+
+        img.src = 'files/pictures/'+filename;
+    }
+}
+
+function formatData(data){
+    return data.substring(8,10)+'/'+data.substring(5,7)+'/'+data.substring(0,4)
 }
