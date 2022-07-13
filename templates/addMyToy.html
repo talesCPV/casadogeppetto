@@ -1,0 +1,62 @@
+<template>
+ 
+    <style>
+
+        .frm-brinq{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+        }
+
+        .frm-brinq *{
+            padding: 8px;
+            margin: 10px;
+            width: 80%;
+        }
+
+        #cnvImg{
+            max-width: 300px;
+        }
+
+    </style>
+
+    <div class="frm-brinq">
+       
+        <canvas width="300" height="300" id="cnvImg"></canvas>
+        <textarea id="edtSobre" cols="30" rows="10" maxlength="250" readonly></textarea>
+
+        Qtd.
+        <input type="text"     id="edtQtd" placeholder="Quantidade" value="1">
+
+        <button id="btnAdd"> Adicionar </button>
+        
+    </div>
+
+</template>
+
+<script>        
+
+    if(modal_data != ''){
+
+        document.querySelector('#edtSobre').value = modal_data.sobre
+        if(modal_data.img.trim() != ''){
+            loadImg(modal_data.img)
+        }
+
+    }
+
+    document.querySelector('#btnAdd').addEventListener('click',()=>{
+
+
+
+    })
+
+
+
+    document.querySelector('#edtQtd').addEventListener('keyup',(key)=>{
+        number(key.target)
+        key.target.value = key.target.value.trim() == '' ? 0 : parseInt(key.target.value)
+    })
+
+</script>    

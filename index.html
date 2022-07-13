@@ -110,22 +110,10 @@
         <label class="hamb" for="side-menu"><span class="hamb-line"></span></label>
         <!-- Menu -->
         <nav class="nav">
-            <ul class="menu">
-<!-- 
-                <li id="menu-login"  > Login      </li>
-                <li id="menu-agenda" > Agende     </li>
-                <li class="menu-item"> Eventos    </li>
-                <li class="menu-item"> Parceiros  </li>
-                <li class="menu-item"> Brinquedos </li>
-                <div class="social-menu">
-                    <li> <a href="https://api.whatsapp.com/send?phone=5512982008855"><img class="icon" src="assets/whatsapp.png" > </a> </li>
-                    <li> <a href="https://www.instagram.com/casadogeppetto/">        <img class="icon" src="assets/instagram.png"> </a> </li>
-                </div>
--->                                
-            </ul>
+            <ul class="menu"></ul>
          </nav>
          <div class="social">
-            <li> <a href="https://api.whatsapp.com/send?phone=5512982008855" target="_blank"><img class="icon" src="assets/whatsapp.png"> </a> </li>
+            <li> <a href="https://api.whatsapp.com/send?phone=5512981736952" target="_blank"><img class="icon" src="assets/whatsapp.png"> </a> </li>
             <li> <a href="https://www.instagram.com/casadogeppetto/"         target="_blank"><img class="icon" src="assets/instagram.png"> </a></li>
         </div>
 
@@ -139,15 +127,26 @@
     <div id="myModal" class="modal">
         <div class="modal-content">
             <div class="modal-title">
-                <p id="modal-title">some title...</p>
+                <p id="modal-title"></p>
                 <span class="close">&times;</span>
             </div>
-            <div class="modal-text">
-                <p>Some text in the Modal..</p>
-            </div>
+            <div class="modal-text"></div>
         </div>
     
     </div> 
+
+    <!-- Over Modal -->
+    <div id="overModal" class="modal over-modal">
+        <div class="modal-content">
+            <div class="modal-title">
+                <p id="over-title"></p>
+                <span class="over-close">&times;</span>
+            </div>
+            <div class="over-text"></div>
+        </div>
+    
+        </div> 
+
 
 </body>
 
@@ -168,7 +167,7 @@
         let access = localStorage.getItem('access')
         const social = `
             <div class="social-menu">
-                <li> <a href="https://api.whatsapp.com/send?phone=5512982008855" target="_blank"><img class="icon" src="assets/whatsapp.png" > </a> </li>
+                <li> <a href="https://api.whatsapp.com/send?phone=5512981736952" target="_blank"><img class="icon" src="assets/whatsapp.png" > </a> </li>
                 <li> <a href="https://www.instagram.com/casadogeppetto/"         target="_blank"><img class="icon" src="assets/instagram.png"> </a> </li>
             </div>`
 

@@ -1,0 +1,113 @@
+<template>
+ 
+    <style>
+
+        .frm-brinq{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .frm-brinq *{
+            padding: 8px;
+            margin: 10px;
+            width: 80%;
+        }
+
+        .modal-content{
+            width: 90vw;
+
+        }
+
+        .no-margin, canvas{
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+
+    </style>
+
+    <div class="frm-brinq">
+           
+        <fieldset>
+            <legend>Adicione um Brinquedo</legend>
+            <div class="inline">
+                <input type="text" id="edtBusca" placeholder="Digite sua busca aqui">
+                <button id="btnBusca">Busca</button>
+            </div>
+            <table id="tblToys"></table>
+        </fieldset>
+
+        <fieldset>
+            <table id="tblMyToys"></table>
+        </fieldset>
+
+        
+    </div>
+
+</template>
+
+<script>        
+
+    console.log(modal_data)
+
+    function viewToys(){
+
+        const params = new Object;
+            params.nome = document.querySelector('#edtBusca').value;
+            
+        const myPromisse = queryDB(params,10)
+
+        myPromisse.then((resolve)=>{
+
+            const tab = document.querySelector('#tblToys')
+            tab.innerHTML = ''
+            if(resolve.trim() != ""){            
+                tab.innerHTML = '<tr><th>Nome</th><th>Tam.</th><th>Qtd.</th><th>Foto</th></tr>'
+                function addTD(val,cn=''){
+                    const td = document.createElement('td')
+                    td.innerHTML = val
+                    if(cn != ''){
+                        td.className = cn
+                    }
+                    return td
+                }
+
+                const json = JSON.parse(resolve);
+
+                for(let i=0; i<json.length; i++){
+                    const tr = document.createElement('tr')
+                    tr.appendChild(addTD(json[i].id,'hide'))
+                    tr.appendChild(addTD(json[i].nome))
+                    tr.appendChild(addTD(json[i].tamanho))
+                    tr.appendChild(addTD(json[i].qtd))
+                    tr.appendChild(addTD(json[i].sobre,'hide'))
+                    tr.appendChild(addTD(`<canvas width="300" height="300" id="cnvImg${i}"></canvas>`,'no-margin'))
+                    tr.title=json[i].sobre
+                    tr.dados = json[i]
+                    tab.appendChild(tr)
+                    loadImg(json[i].img,"cnvImg"+ i)
+
+                }
+
+            }
+            
+        });
+
+
+    }
+
+    document.querySelector('#btnBusca').addEventListener('click',()=>{
+
+        viewToys()
+
+    })
+
+    document.querySelector('#tblToys').addEventListener('click',(e)=>{
+        data = e.target.parentNode.dados
+        data.origin = 'myToys'
+        console.log(data)
+        openHTML('addMyToy.html','over',data.nome, data)
+    })
+
+
+</script>    

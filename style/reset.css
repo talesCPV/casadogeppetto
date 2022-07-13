@@ -75,6 +75,9 @@
         background-color: #dddddd;
     }
 
+    fieldset{
+        border-radius: 10px;
+    }
 
 /* CLASSES ESPECIAIS */
 

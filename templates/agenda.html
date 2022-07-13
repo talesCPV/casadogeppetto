@@ -80,7 +80,7 @@
                 for(let i=0; i<json.length; i++){
                     const tr = document.createElement('tr')
                     tr.appendChild(addTD(json[i].id))
-                    tr.appendChild(addTD(json[i].data))
+                    tr.appendChild(addTD(formatData(json[i].data)))
                     tr.appendChild(addTD(json[i].nome))
                     tr.appendChild(addTD(json[i].id_user,'hide'))
                     tr.dados = json[i]
@@ -88,7 +88,6 @@
 
                 }
 
-                console.log(json)
             }
             
         });
@@ -97,22 +96,35 @@
     }
 
     document.querySelector('#btnNovoEvento').addEventListener('click',()=>{
-console.log('go')
-        const params = new Object;
-            params.id_user = localStorage.getItem('id');
-            params.data = document.querySelector('#edtData').value;
-            params.nome = document.querySelector('#edtNome').value;
-console.log(params)        
-        const myPromisse = queryDB(params,13)
 
-        myPromisse.then((resolve)=>{
-            alert('add ok')
-//            btnClose.click();
-//            openHTML('edt_user.html')
-        });
+        const id = localStorage.getItem('id')
+        const dt = document.querySelector('#edtData').value.trim()
+        const nm = document.querySelector('#edtNome').value.trim()
+
+        if(id != '' && dt != '' && nm != ''){
+            const params = new Object;
+                params.id_user = localStorage.getItem('id');
+                params.data = document.querySelector('#edtData').value;
+                params.nome = document.querySelector('#edtNome').value;
+    
+                document.querySelector('#edtNome').value = ''
+
+            const myPromisse = queryDB(params,13)
+
+            myPromisse.then((resolve)=>{    
+                viewParty()
+            });
+        }else{
+            alert('Por favor, forneça uma data e um nome para o evento.')
+        }
+
 
     })
 
-
+    document.querySelector('#tblFestas').addEventListener('click',(e)=>{
+        data = e.target.parentNode.dados
+        data.origin = 'agenda'
+        openHTML('myToys.html','pop-up',data.nome+" - "+formatData(data.data) ,data)
+    })
 
 </script>    
