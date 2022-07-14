@@ -60,6 +60,10 @@
 
         const params = new Object;
             params.nome = document.querySelector('#edtBusca').value;
+            params.tamanho = 0;
+            params.P = modal_data.saldo.P > 0 ? 'P' : 'N'
+            params.M = modal_data.saldo.M > 0 ? 'M' : 'N'
+            params.G = modal_data.saldo.G > 0 ? 'G' : 'N'
             
         const myPromisse = queryDB(params,22)
 

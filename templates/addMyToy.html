@@ -39,6 +39,24 @@
 
     console.log(modal_data)
 
+    function addToy(data){
+        console.log(modal_data)
+        const params = new Object;
+            params.id_brinq = modal_data.id;
+            params.id_festa = modal_data.evento.id;
+            params.qtd = document.querySelector('#edtQtd').value;
+
+        const myPromisse = queryDB(params,19)
+
+        myPromisse.then((resolve)=>{    
+            openHTML('myToys.html','pop-up',modal_data.evento.nome+" - "+formatData(modal_data.evento.data) ,modal_data.evento)
+//            openHTML('myToys.html','pop-up',data.nome+" - "+formatData(data.data)+'<br>'+data.kit ,data)
+            over_close.click()
+        });
+    }
+
+
+
     if(modal_data != ''){
 
         document.querySelector('#edtSobre').value = modal_data.sobre
@@ -50,23 +68,20 @@
 
     document.querySelector('#btnAdd').addEventListener('click',()=>{
 
+        qtd = parseInt(document.querySelector('#edtQtd').value)
+        if(qtd > 0){
 
-        if(document.querySelector('#edtQtd').value > 0){
-            const params = new Object;
-                params.id_brinq = modal_data.id;
-                params.id_festa = modal_data.evento.id;
-                params.qtd = document.querySelector('#edtQtd').value;
-    
-            const myPromisse = queryDB(params,19)
+            if(qtd > 1){
+                if (confirm(`Deseja realmente adicionar ${qtd} volumes deste brinquedo?`)) {
+                    addToy()
+                }
+            }else{
+                addToy()
+            }
 
-            myPromisse.then((resolve)=>{    
-                over_close.click()
-                openHTML('myToys.html','pop-up',modal_data.evento.nome+" - "+formatData(modal_data.evento.data) ,modal_data.evento)
-            });
+        }else{
+            over_close.click()
         }
-
-
-        console.log(modal_data)
 
 
     })
@@ -74,8 +89,27 @@
 
 
     document.querySelector('#edtQtd').addEventListener('keyup',(key)=>{
+        
+        etq = parseInt(modal_data.qtd)
+
         number(key.target)
         key.target.value = key.target.value.trim() == '' ? 0 : parseInt(key.target.value)
+
+        saldo = modal_data.evento.saldo[modal_data.tamanho]
+        qtd = parseInt(key.target.value)
+
+        console.log(modal_data)
+
+        if(qtd > etq){
+            alert(`Temos apenas ${etq} peças deste ítem no estoque`)
+            key.target.value = etq
+            qtd = etq
+        }
+        if(qtd > saldo){
+            alert(`Você pode escolher apenas mais ${saldo} peças do tamanho ${modal_data.tamanho}`)
+            key.target.value = saldo   
+        }
+
     })
 
 </script>    
