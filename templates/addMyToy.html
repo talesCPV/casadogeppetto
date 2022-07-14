@@ -1,0 +1,81 @@
+<template>
+ 
+    <style>
+
+        .frm-brinq{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+        }
+
+        .frm-brinq *{
+            padding: 8px;
+            margin: 10px;
+            width: 80%;
+        }
+
+        #cnvImg{
+            max-width: 300px;
+        }
+
+    </style>
+
+    <div class="frm-brinq">
+       
+        <canvas width="300" height="300" id="cnvImg"></canvas>
+        <textarea id="edtSobre" cols="30" rows="10" maxlength="250" readonly></textarea>
+
+        Qtd.
+        <input type="text"     id="edtQtd" placeholder="Quantidade" value="1">
+
+        <button id="btnAdd"> Adicionar </button>
+        
+    </div>
+
+</template>
+
+<script>        
+
+    console.log(modal_data)
+
+    if(modal_data != ''){
+
+        document.querySelector('#edtSobre').value = modal_data.sobre
+        if(modal_data.img.trim() != ''){
+            loadImg(modal_data.img)
+        }
+
+    }
+
+    document.querySelector('#btnAdd').addEventListener('click',()=>{
+
+
+        if(document.querySelector('#edtQtd').value > 0){
+            const params = new Object;
+                params.id_brinq = modal_data.id;
+                params.id_festa = modal_data.evento.id;
+                params.qtd = document.querySelector('#edtQtd').value;
+    
+            const myPromisse = queryDB(params,19)
+
+            myPromisse.then((resolve)=>{    
+                over_close.click()
+                openHTML('myToys.html','pop-up',modal_data.evento.nome+" - "+formatData(modal_data.evento.data) ,modal_data.evento)
+            });
+        }
+
+
+        console.log(modal_data)
+
+
+    })
+
+
+
+    document.querySelector('#edtQtd').addEventListener('keyup',(key)=>{
+        number(key.target)
+        key.target.value = key.target.value.trim() == '' ? 0 : parseInt(key.target.value)
+    })
+
+</script>    

@@ -1,0 +1,101 @@
+<template>
+ 
+    <style>
+
+        .frm-kit{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+        }
+
+        .frm-kit *{
+            padding: 8px;
+            margin: 10px;
+            width: 80%;
+        }
+
+
+    </style>
+
+    <div class="frm-kit">
+       
+        Nome
+        <input type="text"     id="edtNome" placeholder="Nome" maxlength="50">
+        P
+        <input type="text"     id="edtP" placeholder="Qtd. Peças P" value="0" onkeyup="inteiro(this)">
+        M
+        <input type="text"     id="edtM" placeholder="Qtd. Peças M" value="0" onkeyup="inteiro(this)">
+        G
+        <input type="text"     id="edtG" placeholder="Qtd. Peças G" value="0" onkeyup="inteiro(this)">
+        Valor R$
+        <input type="text"     id="edtValor" placeholder="Valor em R$" value="0" onkeyup="money(this)">
+
+        <button id="btnNovo"> Cadastrar </button>
+        <button id="btnDel" style="display:none;">Deletar</button>        
+        
+    </div>
+
+</template>
+
+<script>        
+
+    if(modal_data != ''){
+        document.querySelector('#edtNome').value = modal_data.nome
+        document.querySelector('#edtP').value = modal_data.P
+        document.querySelector('#edtM').value = modal_data.M
+        document.querySelector('#edtG').value = modal_data.G
+        document.querySelector('#edtValor').value = modal_data.valor
+        document.querySelector('#btnNovo').innerHTML = 'Salvar'
+        document.querySelector('#btnDel').style = 'display:block;'
+    }
+
+    document.querySelector('#btnNovo').addEventListener('click',()=>{
+
+        if(document.querySelector('#edtNome').value.trim() != ''){
+            const params = new Object;
+                params.nome = document.querySelector('#edtNome').value.toUpperCase()
+                params.P = document.querySelector('#edtP').value
+                params.M = document.querySelector('#edtM').value
+                params.G = document.querySelector('#edtG').value
+                params.valor = document.querySelector('#edtValor').value
+
+                let myPromisse
+                if(modal_data != ''){ // edit
+                    params.id = modal_data.id;
+                    myPromisse = queryDB(params,17)
+                }else{ // new
+                    myPromisse = queryDB(params,16)
+                }
+
+            myPromisse.then((resolve)=>{
+                btnClose.click();
+                openHTML('config.html')
+            });
+        }else{
+            alert('Por favor, digite um nome para o kit')
+            document.querySelector('#edtNome').focus()
+        }
+
+
+
+
+    })
+
+    document.querySelector('#btnDel').addEventListener('click',()=>{
+        if (confirm('Deseja realmente deletar este kit?')) {
+
+            const params = new Object;
+                params.id = modal_data.id;
+
+            const myPromisse = queryDB(params,18    )
+            myPromisse.then((resolve)=>{
+                btnClose.click();
+                openHTML('config.html')
+            });         
+
+        }        
+    })
+
+
+</script>    

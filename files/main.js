@@ -39,11 +39,21 @@ var modal_text = document.querySelector(".modal-text");
 var modal_data;
 var btnClose = document.querySelector(".close");
 
-//menu_login()
+var over_modal = document.getElementById("overModal");
+var over_title = document.getElementById("over-title");
+var over_text = document.querySelector(".over-text");
+var over_close = document.querySelector(".over-close");
 
+
+ /*  MODAL  */
 document.querySelector('.close').addEventListener('click',()=>{
     modal.style.display = "none";
 })
+
+document.querySelector('.over-close').addEventListener('click',()=>{
+    over_modal.style.display = "none";
+})
+
 
 menu_item = document.querySelectorAll('.menu-item');
 for(let i=0; i< menu_item.length; i++){
@@ -155,6 +165,10 @@ async function openHTML(template,where="self",label="", data=""){
                         modal_text.innerHTML = body.innerHTML;
                         modal_title.innerHTML = label;
                         modal.style.display = "block";
+                    }else if(where == "over"){
+                        over_text.innerHTML = body.innerHTML;
+                        over_title.innerHTML = label;
+                        over_modal.style.display = "block";                        
                     }else{
                         document.getElementById(where).innerHTML = body.innerHTML;
                     }
@@ -186,6 +200,11 @@ function queryDB(params,cod){
             } 
         });
     });      
+}
+
+function inteiro(K){
+    number(K)
+    K.value = K.value.trim() == '' ? 0 : parseInt(K.value)
 }
 
 function number(campo){
@@ -278,4 +297,36 @@ function loadImg(filename, id='cnvImg') {
 
 function formatData(data){
     return data.substring(8,10)+'/'+data.substring(5,7)+'/'+data.substring(0,4)
+}
+
+function money(campo){
+    var ok_chr = new Array('1','2','3','4','5','6','7','8','9','0');
+    var text = campo.value;
+    while (text[0] == '0'){
+        text = text.substring(1, text.length)
+    }
+    var after_dot = 0;
+    var out_text = '';
+    for(var i = 0; i<text.length; i++){
+
+        if(after_dot > 0){ // conta quantas casas depois da virgula
+            after_dot = after_dot + 1;
+        }
+
+        if (after_dot < 4 ){ // se não passou de 2 casas depois da virgula ( conta o ponto + 2 digitos)
+
+            if(ok_chr.includes(text.charAt(i))){
+                out_text = out_text + text.charAt(i)
+
+            }
+            if((text.charAt(i) == ',' || text.charAt(i) == '.') && after_dot == 0){
+                out_text = out_text + '.';
+                after_dot = after_dot + 1;
+            }
+        }
+
+
+    }
+    
+    campo.value = out_text.trim() == '' ? 0 : out_text
 }

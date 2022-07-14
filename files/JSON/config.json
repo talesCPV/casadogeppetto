@@ -11,10 +11,10 @@
             "access" : 0
         },
         {
-            "text" : "+Brinq",
+            "text" : "Config",
             "id" : "menu-addBrinq",
             "class" : "",
-            "template" : "brinquedos.html",
+            "template" : "config.html",
             "window" : "self",
             "title" : "Nossos Brinquedos",
             "index" : 10,
