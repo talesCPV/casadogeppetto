@@ -12,15 +12,19 @@
             margin: 20px;
         }
 
+        #tblFestas{
+            width: 95%;
+        }
+
         button{
             margin: 0;
         }
-
 
         .inline * {
             margin: 10px;
             width: 100%;
         }
+
 
     </style>
 
@@ -35,6 +39,10 @@
         <div class="inline">
             <label for="edtNome">Nome</label>
             <input type="text" id="edtNome" placeholder="Nome do Evento" maxlength="50">
+        </div>
+        <div class="inline">
+            <label for="cmbKit">Kit</label>
+            <select id="cmbKit"></select>
         </div>
         <button id="btnNovoEvento" >Criar</button>       
        
@@ -52,6 +60,34 @@
 <script>        
 
     viewParty()
+    fillKit()
+
+
+    function fillKit(){
+
+        function addOption(json){
+            op = document.createElement('option')
+            op.value = json.id
+            op.innerHTML = json.nome
+            return op
+        }
+
+        const params = new Object;
+            params.nome = '';
+
+        const myPromisse = queryDB(params,15)
+
+        myPromisse.then((resolve)=>{
+            kits = JSON.parse(resolve)
+            combo = document.querySelector('#cmbKit')
+            combo.innerHTML = ''
+
+            for(let i=0; i<kits.length; i++){
+                combo.appendChild(addOption(kits[i]))
+            }
+
+        })
+    }
 
     function viewParty(){
 
@@ -65,7 +101,7 @@
             const tab = document.querySelector('#tblFestas')
             tab.innerHTML = ''
             if(resolve.trim() != ""){            
-                tab.innerHTML = '<tr><th>id</th><th>Data</th><th>Nome</th></tr>'
+                tab.innerHTML = '<tr><th class="td-min">id</th><th>Data</th><th>Nome</th><th>Kit</th></tr>'
                 function addTD(val,cn=''){
                     const td = document.createElement('td')
                     td.innerHTML = val
@@ -82,6 +118,7 @@
                     tr.appendChild(addTD(json[i].id))
                     tr.appendChild(addTD(formatData(json[i].data)))
                     tr.appendChild(addTD(json[i].nome))
+                    tr.appendChild(addTD(json[i].kit))
                     tr.appendChild(addTD(json[i].id_user,'hide'))
                     tr.dados = json[i]
                     tab.appendChild(tr)
@@ -100,12 +137,14 @@
         const id = localStorage.getItem('id')
         const dt = document.querySelector('#edtData').value.trim()
         const nm = document.querySelector('#edtNome').value.trim()
+        const kt = document.querySelector('#cmbKit').value
 
-        if(id != '' && dt != '' && nm != ''){
+        if(id != '' && dt != '' && nm != ''  && kt != ''){
             const params = new Object;
                 params.id_user = localStorage.getItem('id');
-                params.data = document.querySelector('#edtData').value;
-                params.nome = document.querySelector('#edtNome').value;
+                params.id_kit = kt;
+                params.data = dt;
+                params.nome = nm;
     
                 document.querySelector('#edtNome').value = ''
 
@@ -124,7 +163,7 @@
     document.querySelector('#tblFestas').addEventListener('click',(e)=>{
         data = e.target.parentNode.dados
         data.origin = 'agenda'
-        openHTML('myToys.html','pop-up',data.nome+" - "+formatData(data.data) ,data)
+        openHTML('myToys.html','pop-up',data.nome+" - "+formatData(data.data)+'<br>'+data.kit ,data)
     })
 
 </script>    

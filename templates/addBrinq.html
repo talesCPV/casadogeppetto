@@ -40,7 +40,7 @@
             <option value="G">Grande</option>
         </select>
         Qtd.
-        <input type="text"     id="edtQtd" placeholder="Quantidade" value="1">
+        <input type="text"     id="edtQtd" placeholder="Quantidade" value="1"  onkeyup="inteiro(this)">
         Sobre...
         <textarea id="edtSobre" cols="30" rows="10" maxlength="250"></textarea>
 
@@ -106,7 +106,7 @@
 
                     myPM_2.then((resolve)=>{
                         btnClose.click();
-                        openHTML('brinquedos.html')
+                        openHTML('config.html')
                     });
 
                 } else { 
@@ -146,7 +146,7 @@
     })
 
     document.querySelector('#btnDel').addEventListener('click',()=>{
-        if (confirm('Deseja realmente deletar este usuário?')) {
+        if (confirm('Deseja realmente deletar este brinquedo?')) {
 
             const params = new Object;
                 params.id = modal_data.id;
@@ -154,15 +154,15 @@
             const myPromisse = queryDB(params,12)
             myPromisse.then((resolve)=>{
                 btnClose.click();
-                openHTML('brinquedos.html')
+                openHTML('config.html')
             });         
 
         }        
     })
-
+/*
     document.querySelector('#edtQtd').addEventListener('keyup',(key)=>{
         number(key.target)
         key.target.value = key.target.value.trim() == '' ? 0 : parseInt(key.target.value)
     })
-
+*/
 </script>    

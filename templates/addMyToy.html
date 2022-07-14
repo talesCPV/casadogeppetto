@@ -37,6 +37,8 @@
 
 <script>        
 
+    console.log(modal_data)
+
     if(modal_data != ''){
 
         document.querySelector('#edtSobre').value = modal_data.sobre
@@ -48,6 +50,23 @@
 
     document.querySelector('#btnAdd').addEventListener('click',()=>{
 
+
+        if(document.querySelector('#edtQtd').value > 0){
+            const params = new Object;
+                params.id_brinq = modal_data.id;
+                params.id_festa = modal_data.evento.id;
+                params.qtd = document.querySelector('#edtQtd').value;
+    
+            const myPromisse = queryDB(params,19)
+
+            myPromisse.then((resolve)=>{    
+                over_close.click()
+                openHTML('myToys.html','pop-up',modal_data.evento.nome+" - "+formatData(modal_data.evento.data) ,modal_data.evento)
+            });
+        }
+
+
+        console.log(modal_data)
 
 
     })

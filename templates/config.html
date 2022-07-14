@@ -1,0 +1,164 @@
+<template>
+ 
+    <style>
+
+        .frm-config{
+            display: flex;
+            flex-direction: column;
+            margin: 20px;
+            align-items: center;
+        }
+
+        .inline input{
+            margin: 20px 0;
+            height: auto;
+        }
+
+        button{
+            width: 95%;
+        }
+
+        table{
+            max-width: 95%;
+        }
+
+        fieldset{
+            width: 90vw;
+            margin-bottom: 20px;
+        }
+
+    </style>
+
+    <div class="frm-config">
+
+        <fieldset>
+            <legend>Kits</legend>
+            <div class="inline">
+                <input type="text" id="edtBuscaKit" placeholder="Digite sua busca aqui">
+                <button id="btnBuscaKit">Busca</button>
+            </div>
+            <table id="tblKit"></table>
+            <button id="btnNewKit">Novo Kit</button>      
+          </fieldset>
+
+        <fieldset>
+            <legend>Brinquedos</legend>
+            <div class="inline">
+                <input type="text" id="edtBuscaBrinq" placeholder="Digite sua busca aqui">
+                <button id="btnBuscaBrinq">Busca</button>
+            </div>
+            <table id="tblBrinq"></table>
+            <button id="btnNewToy">Novo Brinquedo</button>  
+        </fieldset>
+        
+    </div>
+
+</template>
+
+<script>        
+    
+    function addTD(val,cn=''){
+        const td = document.createElement('td')
+        td.innerHTML = val
+        if(cn != ''){
+            td.className = cn
+        }
+        return td
+    }
+
+    function viewToys(){
+
+        const params = new Object;
+            params.nome = document.querySelector('#edtBuscaBrinq').value;
+            
+        const myPromisse = queryDB(params,10)
+
+        myPromisse.then((resolve)=>{
+
+            const tab = document.querySelector('#tblBrinq')
+            tab.innerHTML = ''
+
+            if(resolve.trim() != ""){            
+                tab.innerHTML = '<tr><th>id</th><th>Nome</th><th>Tam.</th><th>Qtd.</th><th>Ativo</th><th>Sobre</th></tr>'
+
+                const json = JSON.parse(resolve);
+
+                for(let i=0; i<json.length; i++){
+                    const tr = document.createElement('tr')
+                    tr.appendChild(addTD(json[i].id))
+                    tr.appendChild(addTD(json[i].nome))
+                    tr.appendChild(addTD(json[i].tamanho))
+                    tr.appendChild(addTD(json[i].qtd))
+                    tr.appendChild(addTD(json[i].ativo == '1' ? 'SIM' : 'NÂO' ))
+                    tr.appendChild(addTD(json[i].sobre))
+                    tr.appendChild(addTD(json[i].img,'hide'))
+                    tr.dados = json[i]
+                    tab.appendChild(tr)
+                }
+            }
+
+        });
+    }
+
+    function viewKit(){
+
+        const params = new Object;
+            params.nome = document.querySelector('#edtBuscaKit').value;
+
+        const myPromisse = queryDB(params,15)
+
+        myPromisse.then((resolve)=>{
+
+            const tab = document.querySelector('#tblKit')
+            tab.innerHTML = ''
+
+            if(resolve.trim() != ""){            
+                tab.innerHTML = '<tr><th>id</th><th>Nome</th><th>P</th><th>M</th><th>G</th><th>Valor</th></tr>'
+
+                const json = JSON.parse(resolve);
+
+                for(let i=0; i<json.length; i++){
+                    const tr = document.createElement('tr')
+                    tr.appendChild(addTD(json[i].id))
+                    tr.appendChild(addTD(json[i].nome))
+                    tr.appendChild(addTD(json[i].P))
+                    tr.appendChild(addTD(json[i].M))
+                    tr.appendChild(addTD(json[i].G))
+                    tr.appendChild(addTD(parseFloat(json[i].valor).toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})))
+                    tr.dados = json[i]
+                    tab.appendChild(tr)
+                }
+            }
+
+        });
+    }
+
+    document.querySelector('#tblBrinq').addEventListener('click',(e)=>{
+        data = e.target.parentNode.dados
+        data.origin = 'config'
+        openHTML('addBrinq.html','pop-up',data.nome,data)
+    })
+
+    document.querySelector('#btnNewToy').addEventListener('click',()=>{
+        openHTML('addBrinq.html','pop-up','Novo Brinquedo')
+    })
+
+    document.querySelector('#btnBuscaBrinq').addEventListener('click',()=>{        
+        viewToys()
+    })
+
+    document.querySelector('#tblKit').addEventListener('click',(e)=>{
+        data = e.target.parentNode.dados
+        data.origin = 'config'
+        openHTML('addKit.html','pop-up',data.nome,data)
+    })
+
+    document.querySelector('#btnNewKit').addEventListener('click',()=>{
+        openHTML('addKit.html','pop-up','Novo Kit')
+    })
+
+    document.querySelector('#btnBuscaKit').addEventListener('click',()=>{        
+        viewKit()
+    })
+
+</script>    

@@ -11,7 +11,7 @@
         .frm-brinq *{
             padding: 8px;
             margin: 10px;
-            width: 80%;
+            width: 97%;
         }
 
         .modal-content{
@@ -22,6 +22,10 @@
         .no-margin, canvas{
             margin: 0 !important;
             padding: 0 !important;
+        }
+
+        legend{
+            width: auto !important;
         }
 
     </style>
@@ -38,24 +42,26 @@
         </fieldset>
 
         <fieldset>
+            <legend> Brinquedos Selecionados</legend>
             <table id="tblMyToys"></table>
         </fieldset>
 
-        
+        <button id="btnContrata">Contratar</button>
+
     </div>
 
 </template>
 
 <script>        
 
-    console.log(modal_data)
+    viewMyToys()
 
     function viewToys(){
 
         const params = new Object;
             params.nome = document.querySelector('#edtBusca').value;
             
-        const myPromisse = queryDB(params,10)
+        const myPromisse = queryDB(params,22)
 
         myPromisse.then((resolve)=>{
 
@@ -96,6 +102,88 @@
 
     }
 
+    function viewMyToys(){
+
+        const params = new Object;
+            params.id_festa = data.id;
+            
+        const myPromisse = queryDB(params,20)
+
+        myPromisse.then((resolve)=>{
+
+            const tab = document.querySelector('#tblMyToys')
+            tab.innerHTML = ''
+            if(resolve.trim() != ""){            
+                tab.innerHTML = '<tr><th>Nome</th><th>Tam.</th><th>Qtd.</th><th>Foto</th></tr>'
+                function addTD(val,cn=''){
+                    const td = document.createElement('td')
+                    td.innerHTML = val
+                    if(cn != ''){
+                        td.className = cn
+                    }
+                    return td
+                }
+
+                const json = JSON.parse(resolve);
+
+                for(let i=0; i<json.length; i++){
+                    const tr = document.createElement('tr')
+                    tr.appendChild(addTD(json[i].id,'hide'))
+                    tr.appendChild(addTD(json[i].nome))
+                    tr.appendChild(addTD(json[i].tamanho))
+                    tr.appendChild(addTD(json[i].qtd))
+                    tr.appendChild(addTD(`<canvas width="300" height="300" id="cnvImg${i}"></canvas>`,'no-margin'))
+                    tr.title=json[i].sobre
+                    tr.dados = json[i]
+                    tab.appendChild(tr)
+                    loadImg(json[i].img,"cnvImg"+ i)
+
+                }
+                CountSizes()
+
+            }
+            
+        });
+
+
+    }
+
+    function CountSizes(){
+        const params = new Object;
+            params.id_festa = data.id;
+            
+        const myPromisse = queryDB(params,23)
+
+        myPromisse.then((resolve)=>{
+            out = new Object
+                out.P = 0
+                out.M = 0
+                out.G = 0
+            if(resolve.trim() != ""){ 
+                sizes = JSON.parse(resolve)
+
+                for(let i=0; i<sizes.length; i++){
+                    out.P = sizes[i].tam == 'P' ? parseInt(sizes[i].qtd) : out.P
+                    out.M = sizes[i].tam == 'M' ? parseInt(sizes[i].qtd) : out.M
+                    out.G = sizes[i].tam == 'G' ? parseInt(sizes[i].qtd) : out.G
+//                    console.log(sizes[i])
+                }
+
+                modal_data.reserva = out
+                modal_data.saldo = new Object
+                modal_data.saldo.P = parseInt(modal_data.P) - out.P
+                modal_data.saldo.M = parseInt(modal_data.M) - out.M
+                modal_data.saldo.G = parseInt(modal_data.G) - out.G
+                console.log(modal_data)    
+
+            }
+
+        })
+
+
+    }
+
+
     document.querySelector('#btnBusca').addEventListener('click',()=>{
 
         viewToys()
@@ -105,8 +193,25 @@
     document.querySelector('#tblToys').addEventListener('click',(e)=>{
         data = e.target.parentNode.dados
         data.origin = 'myToys'
+        data.evento = modal_data
         console.log(data)
         openHTML('addMyToy.html','over',data.nome, data)
+    })
+
+    document.querySelector('#tblMyToys').addEventListener('click',(e)=>{
+
+        if (confirm('Deseja realmente deletar este brinquedo da lista?')) {
+            
+            const params = new Object;
+                params.id = e.target.parentNode.dados.id;
+
+            const myPromisse = queryDB(params,21)
+            myPromisse.then((resolve)=>{
+                viewMyToys()
+            });         
+
+        }            
+        
     })
 
 
