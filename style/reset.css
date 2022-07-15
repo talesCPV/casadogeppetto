@@ -80,6 +80,10 @@
         padding: 10px;
     }
 
+    legend{
+        padding: 5px;
+    }
+
 /* CLASSES ESPECIAIS */
 
     .hide{

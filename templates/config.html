@@ -79,7 +79,7 @@
             tab.innerHTML = ''
 
             if(resolve.trim() != ""){            
-                tab.innerHTML = '<tr><th>id</th><th>Nome</th><th>Tam.</th><th>Qtd.</th><th>Sobre</th></tr>'
+                tab.innerHTML = '<tr><th>id</th><th>Nome</th><th>Tam.</th><th>Qtd.</th><th>Ativo</th><th>Sobre</th></tr>'
 
                 const json = JSON.parse(resolve);
 
@@ -89,6 +89,7 @@
                     tr.appendChild(addTD(json[i].nome))
                     tr.appendChild(addTD(json[i].tamanho))
                     tr.appendChild(addTD(json[i].qtd))
+                    tr.appendChild(addTD(json[i].ativo == '1' ? 'SIM' : 'NÂO' ))
                     tr.appendChild(addTD(json[i].sobre))
                     tr.appendChild(addTD(json[i].img,'hide'))
                     tr.dados = json[i]
