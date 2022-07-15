@@ -43,6 +43,7 @@
 
         <fieldset>
             <legend> Brinquedos Selecionados</legend>
+            <h4 id="lblSaldo"></h4>
             <table id="tblMyToys"></table>
         </fieldset>
 
@@ -55,9 +56,57 @@
 <script>        
 
     viewMyToys()
+    viewSaldo()
+
+    modal_data.saldo = new Object
+        modal_data.saldo.P = parseInt(modal_data.P)
+        modal_data.saldo.M = parseInt(modal_data.M)
+        modal_data.saldo.G = parseInt(modal_data.G)
+
+
+    function saldo(){
+
+        lab = ''
+        if((modal_data.saldo.P + modal_data.saldo.M + modal_data.saldo.G) > 0){
+            lab = `Você pode adicionar mais ${modal_data.saldo.P} tam. P, 
+                   ${modal_data.saldo.M} tam. M e ${modal_data.saldo.G} tam. G`
+        }else{
+            lab = 'Todos os brinquedos já foram selecionados.'
+        }
+
+        document.querySelector('#lblSaldo').innerHTML = lab
+
+
+    }
+
+    function viewSaldo(){
+
+
+        const params = new Object;
+            params.data = modal_data.data;
+            
+        const myPromisse = queryDB(params,24)
+
+        myPromisse.then((resolve)=>{
+
+            if(resolve.trim() != ""){            
+
+                json =  JSON.parse(resolve)
+                modal_data.reservado = json
+
+
+                console.log(json)
+            }
+            
+        });
+
+
+    }
+
 
     function viewToys(){
 
+//console.log(modal_data)
         const params = new Object;
             params.nome = document.querySelector('#edtBusca').value;
             params.tamanho = 0;
@@ -82,6 +131,18 @@
                     return td
                 }
 
+                function reserva(obj){
+                    id = obj.id
+                    qtd = parseInt(obj.qtd)
+                    rsv = modal_data.reservado
+                    for(let i=0; i<rsv.length; i++){
+                        if(rsv[i].id == id){
+                            qtd -= parseInt(rsv[i].qtd)
+                        }
+                    }
+                    return qtd
+                }
+
                 const json = JSON.parse(resolve);
 
                 for(let i=0; i<json.length; i++){
@@ -89,7 +150,7 @@
                     tr.appendChild(addTD(json[i].id,'hide'))
                     tr.appendChild(addTD(json[i].nome))
                     tr.appendChild(addTD(json[i].tamanho))
-                    tr.appendChild(addTD(json[i].qtd))
+                    tr.appendChild(addTD(reserva(json[i])))
                     tr.appendChild(addTD(json[i].sobre,'hide'))
                     tr.appendChild(addTD(`<canvas width="300" height="300" id="cnvImg${i}"></canvas>`,'no-margin'))
                     tr.title=json[i].sobre
@@ -129,7 +190,6 @@
                 }
 
                 const json = JSON.parse(resolve);
-
                 for(let i=0; i<json.length; i++){
                     const tr = document.createElement('tr')
                     tr.appendChild(addTD(json[i].id,'hide'))
@@ -148,7 +208,6 @@
             }
             
         });
-
 
     }
 
@@ -170,7 +229,6 @@
                     out.P = sizes[i].tam == 'P' ? parseInt(sizes[i].qtd) : out.P
                     out.M = sizes[i].tam == 'M' ? parseInt(sizes[i].qtd) : out.M
                     out.G = sizes[i].tam == 'G' ? parseInt(sizes[i].qtd) : out.G
-//                    console.log(sizes[i])
                 }
 
                 modal_data.reserva = out
@@ -179,11 +237,12 @@
                 modal_data.saldo.M = parseInt(modal_data.M) - out.M
                 modal_data.saldo.G = parseInt(modal_data.G) - out.G
                 console.log(modal_data)    
-
+                saldo()
             }
 
         })
 
+       
 
     }
 

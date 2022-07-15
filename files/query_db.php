@@ -39,6 +39,14 @@
                     WHERE A.id_brinq = B.id
                     AND A.y00="x00"
                     GROUP BY B.tamanho;',
+         "24" => 'SELECT B.id, B.nome, SUM(A.qtd) AS qtd FROM tb_festa AS F
+	                INNER JOIN tb_agenda AS A
+                    INNER JOIN tb_brinquedo AS B
+	                WHERE A.id_festa = F.id
+                    AND A.id_brinq = B.id
+	                AND F.data = "x00"
+                    GROUP BY B.id;',
+
 
 
     );
