@@ -50,7 +50,19 @@
             <table id="tblBrinq"></table>
             <button id="btnNewToy">Novo Brinquedo</button>  
         </fieldset>
+
+        <fieldset>
+            <legend>Usuários</legend>
+
+            <div class="inline">
+                <input type="text" id="edtBuscaUser" placeholder="Digite sua busca aqui">
+                <button id="btnBuscaUser">Busca</button>
+            </div>
+            <table id="tblUser"></table>
+            <button id="btnNewUser">Novo Usuario</button>  
+        </fieldset>
         
+
     </div>
 
 </template>
@@ -133,6 +145,49 @@
         });
     }
 
+    function viewUsers(){
+
+        const params = new Object;
+            params.hash = localStorage.getItem("hash");
+
+        const myPromisse = queryDB(params,6)
+
+        myPromisse.then((resolve)=>{
+
+            if(resolve.trim() != ""){
+                function addTD(val,cn=''){
+                    const td = document.createElement('td')
+                    td.innerHTML = val
+                    td.className = cn
+                    return td
+                }
+
+                const json = JSON.parse(resolve);
+
+                const tab = document.querySelector('#tblUser')
+                tab.innerHTML = '<tr><th>id</th><th>Nome</th><th>Usuário</th><th>Email</th><th>Cel</th><th>Acesso</th></tr>'
+
+                for(let i=0; i<json.length; i++){
+                    const tr = document.createElement('tr')
+                    tr.appendChild(addTD(json[i].id))
+                    tr.appendChild(addTD(json[i].nome))
+                    tr.appendChild(addTD(json[i].username))
+                    tr.appendChild(addTD(json[i].email))
+                    tr.appendChild(addTD(json[i].cel))
+                    tr.appendChild(addTD(json[i].access=='10'?'Administrador':'Cliente'))
+                    tr.appendChild(addTD(json[i].hash,'hide'))
+                    tr.dados = json[i]
+                    tab.appendChild(tr)
+
+                }
+
+            }     
+
+        });
+
+    }
+
+
     document.querySelector('#tblBrinq').addEventListener('click',(e)=>{
         data = e.target.parentNode.dados
         data.origin = 'config'
@@ -160,5 +215,27 @@
     document.querySelector('#btnBuscaKit').addEventListener('click',()=>{        
         viewKit()
     })
+
+    document.querySelector('#btnBuscaUser').addEventListener('click',()=>{        
+        viewUsers()
+    })
+
+    document.querySelector('#btnNewUser').addEventListener('click',()=>{
+
+        openHTML('new_user.html','pop-up','Novo Usuário')
+
+    })
+
+    document.querySelector('#tblUser').addEventListener('click',(e)=>{
+        data = e.target.parentNode.dados
+        data.origin = 'edt_user'
+
+        console.log(data)
+
+        openHTML('new_user.html','pop-up',data.username,data)
+
+    })
+
+
 
 </script>    

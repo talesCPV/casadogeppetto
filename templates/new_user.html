@@ -82,7 +82,8 @@
 
         myPromisse.then((resolve)=>{
             btnClose.click();
-            openHTML('edt_user.html')
+            openHTML('config.html')
+            viewUsers()
         });
 
 
@@ -106,7 +107,7 @@
             const myPromisse = queryDB(params,8)
             myPromisse.then((resolve)=>{
                 btnClose.click();
-                openHTML('edt_user.html')
+                openHTML('config.html')
             });         
 
         }        

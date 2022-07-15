@@ -94,8 +94,6 @@
                 json =  JSON.parse(resolve)
                 modal_data.reservado = json
 
-
-                console.log(json)
             }
             
         });
@@ -106,7 +104,6 @@
 
     function viewToys(){
 
-//console.log(modal_data)
         const params = new Object;
             params.nome = document.querySelector('#edtBusca').value;
             params.tamanho = 0;
@@ -140,6 +137,7 @@
                             qtd -= parseInt(rsv[i].qtd)
                         }
                     }
+                    obj.qtd = qtd
                     return qtd
                 }
 
@@ -236,7 +234,6 @@
                 modal_data.saldo.P = parseInt(modal_data.P) - out.P
                 modal_data.saldo.M = parseInt(modal_data.M) - out.M
                 modal_data.saldo.G = parseInt(modal_data.G) - out.G
-                console.log(modal_data)    
                 saldo()
             }
 
@@ -255,10 +252,14 @@
 
     document.querySelector('#tblToys').addEventListener('click',(e)=>{
         data = e.target.parentNode.dados
-        data.origin = 'myToys'
-        data.evento = modal_data
-        console.log(data)
-        openHTML('addMyToy.html','over',data.nome, data)
+        if(data.qtd > 0){
+            data.origin = 'myToys'
+            data.evento = modal_data
+            openHTML('addMyToy.html','over',data.nome, data)
+        }else{
+            alert('Infelizmente este brinquedo não esta disponível para essa data')
+        }
+
     })
 
     document.querySelector('#tblMyToys').addEventListener('click',(e)=>{

@@ -37,10 +37,7 @@
 
 <script>        
 
-    console.log(modal_data)
-
     function addToy(data){
-        console.log(modal_data)
         const params = new Object;
             params.id_brinq = modal_data.id;
             params.id_festa = modal_data.evento.id;
@@ -97,8 +94,6 @@
 
         saldo = modal_data.evento.saldo[modal_data.tamanho]
         qtd = parseInt(key.target.value)
-
-        console.log(modal_data)
 
         if(qtd > etq){
             alert(`Temos apenas ${etq} peças deste ítem no estoque`)
