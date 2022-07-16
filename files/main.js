@@ -99,13 +99,12 @@ function loadContent(cat){
 function createFrame(frm){
     
     function btn_edit(){
-
+        frm.origem = 'edit'
         const btn = document.createElement('div')
         btn.classList = 'edit circle'
         btn.innerHTML = 'E'
         btn.addEventListener('click',()=>{
-            console.log(frm)
-            open = openHTML('edit_frame.html','pop-up','Edição',frm) 
+            open = openHTML('new_frame.html','pop-up','Edição',frm) 
         })
         btn.data = frm
 

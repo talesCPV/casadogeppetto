@@ -65,10 +65,10 @@
 
     function fillKit(){
 
-        function addOption(json){
+        function addOption(json){        
             op = document.createElement('option')
             op.value = json.id
-            op.innerHTML = json.nome
+            op.innerHTML = json.nome + ' - ' + parseFloat(json.valor).toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})
             return op
         }
 
