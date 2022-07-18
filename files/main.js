@@ -99,13 +99,12 @@ function loadContent(cat){
 function createFrame(frm){
     
     function btn_edit(){
-
+        frm.origem = 'edit'
         const btn = document.createElement('div')
         btn.classList = 'edit circle'
         btn.innerHTML = 'E'
         btn.addEventListener('click',()=>{
-            console.log(frm)
-            open = openHTML('edit_frame.html','pop-up','Edição',frm) 
+            open = openHTML('new_frame.html','pop-up','Edição',frm) 
         })
         btn.data = frm
 
@@ -235,6 +234,23 @@ function number(campo){
 
     campo.value = out_text ;
 }  
+
+
+function getEnter(e, button = ''){
+    var keynum;
+
+    if(window.event) { // IE                  
+      keynum = e.keyCode;
+    } else if(e.which){ // Netscape/Firefox/Opera                 
+      keynum = e.which;
+    }
+
+    if(keynum == 13){
+        document.querySelector('#'+button).click()
+    }
+
+
+}
 
 function phone(param){ // formata a string no padrão TELEFONE
     number(param);

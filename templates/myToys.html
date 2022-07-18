@@ -2,18 +2,6 @@
  
     <style>
 
-        .frm-brinq{
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .frm-brinq *{
-            padding: 8px;
-            margin: 10px;
-            width: 97%;
-        }
-
         .modal-content{
             width: 90vw;
 
@@ -22,10 +10,20 @@
         .no-margin, canvas{
             margin: 0 !important;
             padding: 0 !important;
+            max-width: 40.5px;
         }
 
         legend{
             width: auto !important;
+        }
+
+        #btnContrata{
+            margin-top: 10px;
+            width: 100%;
+        }
+
+        #tblToys, #tblMyToys{
+            width: calc(100% - 40px);
         }
 
     </style>
@@ -35,7 +33,7 @@
         <fieldset>
             <legend>Adicione um Brinquedo</legend>
             <div class="inline">
-                <input type="text" id="edtBusca" placeholder="Digite sua busca aqui">
+                <input type="text" id="edtBusca" placeholder="Digite sua busca aqui" onkeypress="return getEnter(event, 'btnBusca')" >
                 <button id="btnBusca">Busca</button>
             </div>
             <table id="tblToys"></table>

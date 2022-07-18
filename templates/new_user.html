@@ -49,8 +49,9 @@
 
         return (A == B && A.trim() != '') ? true : false
     }
-
-    if(modal_data != ''){
+console.log(modal_data)
+    if(modal_data.nome != undefined){
+        
         document.querySelector('#edtNome').value = modal_data.nome
         document.querySelector('#edtUser').value = modal_data.username
         document.querySelector('#edtEmail').value = modal_data.email
@@ -58,6 +59,9 @@
         document.querySelector('#cmbAccess').value = modal_data.access
         document.querySelector('#btnNovo').innerHTML = 'Salvar'
         document.querySelector('#btnDel').style = 'display:block;'
+    }else if(modal_data == 0){
+        document.querySelector('#cmbAccess').value = 1
+        document.querySelector('#cmbAccess').style = 'display:none;'
     }
 
     document.querySelector('#btnNovo').addEventListener('click',()=>{
@@ -72,7 +76,7 @@
                 params.nome = document.querySelector('#edtNome').value;
             let myPromisse
 
-            if(modal_data != ''){
+            if(modal_data.nome != undefined){
                 params.id = modal_data.id;
                 myPromisse = queryDB(params,7)
             }else{
@@ -82,8 +86,14 @@
 
         myPromisse.then((resolve)=>{
             btnClose.click();
-            openHTML('config.html')
-            viewUsers()
+            if(modal_data == 0){
+                openHTML('login.html','pop-up')
+            }else{
+                openHTML('config.html')
+                viewUsers()
+            }
+            
+            
         });
 
 

@@ -31,6 +31,7 @@
        
         Imagem
         <input  name="up_file" id="up_file"   type="file"      accept=".jpg,.jpeg,.png">
+        <canvas width="300" height="300" id="cnvImg"></canvas>
 
         Cor de Fundo
         <input id="cmbColor" type="color" value="#f0a70a" >
@@ -41,15 +42,28 @@
         Texto
         <textarea id="edtTexto" cols="40" rows="5"></textarea>
         <button id="btnAdd"> Adicionar </button>
-        
+        <button id="btnDel" style="display:none;">Deletar</button> 
     </div>
 
 </template>
 
 <script>        
+
+    if(modal_data!=''){
+        document.querySelector('#cmbColor').value = modal_data.background
+        document.querySelector('#cmbFont').value = modal_data.font
+        document.querySelector('#edtTexto').value = modal_data.text
+        document.querySelector('#btnAdd').innerHTML = 'Salvar'
+        document.querySelector('#btnDel').style = 'display:block;'
+        if(modal_data.filename.trim() != ''){
+            loadImg(modal_data.filename)
+        }
+
+    }
+
     document.querySelector('#btnAdd').addEventListener('click',()=>{
 
-        document.querySelector('#hdnAccess').value = localStorage.getItem('access');
+//        document.querySelector('#hdnAccess').value = localStorage.getItem('access');
 
         const up_data = new FormData();        
             up_data.append("up_file",  document.querySelector('#up_file').files[0]);
@@ -74,22 +88,31 @@
 
         myPromisse.then((resolve)=>{
 
+            path = document.querySelector('#up_file').value.split('\\')[2]           
+            if(path == undefined){
+                path = modal_data != '' ? modal_data.filename.trim() : ''
+            }
+            
+
             const params = new Object;        
             params.category = localStorage.getItem("frame");
             params.background = document.querySelector('#cmbColor').value;
-            if(resolve == 1){
-                params.content = 'pic';
-                filename = document.querySelector('#up_file').value.split('\\')
-                params.filename = filename[filename.length-1] 
-
-            }else{
+            if(path == ''){
                 params.content = 'txt';
-                params.filename = ''
+            }else{
+                params.content = 'pic';                
             }
+            params.filename = path
             params.font = document.querySelector('#cmbFont').value;
             params.text = document.querySelector('#edtTexto').value;
 
-            const myPromisse = queryDB(params,3)
+            let myPromisse
+                        if(modal_data != ''){
+                            params.id = modal_data.id;
+                            myPromisse = queryDB(params,4)
+                        }else{
+                            myPromisse = queryDB(params,3)
+                        }            
 
             myPromisse.then(()=>{
                 loadContent(localStorage.getItem("frame"));
@@ -98,6 +121,50 @@
             btnClose.click();
 
         })
+    })
+
+    document.querySelector('#up_file').addEventListener('change',()=>{
+
+        if (document.querySelector('#up_file').files && document.querySelector('#up_file').files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+
+                var ctx = document.getElementById('cnvImg');
+                if (ctx.getContext) {
+
+                    ctx = ctx.getContext('2d');
+                    let preview = new Image();
+                    preview.onload = function () {
+                        ar = aspect_ratio(preview)
+                        ctx.drawImage(preview, 0, 0,preview.width,preview.height,ar[0],ar[1],ar[2],ar[3]);
+                    };
+
+                    preview.src = e.target.result
+            
+                }
+
+            }
+
+            reader.readAsDataURL(document.querySelector('#up_file').files[0]);
+        }
+
+    })
+
+    document.querySelector('#btnDel').addEventListener('click',()=>{
+        if (confirm('Deseja deletar este Post?')) {
+
+            const params = new Object;
+            params.id = data.id;
+            const myPromisse = queryDB(params,5)
+
+            myPromisse.then(()=>{
+                loadContent(localStorage.getItem("frame"));
+            })
+
+            btnClose.click();     
+
+        }        
     })
 
 </script>    

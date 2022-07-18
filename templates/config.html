@@ -34,7 +34,7 @@
         <fieldset>
             <legend>Kits</legend>
             <div class="inline">
-                <input type="text" id="edtBuscaKit" placeholder="Digite sua busca aqui">
+                <input type="text" id="edtBuscaKit" placeholder="Digite sua busca aqui" onkeypress="return getEnter(event, 'btnBuscaKit')">
                 <button id="btnBuscaKit">Busca</button>
             </div>
             <table id="tblKit"></table>
@@ -44,7 +44,7 @@
         <fieldset>
             <legend>Brinquedos</legend>
             <div class="inline">
-                <input type="text" id="edtBuscaBrinq" placeholder="Digite sua busca aqui">
+                <input type="text" id="edtBuscaBrinq" placeholder="Digite sua busca aqui" onkeypress="return getEnter(event, 'btnBuscaBrinq')">
                 <button id="btnBuscaBrinq">Busca</button>
             </div>
             <table id="tblBrinq"></table>
@@ -55,7 +55,7 @@
             <legend>Usuários</legend>
 
             <div class="inline">
-                <input type="text" id="edtBuscaUser" placeholder="Digite sua busca aqui">
+                <input type="text" id="edtBuscaUser" placeholder="Digite sua busca aqui" onkeypress="return getEnter(event, 'btnBuscaUser')">
                 <button id="btnBuscaUser">Busca</button>
             </div>
             <table id="tblUser"></table>
@@ -81,7 +81,7 @@
     function viewToys(){
 
         const params = new Object;
-            params.nome = document.querySelector('#edtBuscaBrinq').value;
+            params.nome = document.querySelector('#edtBuscaBrinq').value.trim();
             
         const myPromisse = queryDB(params,10)
 
@@ -115,7 +115,7 @@
     function viewKit(){
 
         const params = new Object;
-            params.nome = document.querySelector('#edtBuscaKit').value;
+            params.nome = document.querySelector('#edtBuscaKit').value.trim();
 
         const myPromisse = queryDB(params,15)
 
@@ -149,6 +149,7 @@
 
         const params = new Object;
             params.hash = localStorage.getItem("hash");
+            params.nome = document.querySelector('#edtBuscaUser').value.trim();
 
         const myPromisse = queryDB(params,6)
 
@@ -222,7 +223,7 @@
 
     document.querySelector('#btnNewUser').addEventListener('click',()=>{
 
-        openHTML('new_user.html','pop-up','Novo Usuário')
+        openHTML('new_user.html','pop-up','Novo Usuário',1)
 
     })
 
