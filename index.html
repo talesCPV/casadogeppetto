@@ -7,96 +7,102 @@
     <link rel="stylesheet" href="style/reset.css">
     <link rel="stylesheet" href="style/menu.css">
     <link rel="stylesheet" href="style/modal.css">
+    <!-- JS-PDF -->
+    <script 
+        src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.4.1/jspdf.debug.js" 
+        integrity="sha384-THVO/sM0mFD9h7dfSndI6TS0PgAGavwKvB5hAxRRvc0o9cPLohB0wb/PTA7LdUHs" 
+        crossorigin="anonymous">
+    </script>    
+    <!-- CSS -->
+    <style>
 
-<style>
+        /* Theming */
+        @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap"); /* import font */
 
-    /* Theming */
-    @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap"); /* import font */
+        :root{
+            --white: #f8f4c1;
+            --black: #36383F;
+            --gray: #85888C;
+            --sel_black: rgb(43, 224, 19);
+            --sel_white: rgb(224, 19, 19);
+        } /* variables*/
 
-    :root{
-        --white: #f8f4c1;
-        --black: #36383F;
-        --gray: #85888C;
-        --sel_black: rgb(43, 224, 19);
-        --sel_white: rgb(224, 19, 19);
-    } /* variables*/
+        main{
+            position: relative;
+            z-index: -2;
+        }
 
-    main{
-        position: relative;
-        z-index: -2;
-    }
+        article{
+            position: relative;
+            z-index: -2;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
 
-    article{
-        position: relative;
-        z-index: -2;
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-    }
+        .frame{
+            position: relative;
+            z-index: -1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            flex-wrap: wrap;
+            padding: 5px;
+            margin: 10px;
+            width: 250px;
+            height: 250px;
+        }
 
-    .frame{
-        position: relative;
-        z-index: -1;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-        flex-wrap: wrap;
-        padding: 5px;
-        margin: 10px;
-        width: 250px;
-        height: 250px;
-    }
+        .frame img{
+            max-width: 200px;
+            max-height: 200px;
+        }
 
-    .frame img{
-        max-width: 200px;
-        max-height: 200px;
-    }
+        .icon{
+            width: 50px;
+            height: 50px;
+        }
 
-    .icon{
-        width: 50px;
-        height: 50px;
-    }
+        .circle{       
+            background-color: beige;
+            width: 50px;
+            height: 50px;
+            border-radius: 25px;
+            text-align: center;
+            padding: 10px;
+            font-size: 20px;
+            font-weight: bolder;
+            cursor: pointer;
+        }
 
-    .circle{       
-        background-color: beige;
-        width: 50px;
-        height: 50px;
-        border-radius: 25px;
-        text-align: center;
-        padding: 10px;
-        font-size: 20px;
-        font-weight: bolder;
-        cursor: pointer;
-    }
+        .circle:hover{
+            background-color: rgb(227, 214, 240);
+        }
 
-    .circle:hover{
-        background-color: rgb(227, 214, 240);
-    }
+        .edit{
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+        }
 
-    .edit{
-        position: absolute;
-        bottom: 10px;
-        right: 10px;
-    }
+        .social{
+            display: flex;
+            position: fixed;
+            top: 8vh;
+            right: 0vw;
+            -webkit-transition: .2s ease-out;
+            -moz-transition: .2s ease-out;
+            transition: .2s ease-out;
+        }
 
-    .social{
-        display: flex;
-        position: fixed;
-        top: 8vh;
-        right: 0vw;
-        -webkit-transition: .2s ease-out;
-        -moz-transition: .2s ease-out;
-        transition: .2s ease-out;
-    }
+        .social *{
+            display: none;
+            margin: 5px 10px;
+            cursor: pointer;
+        }
 
-    .social *{
-        display: none;
-        margin: 5px 10px;
-        cursor: pointer;
-    }
-
-</style>
+    </style>
 
 </head>
 <body>

@@ -61,15 +61,24 @@
         modal_data.saldo.M = parseInt(modal_data.M)
         modal_data.saldo.G = parseInt(modal_data.G)
 
+    if(modal_data.status != 'Aberto'){
+        document.querySelector('#btnContrata').className = 'hide'
+    
+    }
+
 
     function saldo(){
 
         lab = ''
-        if((modal_data.saldo.P + modal_data.saldo.M + modal_data.saldo.G) > 0){
-            lab = `Você pode adicionar mais ${modal_data.saldo.P} tam. P, 
-                   ${modal_data.saldo.M} tam. M e ${modal_data.saldo.G} tam. G`
+        if(modal_data.status == 'Aberto'){
+            if((modal_data.saldo.P + modal_data.saldo.M + modal_data.saldo.G) > 0){
+                lab = `Você pode adicionar mais ${modal_data.saldo.P} tam. P, 
+                    ${modal_data.saldo.M} tam. M e ${modal_data.saldo.G} tam. G`
+            }else{
+                lab = 'Todos os brinquedos já foram selecionados.'
+            }
         }else{
-            lab = 'Todos os brinquedos já foram selecionados.'
+            lab = 'Evento Encerrado'
         }
 
         document.querySelector('#lblSaldo').innerHTML = lab
@@ -142,15 +151,17 @@
                 const json = JSON.parse(resolve);
 
                 for(let i=0; i<json.length; i++){
+                    const qtd = reserva(json[i])
                     const tr = document.createElement('tr')
                     tr.appendChild(addTD(json[i].id,'hide'))
                     tr.appendChild(addTD(json[i].nome))
                     tr.appendChild(addTD(json[i].tamanho))
-                    tr.appendChild(addTD(reserva(json[i])))
+                    tr.appendChild(addTD(qtd))
                     tr.appendChild(addTD(json[i].sobre,'hide'))
                     tr.appendChild(addTD(`<canvas width="300" height="300" id="cnvImg${i}"></canvas>`,'no-margin'))
                     tr.title=json[i].sobre
                     tr.dados = json[i]
+//                    tr.className = qtd > 0 ? '' : 'hide'
                     tab.appendChild(tr)
                     loadImg(json[i].img,"cnvImg"+ i)
 
@@ -243,8 +254,11 @@
 
 
     document.querySelector('#btnBusca').addEventListener('click',()=>{
-
-        viewToys()
+        if(modal_data.status == 'Aberto'){
+            viewToys()
+        }else{
+            alert('Não podemos mais adicionar novos ítens. pois este evento já foi encerrado.')
+        }
 
     })
 
@@ -261,19 +275,43 @@
     })
 
     document.querySelector('#tblMyToys').addEventListener('click',(e)=>{
-
-        if (confirm('Deseja realmente deletar este brinquedo da lista?')) {
+        if(modal_data.status == 'Aberto'){
+            if (confirm('Deseja realmente deletar este brinquedo da lista?')) {
             
-            const params = new Object;
-                params.id = e.target.parentNode.dados.id;
+                const params = new Object;
+                    params.id = e.target.parentNode.dados.id;
 
-            const myPromisse = queryDB(params,21)
-            myPromisse.then((resolve)=>{
-                viewMyToys()
-            });         
+                const myPromisse = queryDB(params,21)
+                myPromisse.then((resolve)=>{
+                    viewMyToys()
+                });         
 
-        }            
+            }                        
+        }else{
+            alert('Não podemos deletar este ítem, pois este evento já foi encerrado.')
+        }
         
+    })
+
+    document.querySelector('#btnContrata').addEventListener('click',()=>{
+
+//        alert('Encerrar!!!!')
+
+//        var imgData = ""; // base-64
+        var doc = new jsPDF({
+            orientation: 'landscape',
+            unit: 'cm',
+            format: 'letter'
+        })  
+        doc.setFontSize(40);
+        doc.text(35, 25, "Artigo para o iMasters");
+//        doc.addImage(imgData, 'JPEG', 15, 40, 180, 180);        
+        doc.text('Hello world!', 10, 10)
+        doc.save('a4.pdf')
+
+
+
+
     })
 
 

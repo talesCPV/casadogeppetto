@@ -43,7 +43,7 @@ var over_modal = document.getElementById("overModal");
 var over_title = document.getElementById("over-title");
 var over_text = document.querySelector(".over-text");
 var over_close = document.querySelector(".over-close");
-
+var today = new Date()
 
  /*  MODAL  */
 document.querySelector('.close').addEventListener('click',()=>{

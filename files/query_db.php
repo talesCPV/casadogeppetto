@@ -26,7 +26,7 @@
          "17" => 'UPDATE tb_kit SET y00="x00", y01="x01", y02="x02", y03="x03", y04="x04" WHERE y05="x05";',
          "18" => 'DELETE FROM tb_kit WHERE y00="x00";',
          "19" => 'INSERT INTO tb_agenda (y00, y01, y02) VALUES ("x00", "x01", "x02");',
-         "20" => 'SELECT A.id, B.nome, B.tamanho, A.qtd, B.img  FROM tb_agenda as A
+         "20" => 'SELECT A.id, B.nome, B.tamanho, A.qtd, B.img, B.sobre  FROM tb_agenda as A
                     INNER JOIN tb_festa as F
                     INNER JOIN tb_brinquedo as B
                     WHERE A.id_festa = F.id
