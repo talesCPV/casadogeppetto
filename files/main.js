@@ -201,6 +201,16 @@ function queryDB(params,cod){
     });      
 }
 
+
+function dateTransform(dt, format='db'){
+
+    day = dt.getDate()
+    month = dt.getMonth() + 1
+    year = dt.getFullYear()
+
+    return format='db'? `${year}-${month}-${day}` : `${day}/${month}/${year}`
+}
+
 function inteiro(K){
     number(K)
     K.value = K.value.trim() == '' ? 0 : parseInt(K.value)

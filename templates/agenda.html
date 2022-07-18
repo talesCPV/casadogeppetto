@@ -164,4 +164,13 @@
         openHTML('myToys.html','pop-up',data.nome+" - "+formatData(data.data)+'<br>'+data.kit ,data)
     })
 
+    document.querySelector('#edtData').addEventListener('change',()=>{
+        schedule = new Date(document.querySelector('#edtData').value)
+        if(schedule < today){
+            alert('Por favor, selecione uma data futura válida')
+            document.querySelector('#edtData').value = dateTransform(today)
+        }
+    })
+
+
 </script>    

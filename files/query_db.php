@@ -15,15 +15,15 @@
          "11" => 'UPDATE tb_brinquedo SET y00="x00", y01="x01", y02="x02", y03="x03", y04="x04", y05="x05" WHERE y06="x06";',
          "12" => 'DELETE FROM tb_brinquedo WHERE y00="x00";',
          "13" => 'INSERT INTO tb_festa (y00, y01, y02, y03) VALUES ("x00", "x01", "x02", "x03");',
-         "14" => 'SELECT F.*,U.nome as cliente, K.nome as kit, K.P, K.M, K.G, K.valor FROM tb_festa as F 
+         "14" => 'SELECT F.*,U.nome as cliente, K.nome as kit, K.P, K.M, K.G, K.valor, K.monitoria FROM tb_festa as F 
                     INNER JOIN tb_usuario as U 
                     INNER JOIN tb_kit as K 
                     WHERE F.y00="x00" 
                     AND F.id_user = U.id
                     AND F.id_kit = K.id;',
          "15" => 'SELECT * FROM tb_kit WHERE y00 LIKE "%x00%"',
-         "16" => 'INSERT INTO tb_kit (y00, y01, y02, y03, y04) VALUES ("x00", "x01", "x02", "x03", "x04");',
-         "17" => 'UPDATE tb_kit SET y00="x00", y01="x01", y02="x02", y03="x03", y04="x04" WHERE y05="x05";',
+         "16" => 'INSERT INTO tb_kit (y00, y01, y02, y03, y04, y05) VALUES ("x00", "x01", "x02", "x03", "x04", "x05");',
+         "17" => 'UPDATE tb_kit SET y00="x00", y01="x01", y02="x02", y03="x03", y04="x04", y05="x05" WHERE y06="x06";',
          "18" => 'DELETE FROM tb_kit WHERE y00="x00";',
          "19" => 'INSERT INTO tb_agenda (y00, y01, y02) VALUES ("x00", "x01", "x02");',
          "20" => 'SELECT A.id, B.nome, B.tamanho, A.qtd, B.img, B.sobre  FROM tb_agenda as A

@@ -295,22 +295,33 @@
 
     document.querySelector('#btnContrata').addEventListener('click',()=>{
 
-//        alert('Encerrar!!!!')
+console.log(modal_data)        
 
-//        var imgData = ""; // base-64
+        var imgData = new Image()
+        imgData.src = 'assets/logo.png'
+//        doc.addImage(imgData, 'png', 15, 40, 180, 180);        
+
+
         var doc = new jsPDF({
-            orientation: 'landscape',
-            unit: 'cm',
-            format: 'letter'
+            orientation: 'p',
+            unit: 'mm',
+            format: 'a4'
         })  
-        doc.setFontSize(40);
-        doc.text(35, 25, "Artigo para o iMasters");
-//        doc.addImage(imgData, 'JPEG', 15, 40, 180, 180);        
-        doc.text('Hello world!', 10, 10)
+
+        doc.rect(5,5,200,286)
+
+        doc.addImage(imgData, 'png', 8, 8, 35, 25);        
+
+//        doc.setFontSize(30);
+//        doc.text(70, 15, "Casa do Gepeto");
+
+        doc.setFontSize(20);
+        doc.text('CONTRATO', 85, 15)
+
+
+
+
         doc.save('a4.pdf')
-
-
-
 
     })
 

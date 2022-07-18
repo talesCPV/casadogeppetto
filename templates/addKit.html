@@ -28,6 +28,12 @@
         <input type="text"     id="edtM" placeholder="Qtd. Peças M" value="0" onkeyup="inteiro(this)">
         G
         <input type="text"     id="edtG" placeholder="Qtd. Peças G" value="0" onkeyup="inteiro(this)">
+        <div class="inline">
+            <label for="ckbMon">Monitoria</label>
+            <input type="checkbox" id="ckbMon" checked>
+    
+        </div>
+
         Valor R$
         <input type="text"     id="edtValor" placeholder="Valor em R$" value="0" onkeyup="money(this)">
 
@@ -45,6 +51,7 @@
         document.querySelector('#edtP').value = modal_data.P
         document.querySelector('#edtM').value = modal_data.M
         document.querySelector('#edtG').value = modal_data.G
+        document.querySelector('#ckbMon').checked = parseInt(modal_data.monitoria)
         document.querySelector('#edtValor').value = modal_data.valor
         document.querySelector('#btnNovo').innerHTML = 'Salvar'
         document.querySelector('#btnDel').style = 'display:block;'
@@ -58,6 +65,7 @@
                 params.P = document.querySelector('#edtP').value
                 params.M = document.querySelector('#edtM').value
                 params.G = document.querySelector('#edtG').value
+                params.monitoria = document.querySelector('#ckbMon').checked
                 params.valor = document.querySelector('#edtValor').value
 
                 let myPromisse
