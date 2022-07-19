@@ -2,13 +2,13 @@
 
     $query_db = array(
          "0"  => 'SELECT * FROM tb_usuario WHERE y00="x00" AND y01="x01";',
-         "1"  => 'INSERT INTO tb_usuario (y00, y01, y02, y03, y04, y05) VALUES ("x00", "x01", "x02", "x03", "x04", "x05");',
+         "1"  => 'INSERT INTO tb_usuario (y00, y01, y02, y03, y04, y05, y06, y07, y08, y09, y10, y11) VALUES ("x00", "x01", "x02", "x03", "x04", "x05", "x06", "x07", "x08", "x09", "x10", "x11");',
          "2"  => 'SELECT * FROM tb_frames WHERE y00="x00" AND y01<="x01" ORDER BY id DESC;',
          "3"  => 'INSERT INTO tb_frames (y00, y01, y02, y03, y04, y05) VALUES ("x00", "x01", "x02", "x03", "x04", "x05");',
          "4"  => 'UPDATE tb_frames SET y00="x00", y01="x01", y02="x02", y03="x03", y04="x04", y05="x05" WHERE y06="x06";',
          "5"  => 'DELETE FROM tb_frames  WHERE y00="x00";',
          "6"  => 'SELECT * FROM tb_usuario as A  WHERE(SELECT B.access from tb_usuario as B WHERE hash = "x00") = 10 AND A.y01 LIKE "%x01%";',
-         "7"  => 'UPDATE tb_usuario SET y00="x00", y01="x01", y02="x02", y03="x03", y04="x04", y05="x05" WHERE y06="x06";',
+         "7"  => 'UPDATE tb_usuario SET y00="x00", y01="x01", y02="x02", y03="x03", y04="x04", y05="x05", y06="x06", y07="x07", y08="x08", y09="x09", y10="x10", y11="x11"  WHERE y12="x12";',
          "8"  => 'DELETE FROM tb_usuario WHERE y00="x00";',
          "9"  => 'INSERT INTO tb_brinquedo (y00, y01, y02, y03, y04, y05) VALUES ("x00", "x01", "x02", "x03", "x04", "x05");',
          "10" => 'SELECT * FROM tb_brinquedo WHERE y00 LIKE "%x00%"',

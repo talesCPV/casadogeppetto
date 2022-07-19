@@ -261,6 +261,28 @@ function getEnter(e, button = ''){
 
 }
 
+function valCPF(edt){
+    let ok_chr = ['1','2','3','4','5','6','7','8','9','0'];
+    var num = edt.value;
+    var count = 0;
+    var out = '';
+
+    for(i=0;i<num.length;i++){
+        chr = num[i]
+        if(ok_chr.includes(chr)){
+            count++;
+            if(count == 4 || count == 7){
+                out += '.' ;
+            }else if(count == 10){
+                out += '-' ;
+            }
+            out += chr;	
+        }
+		
+    }
+    edt.value = out;
+}
+
 function phone(param){ // formata a string no padrão TELEFONE
     number(param);
     var num = param.value;
