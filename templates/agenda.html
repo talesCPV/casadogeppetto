@@ -101,7 +101,7 @@
             const tab = document.querySelector('#tblFestas')
             tab.innerHTML = ''
             if(resolve.trim() != ""){            
-                tab.innerHTML = '<tr><th class="td-min">id</th><th>Data</th><th>Nome</th><th>Kit</th></tr>'
+                tab.innerHTML = '<tr><th class="td-min">id</th><th>Data</th><th>Nome</th><th>Kit</th><th>Status</th></tr>'
                 function addTD(val,cn=''){
                     const td = document.createElement('td')
                     td.innerHTML = val
@@ -112,19 +112,19 @@
                 }
 
                 const json = JSON.parse(resolve);
-
                 for(let i=0; i<json.length; i++){
+                    schedule = new Date(json[i].data)
+                    json[i].status = json[i].aberta != '1' || today > schedule   ? 'Encerrado' : 'Aberto'
                     const tr = document.createElement('tr')
                     tr.appendChild(addTD(json[i].id))
                     tr.appendChild(addTD(formatData(json[i].data)))
                     tr.appendChild(addTD(json[i].nome))
                     tr.appendChild(addTD(json[i].kit))
                     tr.appendChild(addTD(json[i].id_user,'hide'))
+                    tr.appendChild(addTD(json[i].status))
                     tr.dados = json[i]
                     tab.appendChild(tr)
-
                 }
-
             }
             
         });
@@ -163,5 +163,14 @@
         data.origin = 'agenda'
         openHTML('myToys.html','pop-up',data.nome+" - "+formatData(data.data)+'<br>'+data.kit ,data)
     })
+
+    document.querySelector('#edtData').addEventListener('change',()=>{
+        schedule = new Date(document.querySelector('#edtData').value)
+        if(schedule < today){
+            alert('Por favor, selecione uma data futura válida')
+            document.querySelector('#edtData').value = dateTransform(today)
+        }
+    })
+
 
 </script>    

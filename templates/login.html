@@ -33,7 +33,7 @@
         <a href="#" class="logo"><img src="assets/logo.png" alt=""></a>
 
         <input type="text"     id="edtUser" placeholder="Usuário">
-        <input type="password" id="edtPass" placeholder="Senha"  >
+        <input type="password" id="edtPass" placeholder="Senha" onkeypress="return getEnter(event, 'btnLogin')" >
         <button id="btnLogin"> LOGIN </button>
         
         <hr size="1" width="90%">

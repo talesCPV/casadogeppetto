@@ -43,7 +43,7 @@ var over_modal = document.getElementById("overModal");
 var over_title = document.getElementById("over-title");
 var over_text = document.querySelector(".over-text");
 var over_close = document.querySelector(".over-close");
-
+var today = new Date()
 
  /*  MODAL  */
 document.querySelector('.close').addEventListener('click',()=>{
@@ -201,6 +201,16 @@ function queryDB(params,cod){
     });      
 }
 
+
+function dateTransform(dt, format='db'){
+
+    day = dt.getDate()
+    month = dt.getMonth() + 1
+    year = dt.getFullYear()
+
+    return format='db'? `${year}-${month}-${day}` : `${day}/${month}/${year}`
+}
+
 function inteiro(K){
     number(K)
     K.value = K.value.trim() == '' ? 0 : parseInt(K.value)
@@ -234,6 +244,23 @@ function number(campo){
 
     campo.value = out_text ;
 }  
+
+
+function getEnter(e, button = ''){
+    var keynum;
+
+    if(window.event) { // IE                  
+      keynum = e.keyCode;
+    } else if(e.which){ // Netscape/Firefox/Opera                 
+      keynum = e.which;
+    }
+
+    if(keynum == 13){
+        document.querySelector('#'+button).click()
+    }
+
+
+}
 
 function phone(param){ // formata a string no padrão TELEFONE
     number(param);
