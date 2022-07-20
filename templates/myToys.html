@@ -293,37 +293,58 @@
         
     })
 
-    document.querySelector('#btnContrata').addEventListener('click',()=>{
 
-console.log(modal_data)        
+    document.querySelector('#btnContrata').addEventListener('click',()=>{
+        contrato_pdf(modal_data)
+    })
+
+
+    function contrato_pdf(data){
+
+console.log(data)
+
+        function center_text(text,Y){
+            xOffset = (doc.internal.pageSize.getWidth() - text.length * (doc.internal.getFontSize() / 4.6)) /2;         
+            doc.text(text.toUpperCase(), xOffset, Y);
+        }
 
         var imgData = new Image()
-        imgData.src = 'assets/logo.png'
-//        doc.addImage(imgData, 'png', 15, 40, 180, 180);        
+            imgData.src = 'assets/logo.png'
+
+            var doc = new jsPDF({
+                orientation: 'p',
+                unit: 'mm',
+                format: 'a4'
+            })  
+
+            doc.rect(5,5,200,286)
+
+            doc.addImage(imgData, 'png', 14, 7, 36, 25);        
+
+            doc.setFontSize(11)
+            doc.setFont(undefined, 'bold')
+            center_text('CONTRATO DE LOCAÇÃO DE BRINQUEDOS PARA FESTAS E EVENTOS',46)
+            center_text(`${data.nome} - ${formatData(data.data)}`,55)
+
+            doc.setFont(undefined,'normal')
+            doc.text('FVL SB LTDA ME, CNPJ: 25.308.185/0001-27, sediada a Av. Lineu de Moura, n. 805,',30,65)        
+            doc.text('São José dos Campos/SP, doravante denominado LOCADORA.',30,70)
+            doc.text(`${data.cliente}, CPF ${data.CPF}, residente a ${data.endereco} - «Bairro», «Cidade»/SP`,30,78)
+            doc.text('doravante denominado LOCATÁRIA.',30,83)
+            doc.text('As partes acima qualificadas, tem entre si, justo e acertado os seguintes termos e',30,91)
+            doc.text('condições do contrato de locação de brinquedos, conforme a seguir.',30,96)
+                    
+            doc.setFont(undefined, 'bold')
+            
+                                        
+            
 
 
-        var doc = new jsPDF({
-            orientation: 'p',
-            unit: 'mm',
-            format: 'a4'
-        })  
-
-        doc.rect(5,5,200,286)
-
-        doc.addImage(imgData, 'png', 8, 8, 35, 25);        
-
-//        doc.setFontSize(30);
-//        doc.text(70, 15, "Casa do Gepeto");
-
-        doc.setFontSize(20);
-        doc.text('CONTRATO', 85, 15)
 
 
+            doc.save('contrato.pdf')
 
-
-        doc.save('a4.pdf')
-
-    })
+    }
 
 
 </script>    
