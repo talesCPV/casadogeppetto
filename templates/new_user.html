@@ -30,6 +30,7 @@
         <input type="text"    id="edtEnd" placeholder="Endereço" maxlength="70">
         <input type="text"    id="edtNum" placeholder="Numero" maxlength="5">
         <input type="text"    id="edtComp" placeholder="Complemento" maxlength="15">
+        <input type="text"    id="edtBairro" placeholder="Bairro" maxlength="40">
         <input type="text"    id="edtCidade" placeholder="Cidade" maxlength="40">
         <select id="cmbEstado">
             <option value="AC">Acre</option>
@@ -94,6 +95,7 @@ console.log(modal_data)
         document.querySelector('#edtEnd').value = modal_data.endereco
         document.querySelector('#edtNum').value = modal_data.num
         document.querySelector('#edtComp').value = modal_data.complemento
+        document.querySelector('#edtBairro').value = modal_data.bairro
         document.querySelector('#edtCidade').value = modal_data.cidade
         document.querySelector('#cmbEstado').value = modal_data.estado
         document.querySelector('#edtCPF').value = modal_data.CPF
@@ -115,6 +117,7 @@ console.log(modal_data)
                 params.num = document.querySelector('#edtNum').value;
                 params.complemento = document.querySelector('#edtComp').value;
                 params.cidade = document.querySelector('#edtCidade').value;
+                params.bairro = document.querySelector('#edtBairro').value;
                 params.estado = document.querySelector('#cmbEstado').value;
                 params.CPF = document.querySelector('#edtCPF').value;
                 params.cel = document.querySelector('#edtCel').value;
