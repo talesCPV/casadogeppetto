@@ -21,7 +21,18 @@ INSERT INTO tb_frames (category, content, background, justify, text) VALUES ("ph
 
 ALTER TABLE tb_usuario MODIFY cel varchar(15);
 ALTER TABLE tb_brinquedo ADD COLUMN ativo BOOLEAN DEFAULT TRUE;
-
+ALTER TABLE tb_festa ADD COLUMN local varchar(40) DEFAULT NULL;
+ALTER TABLE tb_festa ADD COLUMN endereco varchar(70) DEFAULT NULL;
+ALTER TABLE tb_festa ADD COLUMN cidade varchar(40) DEFAULT NULL;
+ALTER TABLE tb_festa ADD COLUMN num varchar(5) DEFAULT NULL;
+ALTER TABLE tb_festa ADD COLUMN estado varchar(2) DEFAULT NULL;
+ALTER TABLE tb_festa ADD COLUMN bairro varchar(40) DEFAULT NULL;
+ALTER TABLE tb_festa ADD COLUMN responsavel varchar(50) DEFAULT NULL;
+ALTER TABLE tb_festa ADD COLUMN cel varchar(15) DEFAULT NULL;
+ALTER TABLE tb_festa ADD COLUMN obs varchar(250) DEFAULT NULL;
+ALTER TABLE tb_festa ADD COLUMN inicio varchar(5) DEFAULT NULL;
+ALTER TABLE tb_festa ADD COLUMN montagem varchar(5) DEFAULT NULL;
+ALTER TABLE tb_festa ADD COLUMN desmontagem varchar(5) DEFAULT NULL;
 
 SELECT A.id, B.nome, B.tamanho, A.qtd, B.img  FROM tb_agenda as A
 	INNER JOIN tb_festa as F

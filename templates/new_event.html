@@ -1,0 +1,199 @@
+<template>
+ 
+    <style>
+
+        .modal-content{
+            width: 90vw;
+        }
+
+        .frm-evento{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .frm-evento *{
+            padding: 8px;
+            margin: 10px;
+            width: 80%;
+        }
+
+        #lblNovoUsuario{
+            font-size: 12px;
+        }
+
+    </style>
+
+    <div class="frm-evento">
+       
+        <div class="inline">
+            <label for="edtData" >Data</label>
+            <input id="edtData" type="date" > 
+        </div>
+        <div class="inline">
+            <label for="cmbKit">Kit</label>
+            <select id="cmbKit"></select>
+        </div>
+
+        <input type="text" id="edtNome" placeholder="Nome do Evento" title="Digite o nome do evento, ex: Aniversário do Pedrinho" maxlength="50">
+        <input type="text" id="edtLocal" placeholder="Nome do Local" title="Digite o nome do local do evento, ex: Associação de professores de SJC" maxlength="40">
+        <input type="text" id="edtEnd" placeholder="Endereço do Local" title="Digite o endereço onde ocorrerá o evento" maxlength="70">
+        <input type="text" id="edtNum" placeholder="Número" title="digite o número do endereço do local do evento" maxlength="5">
+        <input type="text" id="edtBairro" placeholder="Bairro" title="Digite o nome do bairro do local do evento" maxlength="40">
+        <input type="text" id="edtCidade" placeholder="Cidade" title="Digite o nome da Cidade do local do evento" maxlength="40">
+        <select id="cmbEstado" title="Selecione o estado" >
+            <option value="AC">Acre</option>
+            <option value="AL">Alagoas</option>
+            <option value="AP">Amapá</option>
+            <option value="AM">Amazonas</option>
+            <option value="BA">Bahia</option>
+            <option value="CE">Ceará</option>
+            <option value="DF">Distrito Federal</option>
+            <option value="ES">Espírito Santo</option>
+            <option value="GO">Goiás</option>
+            <option value="MA">Maranhão</option>
+            <option value="MT">Mato Grosso</option>
+            <option value="MS">Mato Grosso do Sul</option>
+            <option value="MG">Minas Gerais</option>
+            <option value="PA">Pará</option>
+            <option value="PB">Paraíba</option>
+            <option value="PR">Paraná</option>
+            <option value="PE">Pernambuco</option>
+            <option value="PI">Piauí</option>
+            <option value="RJ">Rio de Janeiro</option>
+            <option value="RN">Rio Grande do Norte</option>
+            <option value="RS">Rio Grande do Sul</option>
+            <option value="RO">Rondônia</option>
+            <option value="RR">Roraima</option>
+            <option value="SC">Santa Catarina</option>
+            <option value="SP" selected>São Paulo</option>
+            <option value="SE">Sergipe</option>
+            <option value="TO">Tocantis</option>
+        </select>
+
+        <input type="text" id="edtInicio" placeholder="Horário de início" title="Horário de início da festa (chegada dos convidados), ex: 15:00" maxlength="5" onkeyup="horario(this)">
+        <input type="text" id="edtMontagem" placeholder="Horário de Montagem" title="Horário liberado para montagem dos brinquedos , ex: 12:00" maxlength="5" onkeyup="horario(this)">
+        <input type="text" id="edtDesmontagem" placeholder="Horário de Desmontagem" title="Horário estimado do final da festa para agendamento da desmontagem dos brinquedos, ex: 21:00" maxlength="5" onkeyup="horario(this)">
+        <input type="text" id="edtResp" placeholder="Responsável pelo Recebimento" title="Digite o nome do responsável pelo recebimento dos brinquedos na festa" maxlength="50" >
+        <input type="text" id="edtCel" placeholder="Telefone do responsável" title="Digite o celular do responsável por receber os brinquedos na festa" maxlength="15" onkeyup="phone(this)">
+        <label for="edtObs">Observações importantes</label>
+        <textarea id="edtObs" cols="30" rows="10" title="Espaço para digitar alguma informação importante"></textarea>
+        <button id="btnCriar" >Criar</button>   
+        
+    </div>
+
+</template>
+
+<script>        
+    fillKit()
+console.log(modal_data)    
+
+    if(modal_data != ''){
+//        document.querySelector('#edtData').ReadOnly
+        document.querySelector('#edtData').value = modal_data.data
+        document.querySelector('#edtNome').value = modal_data.nome
+        document.querySelector('#edtLocal').value = modal_data.local
+        document.querySelector('#edtEnd').value = modal_data.endereco
+        document.querySelector('#edtNum').value = modal_data.num
+        document.querySelector('#edtBairro').value = modal_data.bairro
+        document.querySelector('#edtCidade').value = modal_data.cidade
+        document.querySelector('#cmbEstado').value = modal_data.estado
+        document.querySelector('#edtInicio').value = modal_data.inicio
+        document.querySelector('#edtMontagem').value = modal_data.montagem
+        document.querySelector('#edtDesmontagem').value = modal_data.desmontagem
+        document.querySelector('#edtResp').value = modal_data.responsavel
+        document.querySelector('#edtCel').value = modal_data.cel
+        document.querySelector('#edtObs').value = modal_data.obs     
+        document.querySelector('#btnCriar').innerHTML = 'Salvar'
+    }
+
+
+    document.querySelector('#edtData').addEventListener('change',()=>{
+        schedule = new Date(document.querySelector('#edtData').value)
+        if(schedule < today){
+            alert('Por favor, selecione uma data futura válida')
+            document.querySelector('#edtData').value = dateTransform(today)
+        }
+    })
+
+    document.querySelector('#btnCriar').addEventListener('click',()=>{
+        addEvent()
+    })
+
+    function fillKit(){
+
+        function addOption(json){        
+            op = document.createElement('option')
+            op.value = json.id
+            op.innerHTML = json.nome + ' - ' + parseFloat(json.valor).toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})
+            if(modal_data != ''){
+                if(modal_data.id_kit == json.id){
+                    op.selected = true
+                }
+            }
+            return op
+        }
+
+        const params = new Object;
+            params.nome = '';
+
+        const myPromisse = queryDB(params,15)
+
+        myPromisse.then((resolve)=>{
+            kits = JSON.parse(resolve)
+            combo = document.querySelector('#cmbKit')
+            combo.innerHTML = ''
+
+            for(let i=0; i<kits.length; i++){
+                combo.appendChild(addOption(kits[i]))
+            }
+
+            
+
+        })
+    }
+
+    function addEvent(){
+  
+        const params = new Object;
+            params.id_user = localStorage.getItem('id');
+            params.id_kit = document.querySelector('#cmbKit').value;
+            params.data = document.querySelector('#edtData').value.trim();
+            params.nome = document.querySelector('#edtNome').value.trim();
+            params.local = document.querySelector('#edtLocal').value.trim();
+            params.endereco = document.querySelector('#edtEnd').value.trim();
+            params.cidade = document.querySelector('#edtCidade').value.trim();
+            params.num = document.querySelector('#edtNum').value.trim();
+            params.estado = document.querySelector('#cmbEstado').value.trim();
+            params.bairro = document.querySelector('#edtBairro').value.trim();
+            params.responsavel = document.querySelector('#edtResp').value.trim();
+            params.cel = document.querySelector('#edtCel').value.trim();
+            params.obs = document.querySelector('#edtObs').value.trim();
+            params.inicio = document.querySelector('#edtInicio').value.trim();
+            params.montagem = document.querySelector('#edtMontagem').value.trim();
+            params.desmontagem = document.querySelector('#edtDesmontagem').value.trim();
+
+console.log(params)
+
+            let myPromisse
+
+            if(modal_data != ''){
+                params.id = modal_data.id;
+                myPromisse = queryDB(params,25)
+            }else{
+                myPromisse = queryDB(params,13)
+            }       
+
+
+//        const myPromisse = queryDB(params,13)
+
+        myPromisse.then((resolve)=>{
+            btnClose.click()   
+            over_close.click()
+            openHTML('agenda.html')
+        })
+      
+    }
+
+
+</script>    

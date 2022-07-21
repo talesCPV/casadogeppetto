@@ -44,6 +44,7 @@ var over_title = document.getElementById("over-title");
 var over_text = document.querySelector(".over-text");
 var over_close = document.querySelector(".over-close");
 var today = new Date()
+var meses = ['janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho', 'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro']
 
  /*  MODAL  */
 document.querySelector('.close').addEventListener('click',()=>{
@@ -280,6 +281,36 @@ function valCPF(edt){
         }
 		
     }
+    edt.value = out;
+}
+
+function horario(edt){
+    let ok_chr = ['1','2','3','4','5','6','7','8','9','0'];
+    var num = edt.value;
+    var count = 0;
+    var out = '';
+
+    for(i=0;i<num.length;i++){
+        chr = num[i]
+        if(ok_chr.includes(chr)){
+
+            count++;
+            if(count == 3 ){
+                out += ':' ;
+            }
+            out += chr;	
+        }
+		
+    }
+
+    if(out.length == 1){
+        out = parseInt(out)<3 ? out : ''
+    }else if(out.length == 2){
+        out = parseInt(out)<24 ? out : out.substring(0,1)
+    }else if(out.length == 4){
+        out = parseInt(out.substring(3,4))< 6 ? out : out.substring(0,3)
+    }
+
     edt.value = out;
 }
 

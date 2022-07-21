@@ -14,8 +14,8 @@
          "10" => 'SELECT * FROM tb_brinquedo WHERE y00 LIKE "%x00%"',
          "11" => 'UPDATE tb_brinquedo SET y00="x00", y01="x01", y02="x02", y03="x03", y04="x04", y05="x05" WHERE y06="x06";',
          "12" => 'DELETE FROM tb_brinquedo WHERE y00="x00";',
-         "13" => 'INSERT INTO tb_festa (y00, y01, y02, y03) VALUES ("x00", "x01", "x02", "x03");',
-         "14" => 'SELECT F.*,U.nome as cliente, U.CPF, U.endereco, U.num, U.cidade, U.estado, U.bairro, K.nome as kit, K.P, K.M, K.G, K.valor, K.monitoria FROM tb_festa as F 
+         "13" => 'INSERT INTO tb_festa (y00, y01, y02, y03, y04, y05, y06, y07, y08, y09, y10, y11, y12, y13, y14, y15) VALUES ("x00", "x01", "x02", "x03", "x04", "x05", "x06", "x07", "x08", "x09", "x10", "x11", "x12", "x13", "x14", "x15");',
+         "14" => 'SELECT F.*,U.nome as cliente, U.CPF, U.endereco as cli_end, U.num as cli_num, U.cidade as cli_cidade, U.estado as cli_estado, U.bairro as cli_bairro, K.nome as kit, K.P, K.M, K.G, K.valor, K.monitoria FROM tb_festa as F 
                     INNER JOIN tb_usuario as U 
                     INNER JOIN tb_kit as K 
                     WHERE F.y00="x00" 
@@ -46,6 +46,7 @@
                     AND A.id_brinq = B.id
 	                AND F.data = "x00"
                     GROUP BY B.id;',
+         "25" => 'UPDATE tb_festa SET y00="x00", y01="x01", y02="x02", y03="x03", y04="x04", y05="x05", y06="x06", y07="x07", y08="x08", y09="x09", y10="x10", y11="x11", y12="x12", y13="x13", y14="x14", y15="x15" WHERE y16="x16";',
 
 
 
