@@ -39,28 +39,11 @@
 
     <h1>Agende sua Festa Conosco</h1>
 
-    <div class="frm-agenda" >
-        <h4>Crie um Evento</h4>
-        <div class="inline">
-            <label for="edtData" >Data</label>
-            <input id="edtData" type="date" > 
-        </div>
-        <div class="inline">
-            <label for="edtNome">Nome</label>
-            <input type="text" id="edtNome" placeholder="Nome do Evento" maxlength="50">
-        </div>
-        <div class="inline">
-            <label for="cmbKit">Kit</label>
-            <select id="cmbKit"></select>
-        </div>
-        <button id="btnNovoEvento" >Criar</button>       
-       
-    </div>
 
     <div class="frm-agenda" >
-    
+        <h4> Meus Eventos</h4>
         <table id="tblFestas"></table>
-    
+        <button id="btnNovoEvento" >Criar Novo</button>  
     </div>
 
 
@@ -69,34 +52,6 @@
 <script>        
 
     viewParty()
-    fillKit()
-
-
-    function fillKit(){
-
-        function addOption(json){        
-            op = document.createElement('option')
-            op.value = json.id
-            op.innerHTML = json.nome + ' - ' + parseFloat(json.valor).toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})
-            return op
-        }
-
-        const params = new Object;
-            params.nome = '';
-
-        const myPromisse = queryDB(params,15)
-
-        myPromisse.then((resolve)=>{
-            kits = JSON.parse(resolve)
-            combo = document.querySelector('#cmbKit')
-            combo.innerHTML = ''
-
-            for(let i=0; i<kits.length; i++){
-                combo.appendChild(addOption(kits[i]))
-            }
-
-        })
-    }
 
     function viewParty(){
 
@@ -142,6 +97,8 @@
 
     document.querySelector('#btnNovoEvento').addEventListener('click',()=>{
 
+        openHTML('new_event.html','pop-up','Crie seu Evento')
+/*        
         const id = localStorage.getItem('id')
         const dt = document.querySelector('#edtData').value.trim()
         const nm = document.querySelector('#edtNome').value.trim()
@@ -164,7 +121,7 @@
         }else{
             alert('Por favor, forneça uma data e um nome para o evento.')
         }
-
+*/
     })
 
     document.querySelector('#tblFestas').addEventListener('click',(e)=>{
@@ -173,13 +130,7 @@
         openHTML('myToys.html','pop-up',data.nome+" - "+formatData(data.data)+'<br>'+data.kit ,data)
     })
 
-    document.querySelector('#edtData').addEventListener('change',()=>{
-        schedule = new Date(document.querySelector('#edtData').value)
-        if(schedule < today){
-            alert('Por favor, selecione uma data futura válida')
-            document.querySelector('#edtData').value = dateTransform(today)
-        }
-    })
+
 
 
 </script>    
