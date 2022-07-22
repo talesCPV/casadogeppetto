@@ -86,8 +86,7 @@
 
 <script>        
     fillKit()
-console.log(modal_data)    
-
+  
     if(modal_data != ''){
 //        document.querySelector('#edtData').ReadOnly
         document.querySelector('#edtData').value = modal_data.data
@@ -105,6 +104,13 @@ console.log(modal_data)
         document.querySelector('#edtCel').value = modal_data.cel
         document.querySelector('#edtObs').value = modal_data.obs     
         document.querySelector('#btnCriar').innerHTML = 'Salvar'
+    }else{
+        document.querySelector('#edtEnd').value = ['undefined','null'].includes(localStorage.getItem("endereco")) ? '' : localStorage.getItem("endereco")
+        document.querySelector('#edtNum').value = ['undefined','null'].includes(localStorage.getItem("num")) ?'' : localStorage.getItem("num") 
+        document.querySelector('#edtBairro').value = ['undefined','null'].includes(localStorage.getItem("bairro")) ? '' : localStorage.getItem("bairro") 
+        document.querySelector('#edtCidade').value = ['undefined','null'].includes(localStorage.getItem("cidade")) ? '' : localStorage.getItem("cidade") 
+        document.querySelector('#edtCel').value = ['undefined','null'].includes(localStorage.getItem("cel")) ? '' : localStorage.getItem("cel") 
+        document.querySelector('#edtResp').value = ['undefined','null'].includes(localStorage.getItem("nome")) ? '' : localStorage.getItem("nome") 
     }
 
 

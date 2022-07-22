@@ -33,6 +33,10 @@ ALTER TABLE tb_festa ADD COLUMN obs varchar(250) DEFAULT NULL;
 ALTER TABLE tb_festa ADD COLUMN inicio varchar(5) DEFAULT NULL;
 ALTER TABLE tb_festa ADD COLUMN montagem varchar(5) DEFAULT NULL;
 ALTER TABLE tb_festa ADD COLUMN desmontagem varchar(5) DEFAULT NULL;
+ALTER TABLE tb_usuario ADD COLUMN aux varchar(1) DEFAULT 0;
+
+
+UPDATE tb_festa SET id_user="1", id_kit="5", data="2022-07-28", nome="evento Teste", local="qqq", endereco="11", cidade="222", num="11", estado="SP", bairro="1111", responsavel="dsfsd", cel="(12)9 8563-2548", obs="blablablabla", inicio="08:30", montagem="07:00", desmontagem="13:00" WHERE id="5";
 
 SELECT A.id, B.nome, B.tamanho, A.qtd, B.img  FROM tb_agenda as A
 	INNER JOIN tb_festa as F
