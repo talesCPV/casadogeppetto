@@ -97,7 +97,25 @@
 
     document.querySelector('#btnNovoEvento').addEventListener('click',()=>{
 
-        openHTML('new_event.html','pop-up','Crie seu Evento')
+        data = []
+        data.push(localStorage.getItem("nome"))
+        data.push(localStorage.getItem("endereco"))
+        data.push(localStorage.getItem("num"))
+        data.push(localStorage.getItem("bairro"))
+        data.push(localStorage.getItem("cidade"))
+        data.push(localStorage.getItem("cel"))
+        data.push(localStorage.getItem("nome"))
+
+        not_ok = data.includes('null') || data.includes('undefined') || data.includes('')
+
+        if(not_ok){
+            alert('Por favor, precisamos completar seu cadastro antes')
+            openHTML('new_user.html','pop-up','Complete seu cadastro',2)
+        }else{
+            openHTML('new_event.html','pop-up','Crie seu Evento')
+        }
+
+        
 /*        
         const id = localStorage.getItem('id')
         const dt = document.querySelector('#edtData').value.trim()

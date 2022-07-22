@@ -408,3 +408,238 @@ function money(campo){
     
     campo.value = out_text.trim() == '' ? 0 : out_text
 }
+
+function checkField(fields){
+    
+    for(let i=0; i< fields.length; i++){
+        if(document.getElementById(fields[i]).value.trim() == ''){
+            alert('Favor preencher todos os campos obrigatórios.')
+            document.getElementById(fields[i]).focus()
+            return false
+        }
+    }
+    return true
+}
+
+
+function contrato_pdf(data){
+
+    var imgData = new Image()
+        imgData.src = 'assets/logo.png'
+
+    var doc = new jsPDF({
+            orientation: 'p',
+            unit: 'mm',
+            format: 'a4'
+        })  
+
+    var txt = new Object
+            txt.heigth = 5
+            txt.x = 25
+            txt.y = 46
+            txt.width = doc.internal.pageSize.getWidth() - txt.x
+            txt.alt = 285
+            txt.text 
+
+    function addLine(N=1){
+        txt.y += txt.heigth * N
+    }
+
+    function frame(){
+        doc.rect(5,5,200,286)
+    }
+
+    function logo(){
+        doc.addImage(imgData, 'png', 14, 7, 36, 25);
+    }
+
+    function center_text(T=''){
+        let text = T==''? txt.text : T
+        xOffset = (doc.internal.pageSize.getWidth() - text.length * (doc.internal.getFontSize() / 4.6)) /2;         
+        doc.text(text.toUpperCase(), xOffset, txt.y);
+        addLine()
+    }
+
+    function block_text(T=''){
+        const text = T==''? txt.text.split(' ') : T.split(' ')
+        let line = ''
+
+        function print(){
+
+            if(line.length > 0){
+                doc.text(line.trim(), txt.x, txt.y);
+            }
+            addLine()
+            line = ''
+            if (txt.y >= txt.alt){
+                doc.addPage();
+                frame()
+                logo()
+                txt.y = 46 
+            }                
+        }
+
+        for(let i=0; i< text.length; i++){
+
+            if(text[i].includes('\n')){
+                line = line.trim() + ' ' + text[i].trim()
+                print()
+            }else if(text[i] != ''){
+                line = line.trim() + ' ' + text[i].trim()
+            }
+            
+            length = line.length * (doc.internal.getFontSize() / 4.6)
+            if(length > txt.width){
+                print()
+            }                
+        }
+        print()
+    }
+
+    function countHora(A, B){
+        hora = new Object
+            hora.A_h = parseInt(A.substring(0,2))
+            hora.A_m = parseInt(A.substring(3,5))
+            hora.B_h = parseInt(B.substring(0,2))
+            hora.B_m = parseInt(B.substring(3,5))
+        return (hora.B_h - hora.A_h) +','+ Math.floor(((hora.B_m - hora.A_m) < 0 ? (hora.B_m - hora.A_m) + 60 : (hora.B_m - hora.A_m))/0.6)
+
+    }
+
+    frame()
+    logo()
+
+    
+    doc.setFontSize(11)
+    doc.setFont(undefined, 'bold')
+    center_text('CONTRATO DE LOCAÇÃO DE BRINQUEDOS PARA FESTAS E EVENTOS')
+    center_text(`${data.nome} - ${formatData(data.data)}`)
+
+    addLine(2)
+
+    txt.text = `FVL SB LTDA ME, CNPJ 25.308.185/0001-27, sediada a Av. Lineu de Moura, n.805, São José dos Campos/SP, doravante denominado LOCADORA. 
+    
+    ${data.cliente}, CPF ${data.CPF}, residente a ${data.cli_end}, n.${data.cli_num}, ${data.cli_cidade}/${data.cli_estado} doravante denominado LOCATÁRIA. 
+    
+    As partes acima qualificadas, tem entre si, justo e acertado os seguintes termos e condições do contrato de locação de brinquedos, conforme a seguir.`
+
+    doc.setFont(undefined,'normal')
+    block_text()
+
+            
+    doc.setFont(undefined, 'bold')
+    
+    addLine()
+
+    block_text(`${data.kit} ${data.monitoria=='1' ? '+ MONITORA' : '' }`) 
+    addLine()    
+    block_text('Descrição dos Itens Locados:')     
+    addLine()
+    txt.text = ''
+    for(let i=0; i<data.myToys.length; i++){
+        txt.text += `${data.myToys[i].qtd}  ${data.myToys[i].nome} - tam ${data.myToys[i].tamanho}   
+        `
+    }
+
+    doc.setFont(undefined,'normal')
+    block_text()
+
+    preco = parseFloat(data.valor)
+
+    txt.text =`O kit será acompanhado por tapete de EVA cor madeira e lousa. 
+ 
+    O valor da locação é de ${preco.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})}, frete incluso, que deverão ser pagos através de depósito em conta corrente no banco NU BANK (Banco 260 - Nu Pagamentos S.A.), AG 0001, C/C 80940970-1, titularidade de Michele de Souza Lopes, CPF 286.193.928-16 ou via PIX - Chaves de acesso: "12981736952" ou "casadogeppetto@gmail.com" 
+     
+    50% (${(preco/2).toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})}) no recebimento do contrato para reserva de vaga. 
+    50% (${(preco/2).toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})}) até o dia da festa ${formatData(data.data)}
+    
+    
+    Contratam, sob as cláusulas e condições seguintes: 
+ 
+     
+    I - A locação dos brinquedos vigerá pelo período de ${countHora(data.montagem,data.desmontagem)}hrs, caso necessite de mais tempo consultar disponibilidade com antecedência e o valor da hora adicional, devendo o locatário restituí-lo findo o prazo; 
+ 
+    II - Fica estabelecido o sinal de 50% (cinquenta por cento) do valor monetário total da locação para reserva de datas. O saldo restante deverá ser pago até a data da festa já mencionada acima.  
+ 
+    III - A desistência por parte do LOCATÁRIO implica na perda total do valor pago pela locação do(s) item(s) acima descrito(s) na seguinte proporção: 
+ 
+    III.1 - Cancelamento com antecedência inferior ou igual a 15 dias do evento, será cobrado o valor integral deste contrato, dada a impossibilidade de locação para novo cliente;
+ 
+    III.2 - Cancelamento com antecedência superior a 15 e inferior a 30 dias, será cobrado 50% do valor do contrato;
+ 
+    III.3 - Cancelamento superior a 30 dias, será retido a 20% sobre o valor do contrato
+ 
+    IV - O LOCATÁRIO assume a responsabilidade que usará o(s) brinquedo(s) de forma a não prejudicar as condições estéticas e de segurança do(s) mesmo(s); 
+ 
+    V - O LOCATÁRIO assume também a responsabilidade de proporcionar um local adequado para o(s) brinquedo(s) locado(s), devendo ser plano e uniforme, caso na data do evento o tempo esteja chuvoso, pois não é possível a montagem dos brinquedos expostos à chuva por motivo de segurança das crianças e a impossibilidade por este motivo não obriga o LOCADOR a fazer a devolução do valor monetário dado como sinal; locais de difícil acesso para a montagem dos brinquedos será cobrada uma adicional de grau de dificuldade. 
+ 
+    VI - O LOCATÁRIO, indica que o local, data e hora do evento 
+ 
+    Local: ${data.local}
+    Endereço: ${data.endereco}, ${data.bairro} - ${data.cidade}-${data.estado}
+    Data: ${formatData(data.data)}       
+    Início do evento: ${data.inicio}
+    Montagem: ${data.montagem}   
+    Desmontagem: ${data.desmontagem}
+    Responsável: ${data.responsavel}
+    Tel: ${data.cel}
+    Observações importantes: ${data.obs} 
+ 
+ 
+    VII - O LOCADOR se compromete a montar o(s) brinquedo(s) uma hora antes do início do evento (horário do evento estabelecido no início deste contrato) e 1 monitor se contratado. 
+ 
+    VIII - Caso, antes do evento, ocorra algum defeito ou dano no item alugado, o LOCADOR reserva o direito de substituí-lo SEM AVISO PREVIO, por outro brinquedo de mesma categoria; 
+ 
+    IX - O LOCADOR, por si ou por preposto, poderá visitar o local do evento durante a locação, para garantir o bom funcionamento do(s) brinquedo(s) e verificar o exato cumprimento das cláusulas deste contrato; 
+ 
+    X - BENS MÓVEIS: O termo Bens Móveis refere-se a todo o mobiliário fornecido pela LOCADORA a LOCATÁRIA. 
+ 
+    X.1- A LOCADORA possui propriedade dos Bens Móveis sendo de exclusivo uso da LOCATÁRIA e deverão ser devolvidos pela LOCATÁRIA, ao término ou no caso de rescisão parcial ou total deste contrato. 
+ 
+    X.2 - É vedado à LOCATÁRIA ceder, emprestar ou sublocar, total ou parcialmente, o objeto locado sem a anuência, por escrito, do locador. 
+ 
+    XI - A entrega dos bens locados caberá à LOCADORA, ou a quem por ela for indicado, na localização estipulada pela LOCATÁRIA no Pedido de Locação, contabilizando desde assinatura e aceitação da LOCATÁRIA. 
+ 
+    XI.1 - Se houver interesse da LOCATÁRIA na prorrogação do prazo de Locação deste contrato, caberá às partes no prazo improrrogável de 72 (setenta e duas) horas anteriores ao seu evento, manifestar seu desejo, por escrito, em continuar com a locação por prazo igual ou superior. 
+ 
+    XI. 2 - A LOCATÁRIA deverá ter a posse legal do local em que forem entregues e instalados os bens, sendo que sem o prévio consentimento, por escrito da LOCADORA, tais bens, não poderão ser instalados em outro local que não o estabelecido no respectivo contrato. 
+ 
+    XI.3 - A responsabilidade de averiguação se os bens entregues pela LOCADORA atendem às especificações solicitadas será da LOCATÁRIA, que deverá no ato do recebimento assinar o termo de entrega e vistoria, que servirá como comprovante do recebimento e aceitação dos bens. 
+ 
+    XI.4 - A continuação da utilização dos bens móveis após o término do Contrato implicará a concordância imediata da LOCATÁRIA com a sua renovação por prazo igual. 
+ 
+    XII - Em caso de avaria, extravio, danos e/ou furto do material locado, a LOCADORA se reserva o direito de emitir cobrança bancária a LOCATÁRIA, que desde já autoriza tal cobrança no valor correspondente ao reparo e/ou substituição do material. 
+ 
+    XII.1 - Todo e qualquer conserto e/ou reparo será efetuado única e exclusivamente pela LOCADORA, caso contrário a LOCATÁRIA será automaticamente responsabilizada pelos danos eventualmente causados. 
+ 
+    XII.2 - A conservação dos bens locados será de responsabilidade da LOCATÁRIA. 
+ 
+    XII.3 - Não é permitido a LOCATÁRIA adaptar os bens locados, instalando peças, modificando sua aparência, estrutura ou funcionamento, a não ser que a LOCADORA, por escrito, consinta previamente. 
+ 
+    XIII - A infração de qualquer das cláusulas deste contrato faz incorrer ao infrator na multa irredutível de 20% (vinte por cento), sobre o valor monetário da locação e importa na sua rescisão de pleno direito, sujeitando-se a parte infratora ao pagamento das perdas e danos que posteriormente forem apuradas; 
+ 
+    Fica eleito do foro da cidade de São José dos Campos, para dirimir qualquer litígio. 
+ 
+    E por estarem justos e contratados, lavraram o presente instrumento em 02 (duas) vias de igual teor e forma para as finalidades de direito. 
+ 
+    São José dos Campos, ${today.getDate()} de ${meses[today.getMonth()]} de ${today.getFullYear()}. 
+    `
+
+    block_text()
+
+    addLine(2)
+    doc.text('Locador',txt.x, txt.y)
+    doc.setFontSize(15)
+    doc.setTextColor(38,99,108);
+    doc.text('Michele S. Lopes / Natalia Savassa',txt.x + 20, txt.y)
+    addLine(3)
+    doc.setFontSize(11)
+    doc.setTextColor(0,0,0);
+    doc.text('Locatário',txt.x, txt.y)
+    doc.setFontSize(15)
+    doc.setTextColor(38,99,108);
+    doc.text(data.cliente,txt.x + 20, txt.y)
+
+    doc.save('contrato.pdf')
+
+}

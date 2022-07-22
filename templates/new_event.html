@@ -22,62 +22,109 @@
             font-size: 12px;
         }
 
+        .label{
+            width: 80%;
+            text-align: left;
+        }
+
+        .inline label{
+            width: 20%;
+        }
+
     </style>
 
     <div class="frm-evento">
        
         <div class="inline">
-            <label for="edtData" >Data</label>
+            <label for="edtData" >Data:</label>
             <input id="edtData" type="date" > 
         </div>
         <div class="inline">
-            <label for="cmbKit">Kit</label>
+            <label for="cmbKit">Kit:</label>
             <select id="cmbKit"></select>
         </div>
+        <div class="inline">
+            <label for="edtNome">Evento:</label>
+            <input type="text" id="edtNome" placeholder="Nome do Evento" title="Digite o nome do evento, ex: Aniversário do Pedrinho" maxlength="50">
+        </div>
+        <div class="inline">
+            <label for="edtLocal">Local:</label>
+            <input type="text" id="edtLocal" placeholder="Nome do Local" title="Digite o nome do local do evento, ex: Associação de professores de SJC" maxlength="40">
+        </div>
+        <div class="inline">
+            <label for="edtEnd">Endereço:</label>
+            <input type="text" id="edtEnd" placeholder="Endereço do Local" title="Digite o endereço onde ocorrerá o evento" maxlength="70">
+        </div>
+        <div class="inline">
+            <label for="edtNum">Número</label>
+            <input type="text" id="edtNum" placeholder="Número" title="digite o número do endereço do local do evento" maxlength="5">
+        </div>
+        <div class="inline">
+            <label for="edtBairro">Bairro</label>
+            <input type="text" id="edtBairro" placeholder="Bairro" title="Digite o nome do bairro do local do evento" maxlength="40">
+        </div>
+        <div class="inline">
+            <label for="edtCidade">Cidade</label>
+            <input type="text" id="edtCidade" placeholder="Cidade" title="Digite o nome da Cidade do local do evento" maxlength="40">
+        </div>
+        <div class="inline">
+            <label for="cmbEstado">Estado</label>
+            <select id="cmbEstado" title="Selecione o estado" >
+                <option value="AC">Acre</option>
+                <option value="AL">Alagoas</option>
+                <option value="AP">Amapá</option>
+                <option value="AM">Amazonas</option>
+                <option value="BA">Bahia</option>
+                <option value="CE">Ceará</option>
+                <option value="DF">Distrito Federal</option>
+                <option value="ES">Espírito Santo</option>
+                <option value="GO">Goiás</option>
+                <option value="MA">Maranhão</option>
+                <option value="MT">Mato Grosso</option>
+                <option value="MS">Mato Grosso do Sul</option>
+                <option value="MG">Minas Gerais</option>
+                <option value="PA">Pará</option>
+                <option value="PB">Paraíba</option>
+                <option value="PR">Paraná</option>
+                <option value="PE">Pernambuco</option>
+                <option value="PI">Piauí</option>
+                <option value="RJ">Rio de Janeiro</option>
+                <option value="RN">Rio Grande do Norte</option>
+                <option value="RS">Rio Grande do Sul</option>
+                <option value="RO">Rondônia</option>
+                <option value="RR">Roraima</option>
+                <option value="SC">Santa Catarina</option>
+                <option value="SP" selected>São Paulo</option>
+                <option value="SE">Sergipe</option>
+                <option value="TO">Tocantis</option>
+            </select>
+    
+        </div>
 
-        <input type="text" id="edtNome" placeholder="Nome do Evento" title="Digite o nome do evento, ex: Aniversário do Pedrinho" maxlength="50">
-        <input type="text" id="edtLocal" placeholder="Nome do Local" title="Digite o nome do local do evento, ex: Associação de professores de SJC" maxlength="40">
-        <input type="text" id="edtEnd" placeholder="Endereço do Local" title="Digite o endereço onde ocorrerá o evento" maxlength="70">
-        <input type="text" id="edtNum" placeholder="Número" title="digite o número do endereço do local do evento" maxlength="5">
-        <input type="text" id="edtBairro" placeholder="Bairro" title="Digite o nome do bairro do local do evento" maxlength="40">
-        <input type="text" id="edtCidade" placeholder="Cidade" title="Digite o nome da Cidade do local do evento" maxlength="40">
-        <select id="cmbEstado" title="Selecione o estado" >
-            <option value="AC">Acre</option>
-            <option value="AL">Alagoas</option>
-            <option value="AP">Amapá</option>
-            <option value="AM">Amazonas</option>
-            <option value="BA">Bahia</option>
-            <option value="CE">Ceará</option>
-            <option value="DF">Distrito Federal</option>
-            <option value="ES">Espírito Santo</option>
-            <option value="GO">Goiás</option>
-            <option value="MA">Maranhão</option>
-            <option value="MT">Mato Grosso</option>
-            <option value="MS">Mato Grosso do Sul</option>
-            <option value="MG">Minas Gerais</option>
-            <option value="PA">Pará</option>
-            <option value="PB">Paraíba</option>
-            <option value="PR">Paraná</option>
-            <option value="PE">Pernambuco</option>
-            <option value="PI">Piauí</option>
-            <option value="RJ">Rio de Janeiro</option>
-            <option value="RN">Rio Grande do Norte</option>
-            <option value="RS">Rio Grande do Sul</option>
-            <option value="RO">Rondônia</option>
-            <option value="RR">Roraima</option>
-            <option value="SC">Santa Catarina</option>
-            <option value="SP" selected>São Paulo</option>
-            <option value="SE">Sergipe</option>
-            <option value="TO">Tocantis</option>
-        </select>
-
-        <input type="text" id="edtInicio" placeholder="Horário de início" title="Horário de início da festa (chegada dos convidados), ex: 15:00" maxlength="5" onkeyup="horario(this)">
-        <input type="text" id="edtMontagem" placeholder="Horário de Montagem" title="Horário liberado para montagem dos brinquedos , ex: 12:00" maxlength="5" onkeyup="horario(this)">
-        <input type="text" id="edtDesmontagem" placeholder="Horário de Desmontagem" title="Horário estimado do final da festa para agendamento da desmontagem dos brinquedos, ex: 21:00" maxlength="5" onkeyup="horario(this)">
-        <input type="text" id="edtResp" placeholder="Responsável pelo Recebimento" title="Digite o nome do responsável pelo recebimento dos brinquedos na festa" maxlength="50" >
-        <input type="text" id="edtCel" placeholder="Telefone do responsável" title="Digite o celular do responsável por receber os brinquedos na festa" maxlength="15" onkeyup="phone(this)">
-        <label for="edtObs">Observações importantes</label>
-        <textarea id="edtObs" cols="30" rows="10" title="Espaço para digitar alguma informação importante"></textarea>
+        <div class="inline">
+            <label for="edtInicio">Início</label>
+            <input type="text" id="edtInicio" placeholder="Horário de início" title="Horário de início da festa (chegada dos convidados), ex: 15:00" maxlength="5" onkeyup="horario(this)">
+        </div>
+        <div class="inline">
+            <label for="edtMontagem">Montagem</label>
+            <input type="text" id="edtMontagem" placeholder="Horário de Montagem" title="Horário liberado para montagem dos brinquedos , ex: 12:00" maxlength="5" onkeyup="horario(this)">
+        </div>
+        <div class="inline">
+            <label for="edtDesmontagem">Desmontagem</label>
+            <input type="text" id="edtDesmontagem" placeholder="Horário de Desmontagem" title="Horário estimado do final da festa para agendamento da desmontagem dos brinquedos, ex: 21:00" maxlength="5" onkeyup="horario(this)">
+        </div>
+        <div class="inline">
+            <label for="edtResp">Responsável</label>
+            <input type="text" id="edtResp" placeholder="Responsável pelo Recebimento" title="Digite o nome do responsável pelo recebimento dos brinquedos na festa" maxlength="50" >
+        </div>
+        <div class="inline">
+            <label for="edtCel">Telefone</label>
+            <input type="text" id="edtCel" placeholder="Telefone do responsável" title="Digite o celular do responsável por receber os brinquedos na festa" maxlength="15" onkeyup="phone(this)">
+        </div>
+        <div class="inline">
+            <label for="edtObs">Observações importantes</label>
+            <textarea id="edtObs" cols="30" rows="10" title="Espaço para digitar alguma informação importante"></textarea>    
+        </div>
         <button id="btnCriar" >Criar</button>   
         
     </div>
@@ -86,10 +133,8 @@
 
 <script>        
     fillKit()
-console.log(modal_data)    
-
+  
     if(modal_data != ''){
-//        document.querySelector('#edtData').ReadOnly
         document.querySelector('#edtData').value = modal_data.data
         document.querySelector('#edtNome').value = modal_data.nome
         document.querySelector('#edtLocal').value = modal_data.local
@@ -105,8 +150,14 @@ console.log(modal_data)
         document.querySelector('#edtCel').value = modal_data.cel
         document.querySelector('#edtObs').value = modal_data.obs     
         document.querySelector('#btnCriar').innerHTML = 'Salvar'
+    }else{
+        document.querySelector('#edtEnd').value = ['undefined','null'].includes(localStorage.getItem("endereco")) ? '' : localStorage.getItem("endereco")
+        document.querySelector('#edtNum').value = ['undefined','null'].includes(localStorage.getItem("num")) ?'' : localStorage.getItem("num") 
+        document.querySelector('#edtBairro').value = ['undefined','null'].includes(localStorage.getItem("bairro")) ? '' : localStorage.getItem("bairro") 
+        document.querySelector('#edtCidade').value = ['undefined','null'].includes(localStorage.getItem("cidade")) ? '' : localStorage.getItem("cidade") 
+        document.querySelector('#edtCel').value = ['undefined','null'].includes(localStorage.getItem("cel")) ? '' : localStorage.getItem("cel") 
+        document.querySelector('#edtResp').value = ['undefined','null'].includes(localStorage.getItem("nome")) ? '' : localStorage.getItem("nome") 
     }
-
 
     document.querySelector('#edtData').addEventListener('change',()=>{
         schedule = new Date(document.querySelector('#edtData').value)
@@ -117,7 +168,13 @@ console.log(modal_data)
     })
 
     document.querySelector('#btnCriar').addEventListener('click',()=>{
-        addEvent()
+        
+        required = ['edtData','edtNome','edtLocal','edtEnd', 'edtNum', 'edtBairro','edtCidade','edtInicio','edtMontagem','edtDesmontagem','edtResp','edtCel']
+
+        if(checkField(required)){
+            addEvent()
+        }
+
     })
 
     function fillKit(){
@@ -147,9 +204,7 @@ console.log(modal_data)
             for(let i=0; i<kits.length; i++){
                 combo.appendChild(addOption(kits[i]))
             }
-
             
-
         })
     }
 
@@ -173,19 +228,13 @@ console.log(modal_data)
             params.montagem = document.querySelector('#edtMontagem').value.trim();
             params.desmontagem = document.querySelector('#edtDesmontagem').value.trim();
 
-console.log(params)
-
             let myPromisse
-
             if(modal_data != ''){
                 params.id = modal_data.id;
                 myPromisse = queryDB(params,25)
             }else{
                 myPromisse = queryDB(params,13)
             }       
-
-
-//        const myPromisse = queryDB(params,13)
 
         myPromisse.then((resolve)=>{
             btnClose.click()   
@@ -194,6 +243,5 @@ console.log(params)
         })
       
     }
-
 
 </script>    

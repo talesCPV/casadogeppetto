@@ -79,13 +79,22 @@
         myPromisse.then((resolve)=>{
 
             if(resolve.trim() != ""){
-                const json = JSON.parse(resolve);
-                
+                const json = JSON.parse(resolve);            
                 localStorage.setItem("id",json[0].id);
                 localStorage.setItem("username",json[0].username);
                 localStorage.setItem("hash",json[0].hash);
                 localStorage.setItem("nome",json[0].nome);
                 localStorage.setItem("access",json[0].access);
+                localStorage.setItem("bairro",json[0].bairro);
+                localStorage.setItem("cel",json[0].cel);
+                localStorage.setItem("cidade",json[0].cidade);
+                localStorage.setItem("estado",json[0].estado);
+                localStorage.setItem("comp",json[0].complemento);
+                localStorage.setItem("endereco",json[0].endereco);
+                localStorage.setItem("num",json[0].num);
+                localStorage.setItem("CPF",json[0].CPF);
+                localStorage.setItem("email",json[0].email);
+
                 loadContent(localStorage.getItem("frame"))
             }else{
                 alert("Usuário ou senha inválido!");
