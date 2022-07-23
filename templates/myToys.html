@@ -265,9 +265,13 @@
 
 
     document.querySelector('#btnEdit').addEventListener('click',()=>{
-        data.origin = 'myToys'
-        data.evento = modal_data
-        openHTML('new_event.html','over',data.nome, data)
+        if(modal_data.status == 'Aberto'){
+            data.origin = 'myToys'
+            data.evento = modal_data
+            openHTML('new_event.html','over',data.nome, data)
+        }else{
+            alert('Este evento já foi encerrado')
+        }
     })
 
     document.querySelector('#btnBusca').addEventListener('click',()=>{
