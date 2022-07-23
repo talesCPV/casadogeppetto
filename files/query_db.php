@@ -47,6 +47,7 @@
 	                AND F.data = "x00"
                     GROUP BY B.id;',
          "25" => 'UPDATE tb_festa SET y00="x00", y01="x01", y02="x02", y03="x03", y04="x04", y05="x05", y06="x06", y07="x07", y08="x08", y09="x09", y10="x10", y11="x11", y12="x12", y13="x13", y14="x14", y15="x15" WHERE y16="x16";',
+         "26" => 'UPDATE tb_festa SET y00="x00", y01="x01" WHERE y02="x02";',
 
 
 

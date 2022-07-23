@@ -409,7 +409,23 @@ function money(campo){
     campo.value = out_text.trim() == '' ? 0 : out_text
 }
 
+function checkField(fields){
+    
+    for(let i=0; i< fields.length; i++){
+        if(document.getElementById(fields[i]).value.trim() == ''){
+            alert('Favor preencher todos os campos obrigatórios.')
+            document.getElementById(fields[i]).focus()
+            return false
+        }
+    }
+    return true
+}
+
+
 function contrato_pdf(data){
+
+    var sign_day = new Date(data.contrato)
+        sign_day.setDate(sign_day.getDate() + 1);
 
     var imgData = new Image()
         imgData.src = 'assets/logo.png'
@@ -609,7 +625,7 @@ function contrato_pdf(data){
  
     E por estarem justos e contratados, lavraram o presente instrumento em 02 (duas) vias de igual teor e forma para as finalidades de direito. 
  
-    São José dos Campos, ${today.getDate()} de ${meses[today.getMonth()]} de ${today.getFullYear()}. 
+    São José dos Campos, ${sign_day.getDate()} de ${meses[sign_day.getMonth()]} de ${sign_day.getFullYear()}. 
     `
 
     block_text()

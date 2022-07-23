@@ -230,11 +230,7 @@
     document.querySelector('#tblUser').addEventListener('click',(e)=>{
         data = e.target.parentNode.dados
         data.origin = 'edt_user'
-
-        console.log(data)
-
         openHTML('new_user.html','pop-up',data.username,data)
-
     })
 
 
