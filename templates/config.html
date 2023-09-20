@@ -148,8 +148,7 @@
     function viewUsers(){
 
         const params = new Object;
-            params.hash = localStorage.getItem("hash");
-            params.nome = document.querySelector('#edtBuscaUser').value.trim();
+            params.email = document.querySelector('#edtBuscaUser').value.trim();
 
         const myPromisse = queryDB(params,6)
 
@@ -166,17 +165,13 @@
                 const json = JSON.parse(resolve);
 
                 const tab = document.querySelector('#tblUser')
-                tab.innerHTML = '<tr><th>id</th><th>Nome</th><th>Usuário</th><th>Email</th><th>Cel</th><th>Acesso</th></tr>'
+                tab.innerHTML = '<tr><th>id</th><th>Email</th><th>Acesso</th></tr>'
 
                 for(let i=0; i<json.length; i++){
                     const tr = document.createElement('tr')
                     tr.appendChild(addTD(json[i].id))
-                    tr.appendChild(addTD(json[i].nome))
-                    tr.appendChild(addTD(json[i].username))
                     tr.appendChild(addTD(json[i].email))
-                    tr.appendChild(addTD(json[i].cel))
                     tr.appendChild(addTD(json[i].access=='10'?'Administrador':'Cliente'))
-                    tr.appendChild(addTD(json[i].hash,'hide'))
                     tr.dados = json[i]
                     tab.appendChild(tr)
 
@@ -228,13 +223,9 @@
     })
 
     document.querySelector('#tblUser').addEventListener('click',(e)=>{
-        data = e.target.parentNode.dados
-        data.origin = 'edt_user'
-
-        console.log(data)
-
+        data = e.target.parentNode.dados        
+        data.origin = 'edt_config'
         openHTML('new_user.html','pop-up',data.username,data)
-
     })
 
 

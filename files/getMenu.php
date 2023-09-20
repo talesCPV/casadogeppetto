@@ -3,9 +3,9 @@
     $out = [];
     $access = 0;
 
-	if (IsSet($_POST["user"]) && IsSet($_POST["hash"])){
+	if (IsSet($_POST["hash"])){
 
-        $query = "SELECT access FROM tb_usuario WHERE username=\"".$_POST["user"]."\" AND hash=\"".$_POST["hash"]."\"";
+        $query = "SELECT access FROM tb_usuario WHERE hash=\"".$_POST["hash"]."\"";
         include "connect.php"; 
         $result = mysqli_query($conexao, $query);
 //        var_dump($result);

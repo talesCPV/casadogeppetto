@@ -1,14 +1,15 @@
-/* HASH */
 
+/*  STRING  */
 String.prototype.getHash = function(S){
     let weigth = 0
     let hash = ''
     let str = this.valueOf()
 
     function getRange(N){ // keeps caracters under ASCII 33 & 126
-        while (N > 126 || N < 33){
+        const forbid = [47,92]
+        while (N > 126 || N < 40){
             N -= 126
-            N < 33 ? N += 33 : N
+            N < 40 ? N += 40 : N
             N == 127 ? N++ : 0
         }
         return N
@@ -24,6 +25,8 @@ String.prototype.getHash = function(S){
 
     for (i = 0; i < str.length; i++) {
         chr = getRange(weigth * str.charCodeAt(i))
+        chr = chr===92 ? 168 : chr;
+        chr = chr===34 ? 173 : chr;
         hash += String.fromCharCode(chr)  
     }
 
@@ -65,7 +68,7 @@ for(let i=0; i< menu_item.length; i++){
     })
 }
 
-loadContent("brinquedos")
+loadContent("Home")
 
 function closeMenu(){
     document.querySelector('#side-menu').checked =  false;
@@ -81,11 +84,18 @@ function loadContent(cat){
     const myPromisse = queryDB(params,2)
 
     myPromisse.then((resolve)=>{
-       
+        frames = document.querySelector('#form-for-frames')
+        frames.innerHTML = `<h1>${cat}</h1>`       
         if(resolve.trim() != ""){
             const json = JSON.parse(resolve);
-            frames = document.querySelector('#form-for-frames')
-            frames.innerHTML = `<h1>${cat}</h1>`
+
+            if(localStorage.getItem('access')=='10'){
+                newFrame = createFrame({content:'plus',background:'#f0a70a'})
+                frames.appendChild(newFrame.html)
+                eval(newFrame.script)
+
+            }
+
             for(let i=0; i<json.length; i++){
                 newFrame = createFrame(json[i])
                 frames.appendChild(newFrame.html)
@@ -134,6 +144,9 @@ function createFrame(frm){
         out.html.style =  `text-align : ${frm.justify}; font-size: ${frm.font}px ;`
     }else if(frm.content == 'pic'){
         out.html.innerHTML = `<img src="files/pictures/${frm.filename}" alt="">`
+        if(frm.text.trim() != ''){
+            out.html.title = frm.text
+        }
     }
 
     out.html.style.background = frm.background;
@@ -424,6 +437,9 @@ function checkField(fields){
 
 function contrato_pdf(data){
 
+    var sign_day = new Date(data.contrato)
+        sign_day.setDate(sign_day.getDate() + 1);
+
     var imgData = new Image()
         imgData.src = 'assets/logo.png'
 
@@ -622,7 +638,7 @@ function contrato_pdf(data){
  
     E por estarem justos e contratados, lavraram o presente instrumento em 02 (duas) vias de igual teor e forma para as finalidades de direito. 
  
-    São José dos Campos, ${today.getDate()} de ${meses[today.getMonth()]} de ${today.getFullYear()}. 
+    São José dos Campos, ${sign_day.getDate()} de ${meses[sign_day.getMonth()]} de ${sign_day.getFullYear()}. 
     `
 
     block_text()

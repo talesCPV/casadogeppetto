@@ -56,7 +56,7 @@
     function viewParty(){
 
         const params = new Object;
-            params.id_user = localStorage.getItem('id');
+            params.hash = localStorage.getItem('hash');
             
         const myPromisse = queryDB(params,14)
 
@@ -74,7 +74,6 @@
                     }
                     return td
                 }
-
                 const json = JSON.parse(resolve);
                 for(let i=0; i<json.length; i++){
                     schedule = new Date(json[i].data)
@@ -145,7 +144,7 @@
     document.querySelector('#tblFestas').addEventListener('click',(e)=>{
         data = e.target.parentNode.dados
         data.origin = 'agenda'
-        openHTML('myToys.html','pop-up',data.nome+" - "+formatData(data.data)+'<br>'+data.kit ,data)
+        openHTML('myToys.html','pop-up',data.nome.toUpperCase()+" - "+formatData(data.data)+'<br>'+data.kit ,data)
     })
 
 

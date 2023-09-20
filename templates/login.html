@@ -32,7 +32,7 @@
        
         <a href="#" class="logo"><img src="assets/logo.png" alt=""></a>
 
-        <input type="text"     id="edtUser" placeholder="Usuário">
+        <input type="email"     id="edtMail" placeholder="Email">
         <input type="password" id="edtPass" placeholder="Senha" onkeypress="return getEnter(event, 'btnLogin')" >
         <button id="btnLogin"> LOGIN </button>
         
@@ -51,6 +51,12 @@
 //    localStorage.clear();
     menu_login()
 
+    function checkLogin(){
+        const user = document.querySelector('#edtMail').value.trim() != ''
+        const pass = document.querySelector('#edtPass').value.trim() != ''
+        return(user && pass)        
+    }
+
 
     function menu_login(){
         if(localStorage.getItem('access') != null){
@@ -66,47 +72,40 @@
 
 
     document.querySelector('#btnLogin').addEventListener('click',()=>{
+        if(checkLogin()){
+            
+            const params = new Object;
+                params.hash = (document.querySelector('#edtMail').value.trim()+document.querySelector('#edtPass').value.trim()).getHash(77);
 
-        let user = document.querySelector('#edtUser').value
-        let hash = document.querySelector('#edtPass').value.getHash(30)
+            const myPromisse = queryDB(params,0)
 
-        const params = new Object;
-            params.username = user;
-            params.hash = hash;
+            myPromisse.then((resolve)=>{
 
-        const myPromisse = queryDB(params,0)
+                if(resolve.trim() != ""){
+                    const json = JSON.parse(resolve);
+                    console.log(json)
+                    localStorage.setItem("id",json[0].id);
+                    localStorage.setItem("hash",json[0].hash);
+                    localStorage.setItem("access",json[0].access);
+                    localStorage.setItem("email",json[0].email);
+                    loadContent(localStorage.getItem("frame"))
+                    closeMenu()
+                    loadContent(localStorage.getItem("frame")) 
+                        
 
-        myPromisse.then((resolve)=>{
+                }else{
+                    alert("Usuário ou senha inválido!");
+                    localStorage.clear();                
+                }     
+                btnClose.click();
+                createMenu()
 
-            if(resolve.trim() != ""){
-                const json = JSON.parse(resolve);            
-                localStorage.setItem("id",json[0].id);
-                localStorage.setItem("username",json[0].username);
-                localStorage.setItem("hash",json[0].hash);
-                localStorage.setItem("nome",json[0].nome);
-                localStorage.setItem("access",json[0].access);
-                localStorage.setItem("bairro",json[0].bairro);
-                localStorage.setItem("cel",json[0].cel);
-                localStorage.setItem("cidade",json[0].cidade);
-                localStorage.setItem("estado",json[0].estado);
-                localStorage.setItem("comp",json[0].complemento);
-                localStorage.setItem("endereco",json[0].endereco);
-                localStorage.setItem("num",json[0].num);
-                localStorage.setItem("CPF",json[0].CPF);
-                localStorage.setItem("email",json[0].email);
+            });
 
-                loadContent(localStorage.getItem("frame"))
-            }else{
-                alert("Usuário ou senha inválido!");
-                localStorage.clear();                
-            }     
-            btnClose.click();
-            createMenu()
+        }else{
+            alert('Favor preencher os campos email e senha!')
+        }
 
-        });
-
-        closeMenu()
-        loadContent(localStorage.getItem("frame")) 
 
     })
 

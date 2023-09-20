@@ -19,7 +19,7 @@
 
         #btnContrata, #btnEdit{
             margin-top: 10px;
-            width: 100%;
+            width: 97%;
         }
 
         #tblToys, #tblMyToys{
@@ -65,8 +65,6 @@
     document.querySelector('#lbl02').innerHTML = `<b>Responsável:</b> ${modal_data.responsavel} - ${modal_data.cel}`
     document.querySelector('#lbl03').innerHTML = `<b>Início da Festa:</b> ${modal_data.inicio},  montagem programada para as ${modal_data.montagem} e desmontagem as ${modal_data.desmontagem}`
 
-console.log(modal_data)
-
     viewMyToys()
     viewSaldo()
 
@@ -76,8 +74,7 @@ console.log(modal_data)
         modal_data.saldo.G = parseInt(modal_data.G)
 
     if(modal_data.status != 'Aberto'){
-        document.querySelector('#btnContrata').className = 'hide'
-    
+        document.querySelector('#btnContrata').innerHTML = 'Ver Contrato'    
     }
 
 
@@ -268,9 +265,13 @@ console.log(modal_data)
 
 
     document.querySelector('#btnEdit').addEventListener('click',()=>{
-        data.origin = 'myToys'
-        data.evento = modal_data
-        openHTML('new_event.html','over',data.nome, data)
+        if(modal_data.status == 'Aberto'){
+            data.origin = 'myToys'
+            data.evento = modal_data
+            openHTML('new_event.html','over',data.nome, data)
+        }else{
+            alert('Este evento já foi encerrado')
+        }
     })
 
     document.querySelector('#btnBusca').addEventListener('click',()=>{
@@ -315,9 +316,36 @@ console.log(modal_data)
 
 
     document.querySelector('#btnContrata').addEventListener('click',()=>{
-        contrato_pdf(modal_data)
+        if(modal_data.status == 'Aberto'){
+            closeContract()
+        }else{
+            contrato_pdf(modal_data)
+        }
+
+
     })
 
+
+    function closeContract(){
+
+        if(confirm('Após o encerramento, não poderá mais alterar os brinquedos selecionados, deseja continuar?')){
+            const params = new Object;
+                params.contrato = dateTransform(today)
+                params.aberta = false
+                params.id = modal_data.id;
+
+            const myPromisse = queryDB(params,26)
+            myPromisse.then(()=>{
+                modal_data.origin = 'close_contract'
+                modal_data.status = 'Encerrado'
+                modal_data.contrato = dateTransform(today)
+                openHTML('agenda.html')
+                openHTML('myToys.html','pop-up',modal_data.nome+" - "+formatData(modal_data.data)+'<br>'+modal_data.kit ,modal_data)                               
+            });    
+        }
+
+ 
+    }
 
  
 

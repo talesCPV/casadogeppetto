@@ -31,27 +31,7 @@
             "access" : 1
         },
         {
-            "text" : "Eventos",
-            "id" : "",
-            "class" : "menu-item",
-            "template" : "",
-            "window" : "frame",
-            "title" : "",
-            "index" : 10,
-            "access" : 0
-        },
-        {
-            "text" : "Parceiros",
-            "id" : "",
-            "class" : "menu-item",
-            "template" : "",
-            "window" : "frame",
-            "title" : "",
-            "index" : 10,
-            "access" : 0
-        },
-        {
-            "text" : "Brinquedos",
+            "text" : "Home",
             "id" : "",
             "class" : "menu-item",
             "template" : "",
@@ -63,3 +43,4 @@
 
     ]
 }
+

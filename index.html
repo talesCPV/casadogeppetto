@@ -141,19 +141,20 @@
             <div class="modal-text"></div>
         </div>
     
+        <!-- Over Modal -->
+        <div id="overModal" class="modal over-modal">
+            <div class="modal-content">
+                <div class="modal-title">
+                    <p id="over-title"></p>
+                    <span class="over-close">&times;</span>
+                </div>
+                <div class="over-text"></div>
+            </div>
+        </div>         
+
     </div> 
 
-    <!-- Over Modal -->
-    <div id="overModal" class="modal over-modal">
-        <div class="modal-content">
-            <div class="modal-title">
-                <p id="over-title"></p>
-                <span class="over-close">&times;</span>
-            </div>
-            <div class="over-text"></div>
-        </div>
-    
-        </div> 
+
 
 
 </body>
@@ -167,10 +168,10 @@
 
     function createMenu(){
         let user = ''
-        let pass = ''
-        if(localStorage.getItem('username') != null){
-            user = localStorage.getItem('username')
-            pass = localStorage.getItem('hash')
+        let hash = ''
+        if(localStorage.getItem('email') != null){
+            user = localStorage.getItem('email')
+            hash = localStorage.getItem('hash')
         }
         let access = localStorage.getItem('access')
         const social = `
@@ -182,9 +183,8 @@
         const json =  new Promise((resolve,reject)=>{
 
             const data = new URLSearchParams();  
-            if(user.trim()!='' && pass.trim()!=''){
-                data.append("user", user);
-                data.append("hash", pass);
+            if(hash.trim()!=''){
+                data.append("hash", hash);
             }      
 
             const myRequest = new Request("files/getMenu.php",{
@@ -206,7 +206,7 @@
 
             const menu = document.querySelector('.menu')
             menu.innerHTML = social
-
+            
             const item_menu = JSON.parse(response)
             for(let i=0; i<item_menu.length; i++){
                 item_menu[i] = JSON.parse(item_menu[i])

@@ -1,26 +1,26 @@
 <?php
 
     $query_db = array(
-         "0"  => 'SELECT * FROM tb_usuario WHERE y00="x00" AND y01="x01";',
-         "1"  => 'INSERT INTO tb_usuario (y00, y01, y02, y03, y04, y05, y06, y07, y08, y09, y10, y11, y12) VALUES ("x00", "x01", "x02", "x03", "x04", "x05", "x06", "x07", "x08", "x09", "x10", "x11", "x12");',
-         "2"  => 'SELECT * FROM tb_frames WHERE y00="x00" AND y01<="x01" ORDER BY id DESC;',
+         "0"  => 'CALL sp_login("x00");',
+         "1"  => 'CALL sp_novoUsuario("x00","x01","x02","x03");',
+         "2"  => 'SELECT * FROM tb_frames WHERE y00="x00" AND y01<="x01" ORDER BY id DESC;',         
          "3"  => 'INSERT INTO tb_frames (y00, y01, y02, y03, y04, y05) VALUES ("x00", "x01", "x02", "x03", "x04", "x05");',
          "4"  => 'UPDATE tb_frames SET y00="x00", y01="x01", y02="x02", y03="x03", y04="x04", y05="x05" WHERE y06="x06";',
          "5"  => 'DELETE FROM tb_frames  WHERE y00="x00";',
-         "6"  => 'SELECT * FROM tb_usuario as A  WHERE(SELECT B.access from tb_usuario as B WHERE hash = "x00") = 10 AND A.y01 LIKE "%x01%";',
+         "6"  => 'SELECT id,email,access FROM tb_usuario WHERE email LIKE "%x00%";',
+         
+
          "7"  => 'UPDATE tb_usuario SET y00="x00", y01="x01", y02="x02", y03="x03", y04="x04", y05="x05", y06="x06", y07="x07", y08="x08", y09="x09", y10="x10", y11="x11", y12="x12"  WHERE y13="x13";',
+         
          "8"  => 'DELETE FROM tb_usuario WHERE y00="x00";',
          "9"  => 'INSERT INTO tb_brinquedo (y00, y01, y02, y03, y04, y05) VALUES ("x00", "x01", "x02", "x03", "x04", "x05");',
-         "10" => 'SELECT * FROM tb_brinquedo WHERE y00 LIKE "%x00%"',
+         "10" => 'SELECT * FROM tb_brinquedo WHERE y00 LIKE "%x00%" ORDER BY tamanho DESC, nome ASC',
          "11" => 'UPDATE tb_brinquedo SET y00="x00", y01="x01", y02="x02", y03="x03", y04="x04", y05="x05" WHERE y06="x06";',
          "12" => 'DELETE FROM tb_brinquedo WHERE y00="x00";',
          "13" => 'INSERT INTO tb_festa (y00, y01, y02, y03, y04, y05, y06, y07, y08, y09, y10, y11, y12, y13, y14, y15) VALUES ("x00", "x01", "x02", "x03", "x04", "x05", "x06", "x07", "x08", "x09", "x10", "x11", "x12", "x13", "x14", "x15");',
-         "14" => 'SELECT F.*,U.nome as cliente, U.CPF, U.endereco as cli_end, U.num as cli_num, U.cidade as cli_cidade, U.estado as cli_estado, U.bairro as cli_bairro, K.nome as kit, K.P, K.M, K.G, K.valor, K.monitoria FROM tb_festa as F 
-                    INNER JOIN tb_usuario as U 
-                    INNER JOIN tb_kit as K 
-                    WHERE F.y00="x00" 
-                    AND F.id_user = U.id
-                    AND F.id_kit = K.id;',
+         
+         "14" => 'CALL sp_viewFesta ("x00");',
+
          "15" => 'SELECT * FROM tb_kit WHERE y00 LIKE "%x00%"',
          "16" => 'INSERT INTO tb_kit (y00, y01, y02, y03, y04, y05) VALUES ("x00", "x01", "x02", "x03", "x04", "x05");',
          "17" => 'UPDATE tb_kit SET y00="x00", y01="x01", y02="x02", y03="x03", y04="x04", y05="x05" WHERE y06="x06";',
@@ -33,7 +33,7 @@
                     AND A.id_brinq = B.id
                     AND A.y00="x00";',
          "21" => 'DELETE FROM tb_agenda WHERE y00="x00";',
-         "22" => 'SELECT * FROM tb_brinquedo WHERE y00 LIKE "%x00%" AND (y01="x02" OR y01="x03" OR y01="x04") AND ativo="1";',
+         "22" => 'SELECT * FROM tb_brinquedo WHERE y00 LIKE "%x00%" AND (y01="x02" OR y01="x03" OR y01="x04") AND ativo="1" ORDER BY tamanho DESC, nome ASC',
          "23" => 'SELECT B.tamanho AS tam, SUM(A.qtd) AS qtd FROM tb_agenda as A
                     INNER JOIN tb_brinquedo as B
                     WHERE A.id_brinq = B.id
@@ -47,6 +47,7 @@
 	                AND F.data = "x00"
                     GROUP BY B.id;',
          "25" => 'UPDATE tb_festa SET y00="x00", y01="x01", y02="x02", y03="x03", y04="x04", y05="x05", y06="x06", y07="x07", y08="x08", y09="x09", y10="x10", y11="x11", y12="x12", y13="x13", y14="x14", y15="x15" WHERE y16="x16";',
+         "26" => 'UPDATE tb_festa SET y00="x00", y01="x01" WHERE y02="x02";',
 
 
 

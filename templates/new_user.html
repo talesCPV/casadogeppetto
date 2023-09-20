@@ -23,47 +23,9 @@
 
     <div class="frm-login">
        
-        <input type="text"     id="edtNome" placeholder="Nome Completo" maxlength="50">
-        <input type="text"     id="edtUser" placeholder="Usuário" maxlength="15">
+        <input type="email"    id="edtEmail" placeholder="Email" maxlength="70">
         <input type="password" id="edtPass" placeholder="Senha" maxlength="12" >
         <input type="password" id="edtRepPass" placeholder="Repita a Senha" maxlength="12" >
-        <input type="text"    id="edtEnd" placeholder="Endereço" maxlength="70">
-        <input type="text"    id="edtNum" placeholder="Numero" maxlength="5">
-        <input type="text"    id="edtComp" placeholder="Complemento" maxlength="15">
-        <input type="text"    id="edtBairro" placeholder="Bairro" maxlength="40">
-        <input type="text"    id="edtCidade" placeholder="Cidade" maxlength="40">
-        <select id="cmbEstado">
-            <option value="AC">Acre</option>
-            <option value="AL">Alagoas</option>
-            <option value="AP">Amapá</option>
-            <option value="AM">Amazonas</option>
-            <option value="BA">Bahia</option>
-            <option value="CE">Ceará</option>
-            <option value="DF">Distrito Federal</option>
-            <option value="ES">Espírito Santo</option>
-            <option value="GO">Goiás</option>
-            <option value="MA">Maranhão</option>
-            <option value="MT">Mato Grosso</option>
-            <option value="MS">Mato Grosso do Sul</option>
-            <option value="MG">Minas Gerais</option>
-            <option value="PA">Pará</option>
-            <option value="PB">Paraíba</option>
-            <option value="PR">Paraná</option>
-            <option value="PE">Pernambuco</option>
-            <option value="PI">Piauí</option>
-            <option value="RJ">Rio de Janeiro</option>
-            <option value="RN">Rio Grande do Norte</option>
-            <option value="RS">Rio Grande do Sul</option>
-            <option value="RO">Rondônia</option>
-            <option value="RR">Roraima</option>
-            <option value="SC">Santa Catarina</option>
-            <option value="SP" selected>São Paulo</option>
-            <option value="SE">Sergipe</option>
-            <option value="TO">Tocantis</option>
-        </select>
-        <input type="text"     id="edtCPF" placeholder="CPF" maxlength="14" onkeyup="valCPF(this)">
-        <input type="email"    id="edtEmail" placeholder="Email" maxlength="70">
-        <input type="text"     id="edtCel" placeholder="Celular" maxlength="15" onkeyup="phone(this)">
         <select id="cmbAccess">
             <option value="1">Cliente</option>
             <option value="10">Administrador</option>
@@ -84,40 +46,24 @@
 
         return (A == B && A.trim() != '') ? true : false
     }
-console.log(modal_data)
 
-    if(modal_data.nome != undefined){       
-        document.querySelector('#edtNome').value = modal_data.nome
-        document.querySelector('#edtUser').value = modal_data.username
+    console.log(modal_data)
+
+    if(modal_data.origin == undefined){       
+        document.querySelector('#cmbAccess').value = '1'
+        document.querySelector('#cmbAccess').style = 'display:none;'
+        document.querySelector('#edtPass').style = 'display:block;'
+        document.querySelector('#edtRepPass').style = 'display:block;'
+
+    }else if(modal_data.origin == 'edt_config'){
         document.querySelector('#edtEmail').value = modal_data.email
-        document.querySelector('#edtCel').value = modal_data.cel
         document.querySelector('#cmbAccess').value = modal_data.access
-        document.querySelector('#edtEnd').value = modal_data.endereco
-        document.querySelector('#edtNum').value = modal_data.num
-        document.querySelector('#edtComp').value = modal_data.complemento
-        document.querySelector('#edtBairro').value = modal_data.bairro
-        document.querySelector('#edtCidade').value = modal_data.cidade
-        document.querySelector('#cmbEstado').value = modal_data.estado
-        document.querySelector('#edtCPF').value = modal_data.CPF
         document.querySelector('#btnNovo').innerHTML = 'Salvar'
         document.querySelector('#btnDel').style = 'display:block;'
         document.querySelector('#edtPass').style = 'display:block;'
         document.querySelector('#edtRepPass').style = 'display:block;'
-    }else if(modal_data == 0){
-        document.querySelector('#cmbAccess').value = '1'
-        document.querySelector('#cmbAccess').style = 'display:none;'
-        document.querySelector('#edtPass').style = 'display:block;'
-        document.querySelector('#edtRepPass').style = 'display:block;'        
-    }else if(modal_data == 2){
-        document.querySelector('#edtNome').value = ['undefined','null',''].includes(localStorage.getItem("nome")) ? '' : localStorage.getItem("nome")
-        document.querySelector('#edtUser').value = ['undefined','null',''].includes(localStorage.getItem("username")) ? '' : localStorage.getItem("username")
-        document.querySelector('#edtEnd').value = ['undefined','null',''].includes(localStorage.getItem("endereco")) ? '' : localStorage.getItem("endereco")
-        document.querySelector('#edtNum').value = ['undefined','null',''].includes(localStorage.getItem("num")) ?'' : localStorage.getItem("num") 
-        document.querySelector('#edtComp').value = ['undefined','null',''].includes(localStorage.getItem("comp")) ? '' : localStorage.getItem("comp") 
-        document.querySelector('#edtBairro').value = ['undefined','null',''].includes(localStorage.getItem("bairro")) ? '' : localStorage.getItem("bairro") 
-        document.querySelector('#edtCidade').value = ['undefined','null',''].includes(localStorage.getItem("cidade")) ? '' : localStorage.getItem("cidade") 
-        document.querySelector('#edtCel').value = ['undefined','null',''].includes(localStorage.getItem("cel")) ? '' : localStorage.getItem("cel") 
-        document.querySelector('#edtCPF').value = ['undefined','null',''].includes(localStorage.getItem("CPF")) ? '' : localStorage.getItem("CPF") 
+
+    }else if(modal_data == 'edt_user'){
         document.querySelector('#edtEmail').value = ['undefined','null',''].includes(localStorage.getItem("email")) ? '' : localStorage.getItem("email") 
         document.querySelector('#cmbAccess').value = ['undefined','null',''].includes(localStorage.getItem("access")) ? '1' : localStorage.getItem("access")
         document.querySelector('#cmbAccess').style = 'display:none;'
@@ -128,37 +74,26 @@ console.log(modal_data)
 
     document.querySelector('#btnNovo').addEventListener('click',()=>{
 
-        if(repass() || modal_data == 2){
+        if(repass()){
             const params = new Object;
-                params.username = document.querySelector('#edtUser').value;
-                if(modal_data == 2 || (modal_data.nome != undefined && document.querySelector('#edtPass').value.trim() == '') ){
-                    params.edit = '1'
-                }else{
-                    params.hash = document.querySelector('#edtPass').value.getHash(30);
-                }
+                params.callhash = localStorage.getItem('hash')
+                params.hash = (document.querySelector('#edtEmail').value.trim()+document.querySelector('#edtPass').value.trim()).getHash(77);
+                params.email = document.querySelector('#edtEmail').value.trim();
                 params.access = document.querySelector('#cmbAccess').value;
-                params.endereco = document.querySelector('#edtEnd').value;
-                params.num = document.querySelector('#edtNum').value;
-                params.complemento = document.querySelector('#edtComp').value;
-                params.cidade = document.querySelector('#edtCidade').value;
-                params.bairro = document.querySelector('#edtBairro').value;
-                params.estado = document.querySelector('#cmbEstado').value;
-                params.CPF = document.querySelector('#edtCPF').value;
-                params.cel = document.querySelector('#edtCel').value;
-                params.email = document.querySelector('#edtEmail').value;
-                params.nome = document.querySelector('#edtNome').value;
-            let myPromisse
-
-            if(modal_data.nome != undefined ||  modal_data == 2){
-                params.id = modal_data == 2 ? localStorage.getItem("id") : modal_data.id;
-                myPromisse = queryDB(params,7)
-            }else{
-                myPromisse = queryDB(params,1)
-            }
-
+            const myPromisse = queryDB(params,1)
 
             myPromisse.then((resolve)=>{
-                btnClose.click();
+                const json = JSON.parse(resolve)
+                console.log(json)
+
+                if(parseInt(json[0].SUCCESS)){
+                    btnClose.click();
+                }else{
+                    alert(json[0].MOTIVO)
+                }
+
+
+/*                
                 if(modal_data == 0 || modal_data == 2){
                     const frame = localStorage.getItem("frame")
                     localStorage.clear(); 
@@ -171,15 +106,12 @@ console.log(modal_data)
                     openHTML('config.html')
                     viewUsers()
                 }
-                
-                
+*/                
             });
 
         }else{
             alert('Senhas não conferem ou nulas')
         }
-
-
     })
 
     document.querySelector('#btnDel').addEventListener('click',()=>{
