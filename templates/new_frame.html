@@ -39,6 +39,9 @@
         Fonte
         <input  id="cmbFont" type="number" value="15" min="8" max="35" maxlength="255" >
 
+        Cor da Fonte
+        <input id="cmbColorFont" type="color" value="#000000" >
+
         Texto
         <textarea id="edtTexto" cols="40" rows="5"></textarea>
         <button id="btnAdd"> Adicionar </button>
@@ -51,6 +54,7 @@
 
     if(modal_data!=''){
         document.querySelector('#cmbColor').value = modal_data.background
+        document.querySelector('#cmbColorFont').value = modal_data.color
         document.querySelector('#cmbFont').value = modal_data.font
         document.querySelector('#edtTexto').value = modal_data.text
         document.querySelector('#btnAdd').innerHTML = 'Salvar'
@@ -95,6 +99,7 @@
             
 
             const params = new Object;        
+            params.id = modal_data != ''? modal_data.id : 'DEFAULT'
             params.category = localStorage.getItem("frame");
             params.background = document.querySelector('#cmbColor').value;
             if(path == ''){
@@ -105,14 +110,18 @@
             params.filename = path
             params.font = document.querySelector('#cmbFont').value;
             params.text = document.querySelector('#edtTexto').value;
+            params.color = document.querySelector('#cmbColorFont').value;
 
             let myPromisse
+            myPromisse = queryDB(params,3)
+/*            
                         if(modal_data != ''){
                             params.id = modal_data.id;
                             myPromisse = queryDB(params,4)
                         }else{
                             myPromisse = queryDB(params,3)
                         }            
+*/                        
 
             myPromisse.then(()=>{
                 loadContent(localStorage.getItem("frame"));

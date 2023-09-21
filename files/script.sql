@@ -6,6 +6,8 @@ describe tb_usuario;
 describe tb_frames;
 describe tb_brinquedo;
 describe tb_agenda;
+describe tb_festa;
+describe tb_kit;
 
 SELECT * FROM tb_usuario;
 SELECT * FROM tb_frames;
@@ -38,6 +40,7 @@ ALTER TABLE tb_usuario ADD COLUMN edit varchar(1) DEFAULT 0;
 UPDATE tb_usuario SET access=10 WHERE id=1;
 
 DELETE FROM tb_frames WHERE id=4;
+UPDATE tb_frames SET category='Home' where id=6;
 
 UPDATE tb_festa SET id_user="1", id_kit="5", data="2022-07-28", nome="evento Teste", local="qqq", endereco="11", cidade="222", num="11", estado="SP", bairro="1111", responsavel="dsfsd", cel="(12)9 8563-2548", obs="blablablabla", inicio="08:30", montagem="07:00", desmontagem="13:00" WHERE id="5";
 

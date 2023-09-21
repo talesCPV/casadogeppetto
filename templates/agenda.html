@@ -64,8 +64,12 @@
 
             const tab = document.querySelector('#tblFestas')
             tab.innerHTML = ''
-            if(resolve.trim() != ""){            
-                tab.innerHTML = '<tr><th class="td-min">id</th><th>Data</th><th>Nome</th><th>Kit</th><th>Status</th></tr>'
+            if(resolve.trim() != ""){ 
+                if(localStorage.getItem('access')=='10'){
+                    tab.innerHTML = '<tr><th class="td-min">id</th><th>Data</th><th>Cliente</th><th>Evento</th><th>Kit</th><th>Status</th></tr>'
+                }else{
+                    tab.innerHTML = '<tr><th>Data</th><th>Evento</th><th>Kit</th><th>Status</th></tr>'
+                }
                 function addTD(val,cn=''){
                     const td = document.createElement('td')
                     td.innerHTML = val
@@ -75,12 +79,14 @@
                     return td
                 }
                 const json = JSON.parse(resolve);
+
                 for(let i=0; i<json.length; i++){
                     schedule = new Date(json[i].data)
                     json[i].status = json[i].aberta != '1' || today > schedule   ? 'Encerrado' : 'Aberto'
                     const tr = document.createElement('tr')
-                    tr.appendChild(addTD(json[i].id))
+                    localStorage.getItem('access')=='10' ? tr.appendChild(addTD(json[i].id)) : 0
                     tr.appendChild(addTD(formatData(json[i].data)))
+                    localStorage.getItem('access')=='10' ? tr.appendChild(addTD(json[i].cliente)) : 0
                     tr.appendChild(addTD(json[i].nome))
                     tr.appendChild(addTD(json[i].kit))
                     tr.appendChild(addTD(json[i].id_user,'hide'))

@@ -141,11 +141,15 @@ function createFrame(frm){
 
     }else if(frm.content == 'txt'){
         out.html.innerHTML = frm.text
-        out.html.style =  `text-align : ${frm.justify}; font-size: ${frm.font}px ;`
+        out.html.style =  `text-align : ${frm.justify}; font-size: ${frm.font}px; color:${frm.color};`
     }else if(frm.content == 'pic'){
         out.html.innerHTML = `<img src="files/pictures/${frm.filename}" alt="">`
         if(frm.text.trim() != ''){
             out.html.title = frm.text
+            const txt = document.createElement('div')
+            txt.innerHTML = frm.text
+            txt.style =  `position:absolute; text-align : ${frm.justify}; font-size: ${frm.font}px; color:${frm.color};`
+            out.html.appendChild(txt)
         }
     }
 

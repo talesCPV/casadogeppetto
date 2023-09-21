@@ -4,7 +4,9 @@
          "0"  => 'CALL sp_login("x00");',
          "1"  => 'CALL sp_novoUsuario("x00","x01","x02","x03");',
          "2"  => 'SELECT * FROM tb_frames WHERE y00="x00" AND y01<="x01" ORDER BY id DESC;',         
-         "3"  => 'INSERT INTO tb_frames (y00, y01, y02, y03, y04, y05) VALUES ("x00", "x01", "x02", "x03", "x04", "x05");',
+         "3"  => 'INSERT INTO tb_frames (id, category, background, content, filename, font, text, color) VALUES ("x00", "x01", "x02", "x03", "x04", "x05", "x06", "x07")
+                    ON DUPLICATE KEY UPDATE
+                    category="x01", background="x02", content="x03", filename="x04", font="x05" , text="x06", color="x07";',
          "4"  => 'UPDATE tb_frames SET y00="x00", y01="x01", y02="x02", y03="x03", y04="x04", y05="x05" WHERE y06="x06";',
          "5"  => 'DELETE FROM tb_frames  WHERE y00="x00";',
          "6"  => 'SELECT id,email,access FROM tb_usuario WHERE email LIKE "%x00%";',
