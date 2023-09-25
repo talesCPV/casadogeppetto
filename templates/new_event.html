@@ -103,15 +103,15 @@
 
         <div class="inline">
             <label for="edtInicio">Início</label>
-            <input type="text" id="edtInicio" placeholder="Horário de início" title="Horário de início da festa (chegada dos convidados), ex: 15:00" maxlength="5" onkeyup="horario(this)">
+            <input type="time" id="edtInicio" placeholder="Horário de início" title="Horário de início da festa (chegada dos convidados), ex: 15:00" onfocusout="fillTime(this)" >
         </div>
         <div class="inline">
             <label for="edtMontagem">Montagem</label>
-            <input type="text" id="edtMontagem" placeholder="Horário de Montagem" title="Horário liberado para montagem dos brinquedos , ex: 12:00" maxlength="5" onkeyup="horario(this)">
+            <input type="time" id="edtMontagem" placeholder="Horário de Montagem" title="Horário liberado para montagem dos brinquedos , ex: 12:00" onfocusout="fillTime(this)">
         </div>
         <div class="inline">
             <label for="edtDesmontagem">Desmontagem</label>
-            <input type="text" id="edtDesmontagem" placeholder="Horário de Desmontagem" title="Horário estimado do final da festa para agendamento da desmontagem dos brinquedos, ex: 21:00" maxlength="5" onkeyup="horario(this)">
+            <input type="time" id="edtDesmontagem" placeholder="Horário de Desmontagem" title="Horário estimado do final da festa para agendamento da desmontagem dos brinquedos, ex: 21:00" onfocusout="fillTime(this)">
         </div>
         <div class="inline">
             <label for="edtResp">Responsável</label>
@@ -211,6 +211,7 @@
     function addEvent(){
   
         const params = new Object;
+            params.id = modal_data != '' ?modal_data.id : 'DEFAULT';
             params.id_user = localStorage.getItem('id');
             params.id_kit = document.querySelector('#cmbKit').value;
             params.data = document.querySelector('#edtData').value.trim();
@@ -228,14 +229,16 @@
             params.montagem = document.querySelector('#edtMontagem').value.trim();
             params.desmontagem = document.querySelector('#edtDesmontagem').value.trim();
 
+            const myPromisse = queryDB(params,13)
+
+/*            
             let myPromisse
             if(modal_data != ''){
-                params.id = modal_data.id;
                 myPromisse = queryDB(params,25)
             }else{
                 myPromisse = queryDB(params,13)
             }       
-
+*/
         myPromisse.then((resolve)=>{
             btnClose.click()   
             over_close.click()

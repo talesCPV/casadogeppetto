@@ -2,6 +2,12 @@
  
     <style>
 
+        fieldset{
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
         .modal-content{
             width: 90vw;
 
@@ -26,6 +32,16 @@
             width: calc(100% - 40px);
         }
 
+        .qtd-zero{
+            background: rosybrown !important;
+        }
+
+        .img-PB{
+            -webkit-filter: grayscale(100%);
+            filter: grayscale(100%);
+            filter: gray; /* IE */
+        }
+
     </style>
 
     <div class="frm-brinq">
@@ -35,7 +51,10 @@
             <p id="lbl01"></p>
             <p id="lbl02"></p>
             <p id="lbl03"></p>
-            <button id="btnEdit">Editar</button>
+            <div class="inline">
+                <button id="btnEdit">Editar</button>
+                <button id="btnDel">Deletar</button>
+            </div>
         </fieldset>
 
         <fieldset>
@@ -158,17 +177,18 @@
                 }
 
                 const json = JSON.parse(resolve);
-
+console.log(json)
                 for(let i=0; i<json.length; i++){
                  
                     const qtd = modal_data.reservado==undefined? json[i].qtd : reserva(json[i])
                     const tr = document.createElement('tr')
+                    tr.className = qtd <=0 ? 'qtd-zero' : ''
                     tr.appendChild(addTD(json[i].id,'hide'))
                     tr.appendChild(addTD(json[i].nome))
                     tr.appendChild(addTD(json[i].tamanho))
                     tr.appendChild(addTD(qtd))
                     tr.appendChild(addTD(json[i].sobre,'hide'))
-                    tr.appendChild(addTD(`<canvas width="300" height="300" id="cnvImg${i}"></canvas>`,'no-margin'))
+                    tr.appendChild(addTD(`<canvas width="300" height="300" id="cnvImg${i}" class="${qtd<=0?'img-PB':''}"></canvas>`,'no-margin'))
                     tr.title=json[i].sobre
                     tr.dados = json[i]
 //                    tr.className = qtd > 0 ? '' : 'hide'
@@ -271,6 +291,21 @@
             openHTML('new_event.html','over',data.nome, data)
         }else{
             alert('Este evento já foi encerrado')
+        }
+    })
+
+    document.querySelector('#btnDel').addEventListener('click',()=>{
+        if(confirm('Operação irreversível!\r\rDeseja realmente deletar esta festa?')){
+            const params = new Object;
+                params.hash = localStorage.getItem('hash')
+                params.id = modal_data.id
+
+                const myPromisse = queryDB(params,25)
+
+                myPromisse.then((resolve)=>{
+                    btnClose.click()   
+                    openHTML('agenda.html')
+                })
         }
     })
 

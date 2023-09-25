@@ -331,6 +331,14 @@ function horario(edt){
     edt.value = out;
 }
 
+function fillTime(param){
+    
+    if(param.value.length<5){
+        alert('Favor preencher o campo corretamente')
+        param.focus()
+    }
+}
+
 function phone(param){ // formata a string no padrão TELEFONE
     number(param);
     var num = param.value;
