@@ -90,7 +90,9 @@
                     tr.appendChild(addTD(json[i].nome))
                     tr.appendChild(addTD(json[i].kit))
                     tr.appendChild(addTD(json[i].id_user,'hide'))
-                    tr.appendChild(addTD(json[i].status))
+                    
+                    tr.appendChild(addTD(json[i].status=='Encerrado' ? 'Ver Contrato' : 'Em Aberto'))
+
                     tr.dados = json[i]
                     tab.appendChild(tr)
                 }

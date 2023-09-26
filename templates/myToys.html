@@ -84,8 +84,20 @@
     document.querySelector('#lbl02').innerHTML = `<b>Responsável:</b> ${modal_data.responsavel} - ${modal_data.cel}`
     document.querySelector('#lbl03').innerHTML = `<b>Início da Festa:</b> ${modal_data.inicio},  montagem programada para as ${modal_data.montagem} e desmontagem as ${modal_data.desmontagem}`
 
+    if(modal_data.status != 'Aberto'){
+        if(localStorage.getItem('access')=='10'){
+            if(confirm('Deseja reabrir esta festa para edição?')){
+                document.querySelector('#btnDel').innerHTML='Reabrir Festa'
+            }
+        }else{
+            document.querySelector('#btnDel').style.display='none'
+        }
+    }
+
+
     viewMyToys()
     viewSaldo()
+
 
     modal_data.saldo = new Object
         modal_data.saldo.P = parseInt(modal_data.P)
@@ -177,7 +189,7 @@
                 }
 
                 const json = JSON.parse(resolve);
-console.log(json)
+
                 for(let i=0; i<json.length; i++){
                  
                     const qtd = modal_data.reservado==undefined? json[i].qtd : reserva(json[i])
@@ -243,6 +255,10 @@ console.log(json)
                 modal_data.myToys = json
                 CountSizes()
 
+                if(modal_data.status=='Encerrado'){
+                    contrato_pdf(modal_data)
+                }
+                
             }
             
         });
@@ -295,18 +311,36 @@ console.log(json)
     })
 
     document.querySelector('#btnDel').addEventListener('click',()=>{
-        if(confirm('Operação irreversível!\r\rDeseja realmente deletar esta festa?')){
-            const params = new Object;
-                params.hash = localStorage.getItem('hash')
-                params.id = modal_data.id
+
+        if(modal_data.status == 'Aberto'){
+            if(confirm('Operação irreversível!\r\rDeseja realmente deletar esta festa?')){
+                const params = new Object;
+                    params.hash = localStorage.getItem('hash')
+                    params.id = modal_data.id
+
+                    const myPromisse = queryDB(params,25)
+
+                    myPromisse.then((resolve)=>{
+                        btnClose.click()   
+                        openHTML('agenda.html')
+                    })
+            }
+
+        }else{
+            if(confirm('Deseja reabrir esta festa?')){
+                const params = new Object;
+                    params.hash = localStorage.getItem('hash')
+                    params.id = modal_data.id
 
                 const myPromisse = queryDB(params,25)
-
-                myPromisse.then((resolve)=>{
-                    btnClose.click()   
-                    openHTML('agenda.html')
+                myPromisse.then((resolve)=>{                    
+                    btnClose.click()  
+                    document.querySelector('#menu-agenda').click()
                 })
+
+            }
         }
+
     })
 
     document.querySelector('#btnBusca').addEventListener('click',()=>{
@@ -352,8 +386,11 @@ console.log(json)
 
     document.querySelector('#btnContrata').addEventListener('click',()=>{
         if(modal_data.status == 'Aberto'){
-            closeContract()
+            openHTML('contrato.html','over','Dados de Fatura do Contrato', data)
+//            closeContract()
         }else{
+
+
             contrato_pdf(modal_data)
         }
 

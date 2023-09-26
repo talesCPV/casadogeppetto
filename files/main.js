@@ -446,6 +446,35 @@ function checkField(fields){
     return true
 }
 
+function getNum(V){
+    const ok_chr = ['1','2','3','4','5','6','7','8','9','0'];
+    let out = ''
+    for(let i=0; i< V.length; i++){
+        if(ok_chr.includes(V[i])){
+            out+=V[i]
+        }
+    }
+    return out
+}
+
+function valCPF(edt){
+    edt.value = getCPF(getNum(edt.value))
+}
+
+function getCPF(V){
+    V = getNum(V)
+    let out = ''
+    for(let i=0; i< V.length; i++){
+        if(i==3 || i==6){
+            out+='.'
+        }else if(i==9){
+            out+='-'
+        }
+        out+=V[i]            
+    }
+    return out
+}
+
 
 function contrato_pdf(data){
 
@@ -547,7 +576,7 @@ function contrato_pdf(data){
 
     txt.text = `FVL SB LTDA ME, CNPJ 25.308.185/0001-27, sediada a Av. Lineu de Moura, n.805, São José dos Campos/SP, doravante denominado LOCADORA. 
     
-    ${data.cliente}, CPF ${data.CPF}, residente a ${data.cli_end}, n.${data.cli_num}, ${data.cli_cidade}/${data.cli_estado} doravante denominado LOCATÁRIA. 
+    ${data.fat_nome}, CPF ${data.fat_cpf}, residente a ${data.fat_end}, n.${data.fat_num}, ${data.fat_cidade}/${data.fat_estado} doravante denominado LOCATÁRIA. 
     
     As partes acima qualificadas, tem entre si, justo e acertado os seguintes termos e condições do contrato de locação de brinquedos, conforme a seguir.`
 

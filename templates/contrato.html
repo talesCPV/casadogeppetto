@@ -1,0 +1,138 @@
+<template>
+ 
+    <style>
+
+        .inline{
+            justify-content: center;
+        }
+
+        .inline label{
+            width: 100px;
+            text-align: end;
+        }
+
+
+
+    </style>
+
+    <fieldset>
+        <legend>Locatário</legend>
+
+        <div class="inline">
+            <label for="edtNome">Nome:</label>
+            <input type="text" id="edtNomeLoc" placeholder="Nome do Locatário" title="Digite o nome do contratante da festa" maxlength="50">
+        </div>
+
+        <div class="inline">
+            <label for="edtCPF">CPF:</label>
+            <input type="text" id="edtCPF" placeholder="CPF do Locatário" title="Digite o CPF do contratante da festa" maxlength="14" onkeyup="valCPF(this)">
+        </div>
+
+        <div class="inline">
+            <label for="edtEnd">Endereço:</label>
+            <input type="text" id="edtEnd" placeholder="Endereço do Local" title="Digite o endereço de fatura" maxlength="70">
+        </div>
+        <div class="inline">
+            <label for="edtNum">Número</label>
+            <input type="text" id="edtNum" placeholder="Número" title="digite o número do endereço de fatura" maxlength="5">
+        </div>
+        <div class="inline">
+            <label for="edtComp">Comp.</label>
+            <input type="text" id="edtComp" placeholder="Número" title="digite o número do endereço de fatura" maxlength="20">
+        </div>
+        <div class="inline">
+            <label for="edtBairro">Bairro</label>
+            <input type="text" id="edtBairro" placeholder="Bairro" title="Digite o nome do bairro do local de fatura" maxlength="40">
+        </div>
+        <div class="inline">
+            <label for="edtCidade">Cidade</label>
+            <input type="text" id="edtCidade" placeholder="Cidade" title="Digite o nome da Cidade do local de fatura" maxlength="40">
+        </div>
+        <div class="inline">
+            <label for="cmbEstado">Estado</label>
+            <select id="cmbEstado" title="Selecione o estado do endereço de fatura" >
+                <option value="AC">Acre</option>
+                <option value="AL">Alagoas</option>
+                <option value="AP">Amapá</option>
+                <option value="AM">Amazonas</option>
+                <option value="BA">Bahia</option>
+                <option value="CE">Ceará</option>
+                <option value="DF">Distrito Federal</option>
+                <option value="ES">Espírito Santo</option>
+                <option value="GO">Goiás</option>
+                <option value="MA">Maranhão</option>
+                <option value="MT">Mato Grosso</option>
+                <option value="MS">Mato Grosso do Sul</option>
+                <option value="MG">Minas Gerais</option>
+                <option value="PA">Pará</option>
+                <option value="PB">Paraíba</option>
+                <option value="PR">Paraná</option>
+                <option value="PE">Pernambuco</option>
+                <option value="PI">Piauí</option>
+                <option value="RJ">Rio de Janeiro</option>
+                <option value="RN">Rio Grande do Norte</option>
+                <option value="RS">Rio Grande do Sul</option>
+                <option value="RO">Rondônia</option>
+                <option value="RR">Roraima</option>
+                <option value="SC">Santa Catarina</option>
+                <option value="SP" selected>São Paulo</option>
+                <option value="SE">Sergipe</option>
+                <option value="TO">Tocantis</option>
+            </select>
+
+        </div>
+        <button id="btnContratar">Contratar</button>
+
+
+    </fieldset>     
+        
+
+</template>
+
+<script>        
+
+    if(modal_data != ''){
+        document.querySelector('#edtEnd').value = modal_data.endereco
+        document.querySelector('#edtNum').value = modal_data.num
+        document.querySelector('#edtBairro').value = modal_data.bairro
+        document.querySelector('#edtCidade').value = modal_data.cidade
+        document.querySelector('#cmbEstado').value = modal_data.estado
+    }
+
+
+
+    document.querySelector('#btnContratar').addEventListener('click',()=>{
+
+
+        const required = ['edtNomeLoc','edtCPF','edtEnd', 'edtNum', 'edtBairro','edtCidade','cmbEstado']
+
+        if(checkField(required)){
+
+            if(confirm('Deseja efetuar o contrato desta festa?')){
+
+                const params = new Object;
+                    params.hash = localStorage.getItem('hash')
+                    params.id = modal_data.id;
+                    params.nome =  document.querySelector('#edtNomeLoc').value.trim().toUpperCase()
+                    params.cpf =  document.querySelector('#edtCPF').value.trim()
+                    params.endereco =  document.querySelector('#edtEnd').value.trim().toUpperCase()
+                    params.num =  document.querySelector('#edtNum').value.trim().toUpperCase()
+                    params.comp =  document.querySelector('#edtComp').value.trim().toUpperCase()
+                    params.bairro =  document.querySelector('#edtBairro').value.trim().toUpperCase()
+                    params.cidade =  document.querySelector('#edtCidade').value.trim().toUpperCase()
+                    params.estado =  document.querySelector('#cmbEstado').value
+
+                const myPromisse = queryDB(params,26)
+                myPromisse.then((resolve)=>{
+                    over_close.click()
+                    btnClose.click()  
+                    document.querySelector('#menu-agenda').click()
+                });         
+
+            }
+        }
+
+    })
+
+
+</script>    

@@ -52,9 +52,9 @@
 	                AND F.data = "x00"
                     GROUP BY B.id;',
          
-         "25" => 'CALL sp_delFesta("x00",x01);',
-         
-         "26" => 'UPDATE tb_festa SET y00="x00", y01="x01" WHERE y02="x02";',
+         "25" => 'CALL sp_delFesta("x00",x01);',         
+         "26" => 'CALL sp_contrato("x00","x01","x02","x03","x04","x05","x06","x07","x08","x09");',
+         "27" => 'CALL sp_sp_reopen("x00",x01);',         
 
 
 
