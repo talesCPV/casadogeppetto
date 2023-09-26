@@ -30,7 +30,7 @@
 
         <div class="inline">
             <label for="edtEnd">Endereço:</label>
-            <input type="text" id="edtEnd" placeholder="Endereço do Local" title="Digite o endereço de fatura" maxlength="70">
+            <input type="text" id="edtEnd" placeholder="Endereço do Locatário" title="Digite o endereço de fatura" maxlength="70">
         </div>
         <div class="inline">
             <label for="edtNum">Número</label>
@@ -38,7 +38,7 @@
         </div>
         <div class="inline">
             <label for="edtComp">Comp.</label>
-            <input type="text" id="edtComp" placeholder="Número" title="digite o número do endereço de fatura" maxlength="20">
+            <input type="text" id="edtComp" placeholder="Complemento" title="digite o complemento do endereço de fatura" maxlength="20">
         </div>
         <div class="inline">
             <label for="edtBairro">Bairro</label>
@@ -110,6 +110,8 @@
 
             if(confirm('Deseja efetuar o contrato desta festa?')){
 
+               
+
                 const params = new Object;
                     params.hash = localStorage.getItem('hash')
                     params.id = modal_data.id;
@@ -121,6 +123,9 @@
                     params.bairro =  document.querySelector('#edtBairro').value.trim().toUpperCase()
                     params.cidade =  document.querySelector('#edtCidade').value.trim().toUpperCase()
                     params.estado =  document.querySelector('#cmbEstado').value
+                    params.data = today.getFullYear()+'-'+today.getMonth().toString().padStart(2, '0')+'-'+today.getDate().toString().padStart(2, '0')
+
+                    console.log(params)
 
                 const myPromisse = queryDB(params,26)
                 myPromisse.then((resolve)=>{

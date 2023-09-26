@@ -8,12 +8,14 @@ describe tb_brinquedo;
 describe tb_agenda;
 describe tb_festa;
 describe tb_kit;
+describe tb_locatario;
 
 SELECT * FROM tb_usuario;
 SELECT * FROM tb_frames;
 SELECT * FROM tb_festa;
 SELECT * FROM tb_brinquedo;
 SELECT * FROM tb_agenda;
+SELECT * FROM tb_locatario;
 
 INSERT INTO tb_usuario (username, hash, access) VALUES ("michele", "i--No3<<]~!Bc''Hi--No33Tu99Z{?", 10);
 INSERT INTO tb_usuario (username, hash, access) VALUES ("tales", "IFi:2r'|S*#V-%Y0(\\3+_6.b91e<4h", 10);
@@ -21,14 +23,23 @@ INSERT INTO tb_frames (category, content) VALUES ("Blog", "plus");
 INSERT INTO tb_frames (category, content, background, filename) VALUES ("photo", "pic","10,167,20","wood.jpeg");
 INSERT INTO tb_frames (category, content, background, justify, text) VALUES ("photo", "pic","240,100,80","center","Exemplo de texto... bem grande com várias linhas");
 
+UPDATE tb_festa SET aberta=1 WHERE id=2;
+
 ALTER TABLE tb_usuario MODIFY cel varchar(15);
 ALTER TABLE tb_brinquedo ADD COLUMN ativo BOOLEAN DEFAULT TRUE;
 ALTER TABLE tb_festa ADD COLUMN local varchar(40) DEFAULT NULL;
-ALTER TABLE tb_festa ADD COLUMN endereco varchar(70) DEFAULT NULL;
-ALTER TABLE tb_festa ADD COLUMN cidade varchar(40) DEFAULT NULL;
-ALTER TABLE tb_festa ADD COLUMN num varchar(5) DEFAULT NULL;
-ALTER TABLE tb_festa ADD COLUMN estado varchar(2) DEFAULT NULL;
-ALTER TABLE tb_festa ADD COLUMN bairro varchar(40) DEFAULT NULL;
+
+
+ALTER TABLE tb_festa ADD COLUMN fat_nome varchar(50) NOT NULL DEFAULT "";
+ALTER TABLE tb_festa ADD COLUMN fat_cpf varchar(14) NOT NULL DEFAULT "";
+ALTER TABLE tb_festa ADD COLUMN fat_end varchar(70) NOT NULL DEFAULT "";
+ALTER TABLE tb_festa ADD COLUMN fat_cidade varchar(40) NOT NULL DEFAULT "";
+ALTER TABLE tb_festa ADD COLUMN fat_num varchar(5) NOT NULL DEFAULT "";
+ALTER TABLE tb_festa ADD COLUMN fat_comp varchar(20) NOT NULL DEFAULT "";
+ALTER TABLE tb_festa ADD COLUMN fat_estado varchar(2) NOT NULL DEFAULT "";
+ALTER TABLE tb_festa ADD COLUMN fat_bairro varchar(40) NOT NULL DEFAULT "";
+ALTER TABLE tb_festa ADD COLUMN fat_data varchar(10) NOT NULL DEFAULT "";
+
 ALTER TABLE tb_festa ADD COLUMN responsavel varchar(50) DEFAULT NULL;
 ALTER TABLE tb_festa ADD COLUMN cel varchar(15) DEFAULT NULL;
 ALTER TABLE tb_festa ADD COLUMN obs varchar(250) DEFAULT NULL;
@@ -37,11 +48,20 @@ ALTER TABLE tb_festa ADD COLUMN montagem varchar(5) DEFAULT NULL;
 ALTER TABLE tb_festa ADD COLUMN desmontagem varchar(5) DEFAULT NULL;
 ALTER TABLE tb_usuario ADD COLUMN edit varchar(1) DEFAULT 0;
 
+
+INSERT INTO tb_festa 
+			(id, id_user, id_kit, data, nome, local, endereco, cidade, num, estado, bairro, responsavel, cel, obs, inicio, montagem, desmontagem) 
+    VALUES 	("", "3", "1", "2023-09-30", "a", "a", "a", "a", "a", "AC", "a", "a", "(12)8563-2547", "a", "12:00", "13:00", "18:00") 
+    ON DUPLICATE KEY UPDATE 
+    id_kit="1", data="2023-09-30", nome="a", local="a", endereco="a", cidade="a", num="a", estado="AC", bairro="a", responsavel="a", cel="(12)8563-2547", obs="a", inicio="12:00", montagem="13:00", desmontagem="18:00";
+
+
 UPDATE tb_usuario SET access=10 WHERE id=1;
 
 DELETE FROM tb_frames WHERE id=4;
 UPDATE tb_frames SET category='Home' where id=6;
 
+UPDATE tb_festa SET id_user="5" WHERE id=3;
 UPDATE tb_festa SET id_user="1", id_kit="5", data="2022-07-28", nome="evento Teste", local="qqq", endereco="11", cidade="222", num="11", estado="SP", bairro="1111", responsavel="dsfsd", cel="(12)9 8563-2548", obs="blablablabla", inicio="08:30", montagem="07:00", desmontagem="13:00" WHERE id="5";
 
 SELECT A.id, B.nome, B.tamanho, A.qtd, B.img  FROM tb_agenda as A

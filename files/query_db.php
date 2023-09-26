@@ -53,8 +53,8 @@
                     GROUP BY B.id;',
          
          "25" => 'CALL sp_delFesta("x00",x01);',         
-         "26" => 'CALL sp_contrato("x00","x01","x02","x03","x04","x05","x06","x07","x08","x09");',
-         "27" => 'CALL sp_sp_reopen("x00",x01);',         
+         "26" => 'CALL sp_contrato("x00","x01","x02","x03","x04","x05","x06","x07","x08","x09","x10");',
+         "27" => 'CALL sp_reopen("x00",x01);',         
 
 
 

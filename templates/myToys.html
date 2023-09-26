@@ -85,10 +85,8 @@
     document.querySelector('#lbl03').innerHTML = `<b>Início da Festa:</b> ${modal_data.inicio},  montagem programada para as ${modal_data.montagem} e desmontagem as ${modal_data.desmontagem}`
 
     if(modal_data.status != 'Aberto'){
-        if(localStorage.getItem('access')=='10'){
-            if(confirm('Deseja reabrir esta festa para edição?')){
-                document.querySelector('#btnDel').innerHTML='Reabrir Festa'
-            }
+        if(localStorage.getItem('access')=='10'){           
+            document.querySelector('#btnDel').innerHTML='Reabrir Festa'            
         }else{
             document.querySelector('#btnDel').style.display='none'
         }
@@ -332,7 +330,7 @@
                     params.hash = localStorage.getItem('hash')
                     params.id = modal_data.id
 
-                const myPromisse = queryDB(params,25)
+                const myPromisse = queryDB(params,27)
                 myPromisse.then((resolve)=>{                    
                     btnClose.click()  
                     document.querySelector('#menu-agenda').click()

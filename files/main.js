@@ -478,7 +478,7 @@ function getCPF(V){
 
 function contrato_pdf(data){
 
-    var sign_day = new Date(data.contrato)
+    var sign_day = new Date(data.fat_data)
         sign_day.setDate(sign_day.getDate() + 1);
 
     var imgData = new Image()
@@ -546,7 +546,7 @@ function contrato_pdf(data){
             }
             
             length = line.length * (doc.internal.getFontSize() / 4.6)
-            if(length > txt.width){
+            if(length > txt.width-4){
                 print()
             }                
         }
@@ -576,7 +576,7 @@ function contrato_pdf(data){
 
     txt.text = `FVL SB LTDA ME, CNPJ 25.308.185/0001-27, sediada a Av. Lineu de Moura, n.805, São José dos Campos/SP, doravante denominado LOCADORA. 
     
-    ${data.fat_nome}, CPF ${data.fat_cpf}, residente a ${data.fat_end}, n.${data.fat_num}, ${data.fat_cidade}/${data.fat_estado} doravante denominado LOCATÁRIA. 
+    ${data.fat_nome}, CPF ${data.fat_cpf}, residente a ${data.fat_end}, n.${data.fat_num},${data.fat_comp.trim()} ${data.fat_cidade}/${data.fat_estado} doravante denominado LOCATÁRIA. 
     
     As partes acima qualificadas, tem entre si, justo e acertado os seguintes termos e condições do contrato de locação de brinquedos, conforme a seguir.`
 
@@ -695,7 +695,7 @@ function contrato_pdf(data){
     doc.text('Locatário',txt.x, txt.y)
     doc.setFontSize(15)
     doc.setTextColor(38,99,108);
-    doc.text(data.cliente,txt.x + 20, txt.y)
+    doc.text(data.fat_nome,txt.x + 20, txt.y)
 
     doc.save('contrato.pdf')
 
