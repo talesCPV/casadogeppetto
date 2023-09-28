@@ -36,7 +36,8 @@
                     INNER JOIN tb_brinquedo as B
                     WHERE A.id_festa = F.id
                     AND A.id_brinq = B.id
-                    AND A.y00="x00";',
+                    AND A.y00="x00"
+                    ORDER BY B.tamanho DESC;',
          "21" => 'DELETE FROM tb_agenda WHERE y00="x00";',
          "22" => 'SELECT * FROM tb_brinquedo WHERE y00 LIKE "%x00%" AND (y01="x02" OR y01="x03" OR y01="x04") AND ativo="1" ORDER BY tamanho DESC, nome ASC',
          "23" => 'SELECT B.tamanho AS tam, SUM(A.qtd) AS qtd FROM tb_agenda as A
