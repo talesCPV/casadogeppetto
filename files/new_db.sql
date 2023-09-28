@@ -91,7 +91,7 @@ CREATE TABLE tb_agenda(
 
 /* VIEWS */
 
- DROP VIEW vw_festa;
+-- DROP VIEW vw_festa;
  CREATE VIEW vw_festa AS
    SELECT F.*,U.email as cliente,K.nome as kit,
 		K.P, K.M, K.G, K.valor, K.monitoria 

@@ -98,3 +98,15 @@
         flex-direction: row;
         width: 100%;
     } 
+
+
+    /* Responsiveness */
+    @media (max-width: 850px) {
+
+
+        table, tr, td, th{
+            font-size: 0.9em;
+        }
+
+
+    }

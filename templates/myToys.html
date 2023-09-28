@@ -8,6 +8,12 @@
             gap: 5px;
         }
 
+        table, tr, td, th{
+            padding: 10px;
+            margin: auto;
+            border: none;
+        }
+
         .modal-content{
             width: 90vw;
 
@@ -29,11 +35,16 @@
         }
 
         #tblToys, #tblMyToys{
-            width: calc(100% - 40px);
+            width: calc(100% - 40px);            
         }
 
         .qtd-zero{
-            background: rosybrown !important;
+            background: rosybrown !important;           
+        }
+
+
+        .qtd-zero:nth-child(even){
+            filter: brightness(80%) !important;
         }
 
         .img-PB{

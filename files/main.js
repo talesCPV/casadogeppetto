@@ -576,7 +576,7 @@ function contrato_pdf(data){
 
     txt.text = `FVL SB LTDA ME, CNPJ 25.308.185/0001-27, sediada a Av. Lineu de Moura, n.805, São José dos Campos/SP, doravante denominado LOCADORA. 
     
-    ${data.fat_nome}, CPF ${data.fat_cpf}, residente a ${data.fat_end}, n.${data.fat_num},${data.fat_comp.trim()} ${data.fat_cidade}/${data.fat_estado} doravante denominado LOCATÁRIA. 
+    ${data.fat_nome}, CPF ${data.fat_cpf}, residente a ${data.fat_end}, n.${data.fat_num},${data.fat_comp.trim()} ${data.fat_cidade}/${data.fat_estado} doravante denominado LOCATÁRIO. 
     
     As partes acima qualificadas, tem entre si, justo e acertado os seguintes termos e condições do contrato de locação de brinquedos, conforme a seguir.`
 
@@ -649,29 +649,29 @@ function contrato_pdf(data){
  
     IX - O LOCADOR, por si ou por preposto, poderá visitar o local do evento durante a locação, para garantir o bom funcionamento do(s) brinquedo(s) e verificar o exato cumprimento das cláusulas deste contrato; 
  
-    X - BENS MÓVEIS: O termo Bens Móveis refere-se a todo o mobiliário fornecido pela LOCADORA a LOCATÁRIA. 
+    X - BENS MÓVEIS: O termo Bens Móveis refere-se a todo o mobiliário fornecido pela LOCADORA ao LOCATÁRIO. 
  
-    X.1- A LOCADORA possui propriedade dos Bens Móveis sendo de exclusivo uso da LOCATÁRIA e deverão ser devolvidos pela LOCATÁRIA, ao término ou no caso de rescisão parcial ou total deste contrato. 
+    X.1- A LOCADORA possui propriedade dos Bens Móveis sendo de exclusivo uso do LOCATÁRIO e deverão ser devolvidos pelo LOCATÁRIO, ao término ou no caso de rescisão parcial ou total deste contrato. 
  
-    X.2 - É vedado à LOCATÁRIA ceder, emprestar ou sublocar, total ou parcialmente, o objeto locado sem a anuência, por escrito, do locador. 
+    X.2 - É vedado ao LOCATÁRIO ceder, emprestar ou sublocar, total ou parcialmente, o objeto locado sem a anuência, por escrito, do locador. 
  
-    XI - A entrega dos bens locados caberá à LOCADORA, ou a quem por ela for indicado, na localização estipulada pela LOCATÁRIA no Pedido de Locação, contabilizando desde assinatura e aceitação da LOCATÁRIA. 
+    XI - A entrega dos bens locados caberá à LOCADORA, ou a quem por ela for indicado, na localização estipulada pelo LOCATÁRIO no Pedido de Locação, contabilizando desde assinatura e aceitação do LOCATÁRIO. 
  
-    XI.1 - Se houver interesse da LOCATÁRIA na prorrogação do prazo de Locação deste contrato, caberá às partes no prazo improrrogável de 72 (setenta e duas) horas anteriores ao seu evento, manifestar seu desejo, por escrito, em continuar com a locação por prazo igual ou superior. 
+    XI.1 - Se houver interesse do LOCATÁRIO na prorrogação do prazo de Locação deste contrato, caberá às partes no prazo improrrogável de 72 (setenta e duas) horas anteriores ao seu evento, manifestar seu desejo, por escrito, em continuar com a locação por prazo igual ou superior. 
  
-    XI. 2 - A LOCATÁRIA deverá ter a posse legal do local em que forem entregues e instalados os bens, sendo que sem o prévio consentimento, por escrito da LOCADORA, tais bens, não poderão ser instalados em outro local que não o estabelecido no respectivo contrato. 
+    XI. 2 - O LOCATÁRIO deverá ter a posse legal do local em que forem entregues e instalados os bens, sendo que sem o prévio consentimento, por escrito da LOCADORA, tais bens, não poderão ser instalados em outro local que não o estabelecido no respectivo contrato. 
  
-    XI.3 - A responsabilidade de averiguação se os bens entregues pela LOCADORA atendem às especificações solicitadas será da LOCATÁRIA, que deverá no ato do recebimento assinar o termo de entrega e vistoria, que servirá como comprovante do recebimento e aceitação dos bens. 
+    XI.3 - A responsabilidade de averiguação se os bens entregues pela LOCADORA atendem às especificações solicitadas será do LOCATÁRIO, que deverá no ato do recebimento assinar o termo de entrega e vistoria, que servirá como comprovante do recebimento e aceitação dos bens. 
  
-    XI.4 - A continuação da utilização dos bens móveis após o término do Contrato implicará a concordância imediata da LOCATÁRIA com a sua renovação por prazo igual. 
+    XI.4 - A continuação da utilização dos bens móveis após o término do Contrato implicará a concordância imediata do LOCATÁRIO com a sua renovação por prazo igual. 
  
-    XII - Em caso de avaria, extravio, danos e/ou furto do material locado, a LOCADORA se reserva o direito de emitir cobrança bancária a LOCATÁRIA, que desde já autoriza tal cobrança no valor correspondente ao reparo e/ou substituição do material. 
+    XII - Em caso de avaria, extravio, danos e/ou furto do material locado, a LOCADORA se reserva o direito de emitir cobrança bancária o LOCATÁRIO, que desde já autoriza tal cobrança no valor correspondente ao reparo e/ou substituição do material. 
  
-    XII.1 - Todo e qualquer conserto e/ou reparo será efetuado única e exclusivamente pela LOCADORA, caso contrário a LOCATÁRIA será automaticamente responsabilizada pelos danos eventualmente causados. 
+    XII.1 - Todo e qualquer conserto e/ou reparo será efetuado única e exclusivamente pela LOCADORA, caso contrário o LOCATÁRIO será automaticamente responsabilizada pelos danos eventualmente causados. 
  
-    XII.2 - A conservação dos bens locados será de responsabilidade da LOCATÁRIA. 
+    XII.2 - A conservação dos bens locados será de responsabilidade do LOCATÁRIO. 
  
-    XII.3 - Não é permitido a LOCATÁRIA adaptar os bens locados, instalando peças, modificando sua aparência, estrutura ou funcionamento, a não ser que a LOCADORA, por escrito, consinta previamente. 
+    XII.3 - Não é permitido o LOCATÁRIO adaptar os bens locados, instalando peças, modificando sua aparência, estrutura ou funcionamento, a não ser que a LOCADORA, por escrito, consinta previamente. 
  
     XIII - A infração de qualquer das cláusulas deste contrato faz incorrer ao infrator na multa irredutível de 20% (vinte por cento), sobre o valor monetário da locação e importa na sua rescisão de pleno direito, sujeitando-se a parte infratora ao pagamento das perdas e danos que posteriormente forem apuradas; 
  
