@@ -81,18 +81,22 @@
 
             myPromisse.then((resolve)=>{
 
-                if(resolve.trim() != ""){
-                    const json = JSON.parse(resolve);
-                    console.log(json)
-                    localStorage.setItem("id",json[0].id);
-                    localStorage.setItem("hash",json[0].hash);
-                    localStorage.setItem("access",json[0].access);
-                    localStorage.setItem("email",json[0].email);
-                    loadContent(localStorage.getItem("frame"))
-                    closeMenu()
-                    loadContent(localStorage.getItem("frame")) 
-                        
+                let json
 
+                try{
+                    json = JSON.parse(resolve)[0];
+                }catch{
+                    json = {access:'0'}
+                }
+
+                if(json.access != "0"){                                    
+                    localStorage.setItem("id",json.id);
+                    localStorage.setItem("hash",json.hash);
+                    localStorage.setItem("access",json.access);
+                    localStorage.setItem("email",json.email);
+//                    loadContent(localStorage.getItem("frame"))
+                    closeMenu()
+//                    loadContent(localStorage.getItem("frame"))                         
                 }else{
                     alert("Usuário ou senha inválido!");
                     localStorage.clear();                
