@@ -29,6 +29,10 @@
             width: auto !important;
         }
 
+        fieldset h3{
+            text-align: center;
+        }
+
         #btnContrata, #btnEdit{
             margin-top: 10px;
             width: 97%;
@@ -36,6 +40,15 @@
 
         #tblToys, #tblMyToys{
             width: calc(100% - 40px);            
+        }
+
+        #lblSaldo{
+            background-color: #F8F4C1;
+            border: none;
+            height: 100px;
+            font-size: 1.5em;
+            text-align: center;
+            font-weight: bold;
         }
 
         .qtd-zero{
@@ -72,14 +85,14 @@
             <legend>Adicione um Brinquedo</legend>
             <div class="inline">
                 <input type="text" id="edtBusca" placeholder="Digite sua busca aqui" onkeypress="return getEnter(event, 'btnBusca')" >
-                <button id="btnBusca">Busca</button>
+                <button class="btn-destaque"  id="btnBusca">Busca</button>
             </div>
             <table id="tblToys"></table>
         </fieldset>
 
         <fieldset>
             <legend> Brinquedos Selecionados</legend>
-            <h4 id="lblSaldo"></h4>
+            <textarea id="lblSaldo"></textarea>
             <table id="tblMyToys"></table>
         </fieldset>
 
@@ -122,19 +135,23 @@
 
     function saldo(){
 
-        lab = ''
+        const aviso = document.querySelector('#lblSaldo')
+        
         if(modal_data.status == 'Aberto'){
             if((modal_data.saldo.P + modal_data.saldo.M + modal_data.saldo.G) > 0){
-                lab = `Você pode adicionar mais ${modal_data.saldo.P} tam. P, 
-                    ${modal_data.saldo.M} tam. M e ${modal_data.saldo.G} tam. G`
+                aviso.innerHTML = `Você pode adicionar mais:\n${modal_data.saldo.P ? +modal_data.saldo.P+' tam. P\n':''}${modal_data.saldo.M ? modal_data.saldo.M+' tam. M\n':''}${modal_data.saldo.G ? modal_data.saldo.G+' tam. G\n':''}`
+                aviso.style.color = 'rgb(227, 70, 0)'
             }else{
-                lab = 'Todos os brinquedos já foram selecionados.'
+                aviso.innerHTML = 'Todos os brinquedos já foram selecionados.\nClique no botão Contratar logo abaixo para continuar.'
+                aviso.style.color = 'rgb(0, 70, 227)'
             }
         }else{
-            lab = 'Evento Encerrado'
+            aviso.innerHTML = 'Evento Encerrado'
+            aviso.style.color = 'rgb(100, 200, 100)'
+
         }
 
-        document.querySelector('#lblSaldo').innerHTML = lab
+        
 
 
     }
@@ -397,11 +414,16 @@
 
     document.querySelector('#btnContrata').addEventListener('click',()=>{
         if(modal_data.status == 'Aberto'){
-            openHTML('contrato.html','over','Dados de Fatura do Contrato', data)
-//            closeContract()
+            const tot = modal_data.saldo.P+modal_data.saldo.M+modal_data.saldo.G
+
+            if(tot > 0){
+                alert('Você ainda não adicionou todos os brinquedos do kit, clique no botão "BUSCA" acima para selecionar os brinquedos.')
+                document.querySelector('#btnBusca').click()
+                document.querySelector('#edtBusca').focus()
+            }else{
+                openHTML('contrato.html','over','Dados de Fatura do Contrato', data)
+            }
         }else{
-
-
             contrato_pdf(modal_data)
         }
 
