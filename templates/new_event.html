@@ -6,13 +6,21 @@
             width: 90vw;
         }
 
+        legend{
+            width: auto !important;
+        }
+
+        fieldset .inline{
+            width: 100%;
+        }
+
         .frm-evento{
             display: flex;
             flex-direction: column;
             align-items: center;
         }
 
-        .frm-evento *{
+        .frm-evento *, fieldset select{
             padding: 8px;
             margin: 10px;
             width: 80%;
@@ -27,7 +35,7 @@
             text-align: left;
         }
 
-        .inline label{
+        .inline label, fieldset label{
             width: 20%;
         }
 
@@ -35,13 +43,29 @@
 
     <div class="frm-evento">
        
+        <fieldset>
+            <legend>Selecione seu Kit</legend>
+            <div class="inline">
+                <label for="cmbTipo">Tipo</label>
+                <select id="cmbTipo">
+                    <option value="FESTA">Festa/outros</option>
+                    <option value="CASAMENTO">Casamento</option>
+                    <option id="optPersonal" value="PERSONAL">Personalizado</option>
+                </select>
+            </div>
+            <div class="inline">
+                <label for="cmbKit">Kit:</label>
+                <select id="cmbKit"></select>
+            </div>
+            <div class="inline">
+                <label for="edtSobreKit">Sobre:</label>
+                <textarea id="edtSobreKit" cols="30" rows="10" readonly></textarea>
+            </div>
+        </fieldset>
+
         <div class="inline">
             <label for="edtData" >Data:</label>
             <input id="edtData" type="date" > 
-        </div>
-        <div class="inline">
-            <label for="cmbKit">Kit:</label>
-            <select id="cmbKit"></select>
         </div>
         <div class="inline">
             <label for="edtNome">Evento:</label>
@@ -125,15 +149,17 @@
             <label for="edtObs">Observações importantes</label>
             <textarea id="edtObs" cols="30" rows="10" title="Espaço para digitar alguma informação importante"></textarea>    
         </div>
-        <button id="btnCriar" >Criar</button>   
+        <button  class="btn-destaque" id="btnCriar" >Criar</button>   
         
     </div>
 
 </template>
 
 <script>        
+    havePersonal()
     fillKit()
   
+
     if(modal_data != ''){
         document.querySelector('#edtData').value = modal_data.data
         document.querySelector('#edtNome').value = modal_data.nome
@@ -177,12 +203,48 @@
 
     })
 
+    document.querySelector('#cmbTipo').addEventListener('change',()=>{
+        fillKit()
+    })
+
+    document.querySelector('#cmbKit').addEventListener('change',()=>{
+        changeKit()
+    })
+
+    function changeKit(){
+        const sel = document.querySelector('#cmbKit')
+        const data = sel.options[sel.selectedIndex].data
+        const txt = `Este Kit Contém:\n - ${data.P} brinquedos tam. P\n - ${data.M} brinquedos tam. M\n - ${data.G} brinquedos tam. G\n\n${data.descricao}`
+
+        document.querySelector('#edtSobreKit').value = txt
+        
+    }
+
+    function havePersonal(){
+        const params = new Object;
+            params.personal = localStorage.getItem('id');
+            const myPromisse = queryDB(params,15)
+
+        myPromisse.then((resolve)=>{            
+            try{
+                kits = JSON.parse(resolve)
+            }catch{
+                kits = []
+            }            
+
+            if(kits.length==0 && localStorage.getItem('access')!='10'){
+                document.querySelector('#optPersonal').style.display = 'none'
+            }
+        })
+    }
+
     function fillKit(){
 
         function addOption(json){        
             op = document.createElement('option')
             op.value = json.id
             op.innerHTML = json.nome + ' - ' + parseFloat(json.valor).toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})
+            op.data = json
             if(modal_data != ''){
                 if(modal_data.id_kit == json.id){
                     op.selected = true
@@ -192,7 +254,7 @@
         }
 
         const params = new Object;
-            params.nome = '';
+            params.tipo = document.querySelector('#cmbTipo').value;
 
         const myPromisse = queryDB(params,15)
 
@@ -204,7 +266,8 @@
             for(let i=0; i<kits.length; i++){
                 combo.appendChild(addOption(kits[i]))
             }
-            
+
+            changeKit()
         })
     }
 

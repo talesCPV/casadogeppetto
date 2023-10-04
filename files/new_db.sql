@@ -29,7 +29,10 @@ CREATE TABLE tb_kit(
     M int(11) DEFAULT 0,
     G int(11) DEFAULT 0,
     monitoria boolean DEFAULT TRUE,
-    valor float NOT NULL DEFAULT 0.00,    
+    valor float NOT NULL DEFAULT 0.00,
+    descricao varchar(255) DEFAULT "",
+	tipo varchar(10) DEFAULT "FESTA",
+    personal int(11) DEFAULT 0,
     PRIMARY KEY (id)
 ) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
 

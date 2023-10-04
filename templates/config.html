@@ -125,7 +125,7 @@
             tab.innerHTML = ''
 
             if(resolve.trim() != ""){            
-                tab.innerHTML = '<tr><th>id</th><th>Nome</th><th>P</th><th>M</th><th>G</th><th>Valor</th></tr>'
+                tab.innerHTML = '<tr><th>id</th><th>Nome</th><th>P</th><th>M</th><th>G</th><th>Tipo</th><th>Valor</th></tr>'
 
                 const json = JSON.parse(resolve);
 
@@ -136,6 +136,7 @@
                     tr.appendChild(addTD(json[i].P))
                     tr.appendChild(addTD(json[i].M))
                     tr.appendChild(addTD(json[i].G))
+                    tr.appendChild(addTD(json[i].tipo))
                     tr.appendChild(addTD(parseFloat(json[i].valor).toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})))
                     tr.dados = json[i]
                     tab.appendChild(tr)

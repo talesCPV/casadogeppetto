@@ -6,7 +6,9 @@
             display: flex;
             flex-wrap: wrap;
             overflow-x: scroll;
-            flex-direction: column;         
+            flex-direction: column;     
+            justify-content: center;  
+            align-items: center;  
             width: 90%;
             background-color: rgba(207, 241, 230, 0.8);
             border-radius: 10px;
@@ -43,7 +45,7 @@
     <div class="frm-agenda" >
         <h4> Meus Eventos (Clique na festa para adicionar brinquedos)</h4>
         <table id="tblFestas"></table>
-        <button id="btnNovoEvento" >Criar Novo</button>  
+        <button class="btn-destaque" id="btnNovoEvento" >Criar Nova Festa</button>  
     </div>
 
 
@@ -91,7 +93,9 @@
                     tr.appendChild(addTD(json[i].kit))
                     tr.appendChild(addTD(json[i].id_user,'hide'))
                     
-                    tr.appendChild(addTD(json[i].status=='Encerrado' ? 'Ver Contrato' : 'Em Aberto'))
+                    const status = addTD(json[i].status=='Encerrado' ? 'Ver Contrato' : 'Em Aberto')
+                    status.style.backgroundColor = json[i].status=='Encerrado' ? '#72d5a6' :'#e39696'
+                    tr.appendChild(status)
 
                     tr.dados = json[i]
                     tab.appendChild(tr)

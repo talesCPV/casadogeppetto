@@ -27,9 +27,14 @@
          "14" => 'CALL sp_viewFesta ("x00");',
 
          "15" => 'SELECT * FROM tb_kit WHERE y00 LIKE "%x00%"',
-         "16" => 'INSERT INTO tb_kit (y00, y01, y02, y03, y04, y05) VALUES ("x00", "x01", "x02", "x03", "x04", "x05");',
-         "17" => 'UPDATE tb_kit SET y00="x00", y01="x01", y02="x02", y03="x03", y04="x04", y05="x05" WHERE y06="x06";',
-         "18" => 'DELETE FROM tb_kit WHERE y00="x00";',
+
+         "16" => 'INSERT INTO tb_kit (id, nome, P, M, G, monitoria, valor, descricao,tipo, personal) VALUES ("x00", "x01", "x02", "x03", "x04", "x05", "x06", "x07", "x08", "x09")
+                  ON DUPLICATE KEY UPDATE
+                  nome="x01", P="x02", M="x03", G="x04", monitoria="x05", valor="x06", descricao="x07", tipo="x08" ;',
+
+         "17" => '',
+
+         "18" => 'DELETE FROM tb_kit WHERE id="x00";',
          "19" => 'INSERT INTO tb_agenda (y00, y01, y02) VALUES ("x00", "x01", "x02");',
          "20" => 'SELECT A.id, B.nome, B.tamanho, A.qtd, B.img, B.sobre  FROM tb_agenda as A
                     INNER JOIN tb_festa as F

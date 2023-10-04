@@ -16,6 +16,7 @@ SELECT * FROM tb_festa;
 SELECT * FROM tb_brinquedo;
 SELECT * FROM tb_agenda;
 SELECT * FROM tb_locatario;
+SELECT * FROM tb_kit;
 
 INSERT INTO tb_usuario (username, hash, access) VALUES ("michele", "i--No3<<]~!Bc''Hi--No33Tu99Z{?", 10);
 INSERT INTO tb_usuario (username, hash, access) VALUES ("tales", "IFi:2r'|S*#V-%Y0(\\3+_6.b91e<4h", 10);
@@ -24,6 +25,12 @@ INSERT INTO tb_frames (category, content, background, filename) VALUES ("photo",
 INSERT INTO tb_frames (category, content, background, justify, text) VALUES ("photo", "pic","240,100,80","center","Exemplo de texto... bem grande com várias linhas");
 
 UPDATE tb_festa SET aberta=1 WHERE id=2;
+
+
+ALTER TABLE tb_kit ADD COLUMN descricao varchar(255) DEFAULT "";
+ALTER TABLE tb_kit ADD COLUMN tipo varchar(10) DEFAULT "FESTA";
+ALTER TABLE tb_kit ADD COLUMN personal int(11) DEFAULT 0;
+
 
 ALTER TABLE tb_usuario MODIFY cel varchar(15);
 ALTER TABLE tb_brinquedo ADD COLUMN ativo BOOLEAN DEFAULT TRUE;

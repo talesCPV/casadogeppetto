@@ -15,7 +15,6 @@
             width: 80%;
         }
 
-
     </style>
 
     <div class="frm-kit">
@@ -33,6 +32,18 @@
             <input type="checkbox" id="ckbMon" checked>
     
         </div>
+        Tipo
+        <select id="cmbTipo">
+            <option value="FESTA">Festa</option>
+            <option value="CASAMENTO">Casamento</option>
+            <option value="PERSONAL">Personalizado</option>
+        </select>
+
+        ID do Usuário
+        <input type="text" id="edtPesonal" placeholder="Coloque o Id do usuário desejado" value="0" onkeyup="number(this)" readonly>
+
+        Descrição
+        <textarea id="edtDesc" cols="30" rows="10" maxlength="255"></textarea>
 
         Valor R$
         <input type="text"     id="edtValor" placeholder="Valor em R$" value="0" onkeyup="money(this)">
@@ -53,28 +64,35 @@
         document.querySelector('#edtG').value = modal_data.G
         document.querySelector('#ckbMon').checked = parseInt(modal_data.monitoria)
         document.querySelector('#edtValor').value = modal_data.valor
+        document.querySelector('#cmbTipo').value = modal_data.tipo
+        document.querySelector('#edtDesc').value = modal_data.descricao
+        document.querySelector('#edtPesonal').value = modal_data.personal
         document.querySelector('#btnNovo').innerHTML = 'Salvar'
         document.querySelector('#btnDel').style = 'display:block;'
     }
+
+    document.querySelector('#cmbTipo').addEventListener('change',()=>{
+        if(modal_data == ''){
+            document.querySelector('#edtPesonal').readOnly = document.querySelector('#cmbTipo').value == 'PERSONAL' ? false : true;
+        }
+    })
 
     document.querySelector('#btnNovo').addEventListener('click',()=>{
 
         if(document.querySelector('#edtNome').value.trim() != ''){
             const params = new Object;
+                params.id = modal_data != '' ? modal_data.id : 'DEFAULT'
                 params.nome = document.querySelector('#edtNome').value.toUpperCase()
                 params.P = document.querySelector('#edtP').value
                 params.M = document.querySelector('#edtM').value
                 params.G = document.querySelector('#edtG').value
                 params.monitoria = document.querySelector('#ckbMon').checked
                 params.valor = document.querySelector('#edtValor').value
+                params.descricao = document.querySelector('#edtDesc').value.trim()
+                params.tipo = document.querySelector('#cmbTipo').value
+                params.personal = params.tipo=='PERSONAL' ? document.querySelector('#edtPesonal').value : 0
 
-                let myPromisse
-                if(modal_data != ''){ // edit
-                    params.id = modal_data.id;
-                    myPromisse = queryDB(params,17)
-                }else{ // new
-                    myPromisse = queryDB(params,16)
-                }
+                const myPromisse = queryDB(params,16)
 
             myPromisse.then((resolve)=>{
                 btnClose.click();
