@@ -130,16 +130,37 @@
         margin: 20px 0;
     }
 
+    /* IMAGE */
     .img-icon{
         margin: 0 !important;
         width: auto;
         height: 60%;
     }
 
+    .img-mini{
+        margin: 0 !important;
+        padding: 0 !important;
+        max-width: 40.5px;
+    }
+
+    .img-PB{
+        -webkit-filter: grayscale(100%);
+        filter: grayscale(100%);
+        filter: gray; /* IE */
+    }
+
     /* Responsiveness */
     @media (max-width: 850px) {
 
+        fieldset{
+            width: 100% !important;
+            margin: 0;
+        }
 
+        .td-min{
+            display: none;
+        }
+    
         table, tr, td, th{
             font-size: 0.9em;
         }

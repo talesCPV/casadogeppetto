@@ -7,14 +7,13 @@
             flex-direction: column;
             margin: 20px;
             align-items: center;
+            width: 100%;
         }
 
         .inline input{
             margin: 20px 0;
             height: auto;
         }
-
-
 
         button{
             width: 95%;
@@ -97,21 +96,23 @@
             tab.innerHTML = ''
 
             if(resolve.trim() != ""){            
-                tab.innerHTML = '<tr><th>id</th><th>Nome</th><th>Tam.</th><th>Qtd.</th><th>Ativo</th><th>Sobre</th></tr>'
+                tab.innerHTML = '<tr><th>Img.</th><th>Nome</th><th>Tam.</th><th>Qtd.</th><th class="td-min">Ativo</th><th class="td-min">Sobre</th></tr>'
 
                 const json = JSON.parse(resolve);
 
-                for(let i=0; i<json.length; i++){
+                for(let i=0; i<json.length; i++){                  
                     const tr = document.createElement('tr')
-                    tr.appendChild(addTD(json[i].id))
+                    tr.appendChild(addTD(`<canvas width="300" height="300" class="img-mini" id="cnvImg${i}" class="${json[i].qtd<=0?'img-PB':''}"></canvas>`,'no-margin'))
                     tr.appendChild(addTD(json[i].nome))
                     tr.appendChild(addTD(json[i].tamanho))
                     tr.appendChild(addTD(json[i].qtd))
-                    tr.appendChild(addTD(json[i].ativo == '1' ? 'SIM' : 'NÂO' ))
-                    tr.appendChild(addTD(json[i].sobre))
+                    tr.appendChild(addTD(json[i].ativo == '1' ? 'SIM' : 'NÂO',"td-min" ))
+                    tr.appendChild(addTD(json[i].sobre,"td-min"))
+
                     tr.appendChild(addTD(json[i].img,'hide'))
                     tr.dados = json[i]
                     tab.appendChild(tr)
+                    loadImg(json[i].img,"cnvImg"+ i)
                 }
             }
 
@@ -131,18 +132,18 @@
             tab.innerHTML = ''
 
             if(resolve.trim() != ""){            
-                tab.innerHTML = '<tr><th>id</th><th>Nome</th><th>P</th><th>M</th><th>G</th><th>Tipo</th><th>Valor</th></tr>'
+                tab.innerHTML = '<tr><th class="td-min">id</th><th>Nome</th><th>P</th><th>M</th><th>G</th><th class="td-min">Tipo</th><th>Valor</th></tr>'
 
                 const json = JSON.parse(resolve);
 
                 for(let i=0; i<json.length; i++){
                     const tr = document.createElement('tr')
-                    tr.appendChild(addTD(json[i].id))
+                    tr.appendChild(addTD(json[i].id,"td-min"))
                     tr.appendChild(addTD(json[i].nome))
                     tr.appendChild(addTD(json[i].P))
                     tr.appendChild(addTD(json[i].M))
                     tr.appendChild(addTD(json[i].G))
-                    tr.appendChild(addTD(json[i].tipo))
+                    tr.appendChild(addTD(json[i].tipo,"td-min"))
                     tr.appendChild(addTD(parseFloat(json[i].valor).toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})))
                     tr.dados = json[i]
                     tab.appendChild(tr)

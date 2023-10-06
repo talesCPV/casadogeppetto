@@ -69,7 +69,7 @@
             tab.innerHTML = ''
             if(resolve.trim() != ""){ 
                 if(localStorage.getItem('access')=='10'){
-                    tab.innerHTML = '<tr><th class="td-min">id</th><th>Data</th><th>Cliente</th><th>Evento</th><th>Kit</th><th>Status</th></tr>'
+                    tab.innerHTML = '<tr><th class="td-min">id</th><th>Data</th><th>Cliente</th><th class="td-min">Evento</th><th class="td-min">Kit</th><th>Status</th></tr>'
                 }else{
                     tab.innerHTML = '<tr><th>Data</th><th>Evento</th><th>Kit</th><th>Status</th></tr>'
                 }
@@ -87,11 +87,11 @@
                     schedule = new Date(json[i].data)
                     json[i].status = json[i].aberta != '1' || today > schedule   ? 'Encerrado' : 'Aberto'
                     const tr = document.createElement('tr')
-                    localStorage.getItem('access')=='10' ? tr.appendChild(addTD(json[i].id)) : 0
+                    localStorage.getItem('access')=='10' ? tr.appendChild(addTD(json[i].id,"td-min")) : 0
                     tr.appendChild(addTD(formatData(json[i].data)))
                     localStorage.getItem('access')=='10' ? tr.appendChild(addTD(json[i].cliente)) : 0
-                    tr.appendChild(addTD(json[i].nome))
-                    tr.appendChild(addTD(json[i].kit))
+                    tr.appendChild(addTD(json[i].nome,"td-min"))
+                    tr.appendChild(addTD(json[i].kit,"td-min"))
                     tr.appendChild(addTD(json[i].id_user,'hide'))
                     
                     const status = addTD(json[i].status=='Encerrado' ? 'Ver Contrato' : 'Em Aberto')

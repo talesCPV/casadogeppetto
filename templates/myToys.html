@@ -5,7 +5,7 @@
         fieldset{
             display: flex;
             flex-direction: column;
-            gap: 5px;
+            gap: 5px;            
         }
 
         table, tr, td, th{
@@ -19,7 +19,7 @@
 
         }
 
-        .no-margin, canvas{
+        .no-margin{
             margin: 0 !important;
             padding: 0 !important;
             max-width: 40.5px;
@@ -58,12 +58,6 @@
 
         .qtd-zero:nth-child(even){
             filter: brightness(80%) !important;
-        }
-
-        .img-PB{
-            -webkit-filter: grayscale(100%);
-            filter: grayscale(100%);
-            filter: gray; /* IE */
         }
 
         #fdsBuscaBrinq{
@@ -222,7 +216,7 @@
                 const json = JSON.parse(resolve);
 
                 for(let i=0; i<json.length; i++){
-                 
+            
                     const qtd = modal_data.reservado==undefined? json[i].qtd : reserva(json[i])
                     const tr = document.createElement('tr')
                     tr.className = qtd <=0 ? 'qtd-zero' : ''
@@ -231,7 +225,7 @@
                     tr.appendChild(addTD(json[i].tamanho))
                     tr.appendChild(addTD(qtd))
                     tr.appendChild(addTD(json[i].sobre,'hide'))
-                    tr.appendChild(addTD(`<canvas width="300" height="300" id="cnvImg${i}" class="${qtd<=0?'img-PB':''}"></canvas>`,'no-margin'))
+                    tr.appendChild(addTD(`<canvas width="300" height="300" id="cnvImg${i}" class="img-mini${qtd<=0?' img-PB':''}"></canvas>`,'no-margin'))
                     tr.title=json[i].sobre
                     tr.dados = json[i]
 //                    tr.className = qtd > 0 ? '' : 'hide'
@@ -276,7 +270,7 @@
                     tr.appendChild(addTD(json[i].nome))
                     tr.appendChild(addTD(json[i].tamanho))
                     tr.appendChild(addTD(json[i].qtd))
-                    tr.appendChild(addTD(`<canvas width="300" height="300" id="cnvImg${i}"></canvas>`,'no-margin'))
+                    tr.appendChild(addTD(`<canvas width="300" height="300" class="img-mini" id="cnvImg${i}"></canvas>`,'no-margin'))
                     tr.title=json[i].sobre
                     tr.dados = json[i]
                     tab.appendChild(tr)
