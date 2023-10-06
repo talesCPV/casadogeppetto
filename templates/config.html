@@ -14,6 +14,8 @@
             height: auto;
         }
 
+
+
         button{
             width: 95%;
         }
@@ -25,6 +27,8 @@
         fieldset{
             width: 90vw;
             margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
         }
 
     </style>
@@ -34,32 +38,34 @@
         <fieldset>
             <legend>Kits</legend>
             <div class="inline">
-                <input type="text" id="edtBuscaKit" placeholder="Digite sua busca aqui" onkeypress="return getEnter(event, 'btnBuscaKit')">
-                <button id="btnBuscaKit">Busca</button>
+                <input type="text" class="edtBusca" id="edtBuscaKit" placeholder="Digite sua busca aqui" onkeypress="return getEnter(event, 'btnBuscaKit')">
+                <button class="btn-destaque btn-round" id="btnBuscaKit"><img class="img-icon" src="assets/icon/search.svg" alt=""></button>
+                <button class="btn-destaque btn-round" id="btnNewKit"><img class="img-icon" src="assets/icon/plus.svg" alt=""></button>  
             </div>
+                
+            
             <table id="tblKit"></table>
-            <button id="btnNewKit">Novo Kit</button>      
           </fieldset>
 
         <fieldset>
             <legend>Brinquedos</legend>
             <div class="inline">
-                <input type="text" id="edtBuscaBrinq" placeholder="Digite sua busca aqui" onkeypress="return getEnter(event, 'btnBuscaBrinq')">
-                <button id="btnBuscaBrinq">Busca</button>
+                <input type="text" class="edtBusca" id="edtBuscaBrinq" placeholder="Digite sua busca aqui" onkeypress="return getEnter(event, 'btnBuscaBrinq')">
+                <button class="btn-destaque btn-round" id="btnBuscaBrinq"><img class="img-icon" src="assets/icon/search.svg" alt=""></button>
+                <button class="btn-destaque btn-round" id="btnNewToy"><img class="img-icon" src="assets/icon/plus.svg" alt=""></button>  
             </div>
             <table id="tblBrinq"></table>
-            <button id="btnNewToy">Novo Brinquedo</button>  
         </fieldset>
 
         <fieldset>
             <legend>Usuários</legend>
 
             <div class="inline">
-                <input type="text" id="edtBuscaUser" placeholder="Digite sua busca aqui" onkeypress="return getEnter(event, 'btnBuscaUser')">
-                <button id="btnBuscaUser">Busca</button>
+                <input type="text" class="edtBusca" id="edtBuscaUser" placeholder="Digite sua busca aqui" onkeypress="return getEnter(event, 'btnBuscaUser')">
+                <button class="btn-destaque btn-round" id="btnBuscaUser"><img class="img-icon" src="assets/icon/search.svg" alt=""></button>
+                <button class="btn-destaque btn-round" id="btnNewUser"><img class="img-icon" src="assets/icon/plus.svg" alt=""></button>  
             </div>
             <table id="tblUser"></table>
-            <button id="btnNewUser">Novo Usuario</button>  
         </fieldset>
         
 

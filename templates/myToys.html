@@ -66,6 +66,11 @@
             filter: gray; /* IE */
         }
 
+        #fdsBuscaBrinq{
+            display: none;
+        }
+
+
     </style>
 
     <div class="frm-brinq">
@@ -81,18 +86,18 @@
             </div>
         </fieldset>
 
-        <fieldset>
+        <fieldset id="fdsBuscaBrinq">
             <legend>Adicione um Brinquedo</legend>
             <div class="inline">
                 <input type="text" id="edtBusca" placeholder="Digite sua busca aqui" onkeypress="return getEnter(event, 'btnBusca')" >
-                <button class="btn-destaque"  id="btnBusca">Busca</button>
+                <button class="btn-destaque btn-round" id="btnBusca"><img class="img-icon" src="assets/icon/search.svg" alt=""></button>
             </div>
             <table id="tblToys"></table>
         </fieldset>
 
         <fieldset>
             <legend> Brinquedos Selecionados</legend>
-            <textarea id="lblSaldo"></textarea>
+            <textarea id="lblSaldo" readonly></textarea>
             <table id="tblMyToys"></table>
         </fieldset>
 
@@ -136,24 +141,22 @@
     function saldo(){
 
         const aviso = document.querySelector('#lblSaldo')
-        
+        const fdsBuscaBrinq = document.querySelector('#fdsBuscaBrinq')
+
         if(modal_data.status == 'Aberto'){
+            fdsBuscaBrinq.style.display = 'flex';
             if((modal_data.saldo.P + modal_data.saldo.M + modal_data.saldo.G) > 0){
-                aviso.innerHTML = `Você pode adicionar mais:\n${modal_data.saldo.P ? +modal_data.saldo.P+' tam. P\n':''}${modal_data.saldo.M ? modal_data.saldo.M+' tam. M\n':''}${modal_data.saldo.G ? modal_data.saldo.G+' tam. G\n':''}`
+                aviso.innerHTML = `Você pode adicionar mais:\n${modal_data.saldo.P ? +modal_data.saldo.P+' tam. P\n':''}${modal_data.saldo.M ? modal_data.saldo.M+' tam. M\n':''}${modal_data.saldo.G ? modal_data.saldo.G+' tam. G':''}`
                 aviso.style.color = 'rgb(227, 70, 0)'
             }else{
                 aviso.innerHTML = 'Todos os brinquedos já foram selecionados.\nClique no botão Contratar logo abaixo para continuar.'
                 aviso.style.color = 'rgb(0, 70, 227)'
             }
         }else{
-            aviso.innerHTML = 'Evento Encerrado'
+            aviso.innerHTML = 'Evento Finalizado'
             aviso.style.color = 'rgb(100, 200, 100)'
-
+            fdsBuscaBrinq.style.display = 'none';
         }
-
-        
-
-
     }
 
     function viewSaldo(){
@@ -394,7 +397,7 @@
 
     document.querySelector('#tblMyToys').addEventListener('click',(e)=>{
         if(modal_data.status == 'Aberto'){
-            if (confirm('Deseja realmente deletar este brinquedo da lista?')) {
+            if (confirm('Deseja realmente remover este brinquedo da lista?')) {
             
                 const params = new Object;
                     params.id = e.target.parentNode.dados.id;
@@ -417,7 +420,7 @@
             const tot = modal_data.saldo.P+modal_data.saldo.M+modal_data.saldo.G
 
             if(tot > 0){
-                alert('Você ainda não adicionou todos os brinquedos do kit, clique no botão "BUSCA" acima para selecionar os brinquedos.')
+                alert('Você ainda não adicionou todos os brinquedos do kit, clique na "LUPA" acima para escolher mais brinquedos para sua festa.')
                 document.querySelector('#btnBusca').click()
                 document.querySelector('#edtBusca').focus()
             }else{
