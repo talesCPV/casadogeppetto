@@ -89,14 +89,14 @@
         <fieldset id="fdsBuscaBrinq">
             <legend>Adicione um Brinquedo</legend>
             <div class="inline">
-                <input type="text" id="edtBusca" placeholder="Digite sua busca aqui" onkeypress="return getEnter(event, 'btnBusca')" >
+                <input type="text" class="edtBusca" id="edtBusca" placeholder="Digite sua busca aqui" onkeypress="return getEnter(event, 'btnBusca')" >
                 <button class="btn-destaque btn-round" id="btnBusca"><img class="img-icon" src="assets/icon/search.svg" alt=""></button>
             </div>
             <table id="tblToys"></table>
         </fieldset>
 
         <fieldset>
-            <legend> Brinquedos Selecionados</legend>
+            <legend> Meus Brinquedos Selecionados</legend>
             <textarea id="lblSaldo" readonly></textarea>
             <table id="tblMyToys"></table>
         </fieldset>
