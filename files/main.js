@@ -1,38 +1,4 @@
 
-/*  STRING  */
-String.prototype.getHash = function(S){
-    let weigth = 0
-    let hash = ''
-    let str = this.valueOf()
-
-    function getRange(N){ // keeps caracters under ASCII 33 & 126
-        const forbid = [47,92]
-        while (N > 126 || N < 40){
-            N -= 126
-            N < 40 ? N += 40 : N
-            N == 127 ? N++ : 0
-        }
-        return N
-    }
-
-    for (i = 0; i < str.length; i++) {
-        weigth += str.charCodeAt(i) * 5
-    }
-
-    while(str.length < S){
-        str += String.fromCharCode(str.length + 33)
-    }
-
-    for (i = 0; i < str.length; i++) {
-        chr = getRange(weigth * str.charCodeAt(i))
-        chr = chr===92 ? 168 : chr;
-        chr = chr===34 ? 173 : chr;
-        hash += String.fromCharCode(chr)  
-    }
-
-    return hash;
-}
-
 /* VARIABLES */
 
 var screen = document.querySelector("#form-for-frames");
@@ -57,7 +23,6 @@ document.querySelector('.close').addEventListener('click',()=>{
 document.querySelector('.over-close').addEventListener('click',()=>{
     over_modal.style.display = "none";
 })
-
 
 menu_item = document.querySelectorAll('.menu-item');
 for(let i=0; i< menu_item.length; i++){
@@ -478,7 +443,7 @@ function getCPF(V){
 
 function contrato_pdf(data){
 
-    var sign_day = new Date(data.fat_data)
+    var sign_day = new Date(data.fat_data == '' ? today.getFormatDate() : data.fat_data)
         sign_day.setDate(sign_day.getDate() + 1);
 
     var imgData = new Image()

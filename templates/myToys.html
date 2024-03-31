@@ -117,6 +117,11 @@
         }
     }
 
+    if(modal_data.aberta == '1'){
+        document.querySelector('#fdsBuscaBrinq').style.display = 'flex';
+    }else{
+        document.querySelector('#fdsBuscaBrinq').style.display = 'flex';
+    }
 
     viewMyToys()
     viewSaldo()
@@ -136,20 +141,20 @@
 
         const aviso = document.querySelector('#lblSaldo')
         const fdsBuscaBrinq = document.querySelector('#fdsBuscaBrinq')
-
-        if(modal_data.status == 'Aberto'){
-            fdsBuscaBrinq.style.display = 'flex';
+        if(modal_data.aberta == '1'){            
             if((modal_data.saldo.P + modal_data.saldo.M + modal_data.saldo.G) > 0){
+                fdsBuscaBrinq.style.display = 'flex';
                 aviso.innerHTML = `Você pode adicionar mais:\n${modal_data.saldo.P ? +modal_data.saldo.P+' tam. P\n':''}${modal_data.saldo.M ? modal_data.saldo.M+' tam. M\n':''}${modal_data.saldo.G ? modal_data.saldo.G+' tam. G':''}`
                 aviso.style.color = 'rgb(227, 70, 0)'
             }else{
+                fdsBuscaBrinq.style.display = 'none';
                 aviso.innerHTML = 'Todos os brinquedos já foram selecionados.\nClique no botão Contratar logo abaixo para continuar.'
                 aviso.style.color = 'rgb(0, 70, 227)'
             }
         }else{
+            fdsBuscaBrinq.style.display = 'none';
             aviso.innerHTML = 'Evento Finalizado'
             aviso.style.color = 'rgb(100, 200, 100)'
-            fdsBuscaBrinq.style.display = 'none';
         }
     }
 
@@ -167,12 +172,8 @@
                 modal_data.reservado = json
 
             }
-            
         });
-
-
     }
-
 
     function viewToys(){
 
@@ -249,7 +250,6 @@
         const myPromisse = queryDB(params,20)
 
         myPromisse.then((resolve)=>{
-
             const tab = document.querySelector('#tblMyToys')
             tab.innerHTML = ''
             if(resolve.trim() != ""){            
@@ -356,7 +356,6 @@
                 const params = new Object;
                     params.hash = localStorage.getItem('hash')
                     params.id = modal_data.id
-
                 const myPromisse = queryDB(params,27)
                 myPromisse.then((resolve)=>{                    
                     btnClose.click()  

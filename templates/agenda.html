@@ -69,40 +69,24 @@
             tab.innerHTML = ''
             if(resolve.trim() != ""){ 
                 if(localStorage.getItem('access')=='10'){
-                    tab.innerHTML = '<tr><th class="td-min">id</th><th>Data</th><th>Cliente</th><th class="td-min">Evento</th><th class="td-min">Kit</th><th>Status</th></tr>'
-                }else{
-                    tab.innerHTML = '<tr><th>Data</th><th>Evento</th><th>Kit</th><th>Status</th></tr>'
-                }
-                function addTD(val,cn=''){
-                    const td = document.createElement('td')
-                    td.innerHTML = val
-                    if(cn != ''){
-                        td.className = cn
-                    }
-                    return td
-                }
+                    tab.head('id|td-min,Data,Cliente,Evento|td-min,Kit|td-min,status')
+               }else{
+                    tab.head('Data,Evento,Kit,Status')
+               }
+           
                 const json = JSON.parse(resolve);
 
                 for(let i=0; i<json.length; i++){
                     schedule = new Date(json[i].data)
                     json[i].status = json[i].aberta != '1' || today > schedule   ? 'Encerrado' : 'Aberto'
-                    const tr = document.createElement('tr')
-                    localStorage.getItem('access')=='10' ? tr.appendChild(addTD(json[i].id,"td-min")) : 0
-                    tr.appendChild(addTD(formatData(json[i].data)))
-                    localStorage.getItem('access')=='10' ? tr.appendChild(addTD(json[i].cliente)) : 0
-                    tr.appendChild(addTD(json[i].nome,"td-min"))
-                    tr.appendChild(addTD(json[i].kit,"td-min"))
-                    tr.appendChild(addTD(json[i].id_user,'hide'))
-                    
-                    const status = addTD(json[i].status=='Encerrado' ? 'Ver Contrato' : 'Em Aberto')
-                    status.style.backgroundColor = json[i].status=='Encerrado' ? '#72d5a6' :'#e39696'
-                    tr.appendChild(status)
 
-                    tr.dados = json[i]
-                    tab.appendChild(tr)
+                    if(localStorage.getItem('access')=='10'){
+                        tab.plot(json[i],'id|td-min,data,cliente,nome|td-min,kit|td-min,status','str,dat,str,str,str,str')
+                    }else{
+                        tab.plot(json[i],'data,nome,kit,status','dat,str,str,str')
+                    }                 
                 }
             }
-            
         });
 
     }
@@ -126,41 +110,12 @@
         }else{
             openHTML('new_event.html','pop-up','Crie seu Evento')
         }
-
-        
-/*        
-        const id = localStorage.getItem('id')
-        const dt = document.querySelector('#edtData').value.trim()
-        const nm = document.querySelector('#edtNome').value.trim()
-        const kt = document.querySelector('#cmbKit').value
-
-        if(id != '' && dt != '' && nm != ''  && kt != ''){
-            const params = new Object;
-                params.id_user = localStorage.getItem('id');
-                params.id_kit = kt;
-                params.data = dt;
-                params.nome = nm;
-    
-                document.querySelector('#edtNome').value = ''
-
-            const myPromisse = queryDB(params,13)
-
-            myPromisse.then((resolve)=>{    
-                viewParty()
-            });
-        }else{
-            alert('Por favor, forneça uma data e um nome para o evento.')
-        }
-*/
     })
 
     document.querySelector('#tblFestas').addEventListener('click',(e)=>{
-        data = e.target.parentNode.dados
+        data = e.target.parentNode.data
         data.origin = 'agenda'
         openHTML('myToys.html','pop-up',data.nome.toUpperCase()+" - "+formatData(data.data)+'<br>'+data.kit ,data)
     })
-
-
-
 
 </script>    
